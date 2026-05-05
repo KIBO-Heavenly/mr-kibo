@@ -1,14 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mr Kibo Heavenly Friend Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>🎂 Veronica's Birthday Game</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
 
   <style>
     /* ── CSS Variables ─────────────────────────────────────────── */
@@ -19,8 +21,12 @@
       --green:        #00FF87;
       --white:        #FFFFFF;
       --grey:         #333333;
+      --pink:         #FF69B4;
+      --hot-pink:     #FF1493;
+      --gold:         #FFD700;
       --font-display: 'Bebas Neue', sans-serif;
       --font-body:    'DM Sans', sans-serif;
+      --font-birthday:'Dancing Script', cursive;
     }
 
     /* ── Reset / Base ──────────────────────────────────────────── */
@@ -56,33 +62,50 @@
       z-index: 1000;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 48px;
+      justify-content: space-between;
+      gap: 8px;
       background: #111;
-      border-bottom: 2px solid var(--grey);
-      padding: 12px 24px;
+      border-bottom: 2px solid var(--pink);
+      padding: 6px 12px;
       height: 64px;
+      overflow: hidden;
     }
+
+    #pts-bar-players {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      flex: 1;
+      scrollbar-width: none;
+    }
+    #pts-bar-players::-webkit-scrollbar { display: none; }
 
     .money-player {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 1px;
+      min-width: 56px;
+      flex-shrink: 0;
     }
 
     .money-player .player-label {
       font-family: var(--font-body);
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: #888;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 64px;
     }
 
     .money-player .money-amount {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 20px;
       color: var(--white);
       transition: color 0.2s, transform 0.15s;
     }
@@ -105,11 +128,12 @@
 
     #round-badge {
       font-family: var(--font-display);
-      font-size: 18px;
-      color: var(--yellow);
-      letter-spacing: 0.08em;
-      min-width: 120px;
+      font-size: 16px;
+      color: var(--pink);
+      letter-spacing: 0.06em;
+      min-width: 80px;
       text-align: center;
+      flex-shrink: 0;
     }
 
     /* ── Default / No-Route Screen ─────────────────────────────── */
@@ -125,8 +149,9 @@
     }
 
     #no-route h1 {
-      font-size: clamp(48px, 10vw, 96px);
-      color: var(--yellow);
+      font-size: clamp(36px, 8vw, 72px);
+      color: var(--pink);
+      font-family: var(--font-birthday);
     }
 
     #no-route p {
@@ -191,82 +216,81 @@
     }
 
     .lobby-players {
-      display: flex;
-      gap: 28px;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 900px;
     }
 
     .lobby-player-card {
       background: #111;
       border: 2px solid var(--grey);
       border-radius: 10px;
-      padding: 36px 44px;
+      padding: 16px 12px;
       text-align: center;
-      min-width: 230px;
       transition: border-color 0.4s, box-shadow 0.4s;
     }
 
     .lobby-player-card.ready {
-      border-color: var(--green);
-      box-shadow: 0 0 32px rgba(0,255,135,0.15);
+      border-color: var(--pink);
+      box-shadow: 0 0 24px rgba(255,105,180,0.2);
     }
 
     .lobby-player-card .card-eyebrow {
       font-family: var(--font-body);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       color: #555;
-      margin-bottom: 14px;
+      margin-bottom: 8px;
     }
 
     .lobby-player-card .card-name {
       font-family: var(--font-display);
-      font-size: 38px;
+      font-size: 24px;
       color: var(--white);
-      min-height: 46px;
-      margin-bottom: 6px;
+      min-height: 30px;
+      margin-bottom: 4px;
     }
 
     .lobby-player-card .card-balance {
       font-family: var(--font-display);
-      font-size: 54px;
-      color: var(--green);
+      font-size: 28px;
+      color: var(--pink);
       line-height: 1;
-      text-shadow: 0 0 24px rgba(0,255,135,0.25);
     }
 
     .lobby-player-card .card-status {
-      margin-top: 14px;
-      font-size: 11px;
+      margin-top: 8px;
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       color: #444;
     }
 
-    .lobby-player-card.ready .card-status { color: var(--green); }
+    .lobby-player-card.ready .card-status { color: var(--pink); }
 
     .btn-start {
       font-family: var(--font-display);
-      font-size: clamp(36px, 5.5vw, 56px);
+      font-size: clamp(30px, 4vw, 48px);
       letter-spacing: 0.12em;
-      background: var(--yellow);
-      color: #000;
+      background: var(--pink);
+      color: #fff;
       border: none;
-      padding: 22px 88px;
+      padding: 18px 60px;
       border-radius: 6px;
       cursor: pointer;
       transition: transform 0.12s, box-shadow 0.2s;
-      box-shadow: 0 0 48px rgba(255,215,0,0.28);
-      min-height: 80px;
+      box-shadow: 0 0 40px rgba(255,105,180,0.35);
+      min-height: 64px;
     }
 
     .btn-start:hover:not(:disabled) {
       transform: scale(1.05);
-      box-shadow: 0 0 72px rgba(255,215,0,0.55);
+      box-shadow: 0 0 64px rgba(255,105,180,0.6);
     }
 
     .btn-start:active:not(:disabled) { transform: scale(0.97); }
@@ -2399,7 +2423,7 @@
   </style>
 
   <!-- Three.js r128 — used by The Execution (Round 5 FPS) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Three.js removed — FPS round replaced with Tap Battle -->
 </head>
 <body>
 
@@ -2427,17 +2451,10 @@
 
   <!-- ── Always-Visible Money Counter Bar ──────────────────────── -->
   <div id="money-bar" class="hidden">
-    <div class="money-player">
-      <span class="player-label" id="p1-label">Player 1</span>
-      <span class="money-amount" id="p1-money">$150</span>
+    <div id="pts-bar-players">
+      <!-- dynamically populated by buildPtsBar() -->
     </div>
-
     <div id="round-badge">LOBBY</div>
-
-    <div class="money-player">
-      <span class="player-label" id="p2-label">Player 2</span>
-      <span class="money-amount" id="p2-money">$130</span>
-    </div>
   </div>
 
   <!-- ── Host View ──────────────────────────────────────────────── -->
@@ -2446,26 +2463,29 @@
     <!-- Lobby: players join, host sees names -->
     <div id="host-lobby">
       <div class="lobby-title">
-        <span class="lobby-eyebrow">Mr Kibo Heavenly Presents</span>
-        FRIEND<br>GAME
+        <span class="lobby-eyebrow" style="font-family:var(--font-birthday);font-size:24px;color:var(--pink)">Happy Birthday Veronica! 🎂</span>
+        BIRTHDAY<br>GAME
       </div>
 
-      <div class="lobby-players">
-        <div class="lobby-player-card" id="host-card-p1">
-          <div class="card-eyebrow">Player 1</div>
-          <div class="card-name" id="host-p1-name">—</div>
-          <div class="card-balance" id="host-p1-balance">$150</div>
-          <div class="card-status" id="host-p1-status">Waiting to join…</div>
-        </div>
-        <div class="lobby-player-card" id="host-card-p2">
-          <div class="card-eyebrow">Player 2</div>
-          <div class="card-name" id="host-p2-name">—</div>
-          <div class="card-balance" id="host-p2-balance">$130</div>
-          <div class="card-status" id="host-p2-status">Waiting to join…</div>
-        </div>
+      <!-- Host name entry -->
+      <div style="display:flex;gap:12px;align-items:center;margin:12px 0;flex-wrap:wrap;justify-content:center">
+        <input id="host-name-input" type="text" maxlength="20"
+               placeholder="Your name (you are Player 1)"
+               style="padding:12px 16px;background:#111;border:2px solid var(--pink);border-radius:6px;
+                      color:var(--white);font-family:var(--font-body);font-size:16px;flex:1;min-width:200px;max-width:340px" />
+        <button id="btn-host-lock-name" class="btn-primary" style="padding:12px 24px;font-size:18px">LOCK IN</button>
       </div>
 
-      <button class="btn-start" id="btn-start-game">START GAME</button>
+      <!-- Share link -->
+      <div style="font-family:var(--font-body);font-size:12px;color:#555;margin-bottom:8px">
+        Players join at: <span style="color:var(--pink)" id="lobby-share-url"></span>
+      </div>
+
+      <div class="lobby-players" id="host-lobby-players">
+        <!-- dynamically populated by updateHostCards() -->
+      </div>
+
+      <button class="btn-start" id="btn-start-game" disabled>START GAME</button>
     </div>
 
     <!-- Persistent host controls bar (Start Round, Judge Answer, etc.) -->
@@ -2843,83 +2863,40 @@
 
       </div><!-- /round-panel -->
     </div><!-- /host-stacker -->
-    <div id="host-execution" class="hidden">
+    <div id="host-tapbattle" class="hidden">
       <div class="round-panel">
 
         <div class="round-header">
           <div class="round-eyebrow">Round 5 of 8</div>
-          <h2 class="round-title">The Execution</h2>
+          <h2 class="round-title">🎂 Tap Battle</h2>
         </div>
 
         <!-- ① Pre-start -->
-        <div id="fps-host-prestart" class="trivia-prestart">
-          <p>Both players hunt each other in a 3D arena.<br>
-             First to <strong style="color:var(--white)">5 kills</strong> wins
-             <strong style="color:var(--green)">+$25</strong> /
-             loser loses <strong style="color:var(--red)">-$25</strong>.</p>
-          <button id="btn-fps-start" class="btn-trivia-action btn-start-round">
-            START ROUND
-          </button>
+        <div id="tb-h-prestart" class="trivia-prestart">
+          <p>Everyone taps as fast as they can for <strong style="color:var(--white)">10 seconds</strong>.<br>
+             Most taps wins <strong style="color:var(--green)">+25 pts</strong> /
+             loser loses <strong style="color:var(--red)">-15 pts</strong>.</p>
+          <button id="btn-tb-start" class="btn-trivia-action btn-start-round">START ROUND</button>
         </div>
 
-        <!-- ② Active: spectator view -->
-        <div id="fps-host-active" class="hidden fps-host-spectator">
-          <div id="fps-host-scores">
-            <div class="trivia-score-item">
-              <div class="score-name" id="fps-host-sn1">Player 1</div>
-              <div class="score-val"  id="fps-host-s1">0</div>
-            </div>
-            <div class="score-divider">VS</div>
-            <div class="trivia-score-item">
-              <div class="score-name" id="fps-host-sn2">Player 2</div>
-              <div class="score-val"  id="fps-host-s2">0</div>
-            </div>
-          </div>
-
-          <canvas id="fps-host-map" width="240" height="240"></canvas>
-
-          <div style="font-family:var(--font-body);font-size:12px;color:#444;letter-spacing:0.14em;text-align:center;">
-            ● <span style="color:var(--yellow)">YELLOW</span> = Player 1 &nbsp;&nbsp;
-            ● <span style="color:var(--red)">RED</span> = Player 2
-          </div>
-
-          <div class="trivia-host-controls">
-            <button id="btn-fps-force-end" class="btn-trivia-action btn-finish-round">
-              FORCE END ROUND
-            </button>
-          </div>
+        <!-- ② Active: live tap counts -->
+        <div id="tb-h-active" class="hidden" style="display:flex;flex-direction:column;gap:20px;align-items:center">
+          <div style="font-family:var(--font-display);font-size:72px;color:var(--pink)" id="tb-h-timer">10</div>
+          <div id="tb-h-live-counts" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center"></div>
         </div>
 
         <!-- ③ Ended -->
-        <div id="fps-host-ended" class="hidden trivia-result-section">
-          <div class="result-winner-text" id="fps-result-winner">—</div>
-          <div class="result-sub-text"    id="fps-result-sub"></div>
-
-          <div class="result-money-row">
-            <div class="result-money-card">
-              <div class="rmc-name"  id="fps-rmc-name-p1">Player 1</div>
-              <div class="rmc-delta neutral" id="fps-delta-p1">$0</div>
-            </div>
-            <div class="result-money-card">
-              <div class="rmc-name"  id="fps-rmc-name-p2">Player 2</div>
-              <div class="rmc-delta neutral" id="fps-delta-p2">$0</div>
-            </div>
-          </div>
-
+        <div id="tb-h-ended" class="hidden trivia-result-section">
+          <div class="result-winner-text" id="tb-h-winner">—</div>
+          <div id="tb-h-deltas" style="display:flex;flex-direction:column;gap:8px;font-family:var(--font-display);font-size:22px;margin:16px 0;text-align:center"></div>
           <div class="trivia-host-controls">
-            <button id="btn-fps-apply"
-                    class="btn-trivia-action btn-apply-results">
-              APPLY RESULTS
-            </button>
-            <button id="btn-fps-next-round"
-                    class="btn-trivia-action btn-start-round hidden">
-              NEXT ROUND →
-            </button>
+            <button id="btn-tb-apply" class="btn-trivia-action btn-apply-results hidden">APPLY RESULTS</button>
+            <button id="btn-tb-next-round" class="btn-trivia-action btn-start-round hidden">NEXT ROUND →</button>
           </div>
         </div>
 
       </div><!-- /round-panel -->
-    </div><!-- /host-execution -->
+    </div><!-- /host-tapbattle -->
     <div id="host-betrayal"  class="hidden">
       <div class="round-panel">
 
@@ -2996,69 +2973,40 @@
     </div>
 
     <!-- ── HOST: TYPE TEST ──────────────────────────────────── -->
-    <div id="host-typetest" class="hidden">
+    <div id="host-reaction" class="hidden">
       <div class="round-panel">
         <div class="round-header">
           <div class="round-eyebrow">Round 7 of 8</div>
-          <h2 class="round-title">TYPE TEST</h2>
+          <h2 class="round-title">🎂 REACTION ROUND</h2>
         </div>
 
         <!-- ① Pre-start -->
-        <div id="tt-h-prestart" class="trivia-prestart">
-          <p>60-second typing race. Both players type the same passage.<br>
-             Winner: <strong style="color:var(--green)">+$25</strong> &nbsp;|&nbsp;
-             Loser: <strong style="color:var(--red)">-$15</strong></p>
-          <div style="margin:16px 0;display:flex;flex-direction:column;align-items:center;gap:10px">
-            <label style="font-size:13px;color:#888;text-transform:uppercase;letter-spacing:0.1em">Pick a passage:</label>
-            <select id="tt-passage-select"
-                    style="background:#111;color:var(--white);border:2px solid var(--grey);border-radius:8px;font-size:14px;padding:8px 14px;max-width:400px;width:90%">
-              <option value="0">1 — The quick brown fox…</option>
-              <option value="1">2 — Friends who know each other…</option>
-              <option value="2">3 — Money cannot buy happiness…</option>
-            </select>
-          </div>
-          <button id="btn-tt-start" class="btn-trivia-action btn-start-round">START ROUND</button>
+        <div id="rxn-h-prestart" class="trivia-prestart">
+          <p>5 sub-rounds — first to tap 🎂 wins each sub-round.<br>
+             Winner: <strong style="color:var(--green)">+20 pts</strong> &nbsp;|&nbsp;
+             Loser: <strong style="color:var(--red)">-10 pts</strong></p>
+          <button id="btn-rxn-start" class="btn-trivia-action btn-start-round">START ROUND</button>
         </div>
 
-        <!-- ② Active: live WPM display -->
-        <div id="tt-h-active" class="hidden">
-          <div class="tt-h-live-row">
-            <div class="tt-h-live-card">
-              <div class="tt-h-live-name" id="tt-h-name-p1">Player 1</div>
-              <div class="tt-h-live-wpm"  id="tt-h-wpm-p1">—</div>
-              <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.1em">WPM</div>
-            </div>
-            <div class="tt-h-live-card">
-              <div class="tt-h-live-name" id="tt-h-name-p2">Player 2</div>
-              <div class="tt-h-live-wpm"  id="tt-h-wpm-p2">—</div>
-              <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.1em">WPM</div>
-            </div>
-          </div>
-          <p style="margin-top:16px;color:#555;font-size:13px">Waiting for players to finish or time to expire…</p>
+        <!-- ② Active -->
+        <div id="rxn-h-active" class="hidden" style="display:flex;flex-direction:column;gap:20px;align-items:center">
+          <div id="rxn-h-scoreboard" style="font-family:var(--font-display);font-size:22px;color:var(--white);letter-spacing:0.05em"></div>
+          <div style="font-family:var(--font-display);font-size:22px;color:var(--pink);letter-spacing:0.1em" id="rxn-h-status">READY</div>
+          <button id="btn-rxn-arm" class="btn-trivia-action btn-start-round">ARM NEXT SUB-ROUND</button>
+          <div style="font-family:var(--font-body);font-size:12px;color:#444">Random delay 2–8s then 🎂 appears on player screens</div>
         </div>
 
-        <!-- ③ Ended: results + apply -->
-        <div id="tt-h-ended" class="hidden trivia-result-section">
-          <div class="result-winner-text" id="tt-h-headline">—</div>
-          <div class="tt-result-row" style="margin:16px 0">
-            <div class="tt-result-card" id="tt-h-result-p1">
-              <div class="tt-result-name">Player 1</div>
-              <div class="tt-result-wpm">—</div>
-              <div class="tt-result-delta neutral">$0</div>
-            </div>
-            <div class="tt-result-card" id="tt-h-result-p2">
-              <div class="tt-result-name">Player 2</div>
-              <div class="tt-result-wpm">—</div>
-              <div class="tt-result-delta neutral">$0</div>
-            </div>
-          </div>
+        <!-- ③ Ended -->
+        <div id="rxn-h-ended" class="hidden trivia-result-section">
+          <div class="result-winner-text" id="rxn-h-winner">—</div>
+          <div id="rxn-h-deltas" style="display:flex;flex-direction:column;gap:8px;font-family:var(--font-display);font-size:22px;margin:16px 0;text-align:center"></div>
           <div class="trivia-host-controls">
-            <button id="btn-tt-apply"      class="btn-trivia-action btn-apply-results">APPLY RESULTS</button>
-            <button id="btn-tt-next-round" class="btn-trivia-action btn-start-round hidden">NEXT ROUND →</button>
+            <button id="btn-rxn-apply"      class="btn-trivia-action btn-apply-results hidden">APPLY RESULTS</button>
+            <button id="btn-rxn-next-round" class="btn-trivia-action btn-start-round hidden">NEXT ROUND →</button>
           </div>
         </div>
       </div><!-- /round-panel -->
-    </div>
+    </div><!-- /host-reaction -->
 
     <div id="host-wheel" class="hidden">
       <!-- Pre-start -->
@@ -3175,8 +3123,9 @@
     <!-- Waiting screen: shown between rounds / before game starts -->
     <div id="player-waiting">
       <div class="player-lobby-balance">
-        <div class="balance-eyebrow">Your Starting Balance</div>
-        <div class="balance-amount" id="player-lobby-amount">$150</div>
+        <div class="balance-eyebrow">🎂 Veronica's Birthday Game</div>
+        <div class="balance-amount" id="player-lobby-amount" style="font-size:20px;color:var(--pink)">Welcome!</div>
+        <div id="player-slot-label" style="font-family:var(--font-body);font-size:14px;color:#666;margin-top:4px"></div>
       </div>
 
       <div class="player-name-row">
@@ -3356,71 +3305,36 @@
         </div>
 
       </div><!-- /player-stacker -->
-      <div id="player-execution" class="hidden">
+      <div id="player-tapbattle" class="hidden"
+           style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:20px;gap:16px;text-align:center;">
 
-        <!-- Mobile warning (shown if screen < 600px) -->
-        <div id="fps-mobile-warn" class="hidden">
-          ⚠️ This game works best on desktop. You can still play but use on-screen joystick.
+        <!-- Waiting -->
+        <div id="tb-p-waiting">
+          <div class="player-trivia-anim">🎂 TAP BATTLE</div>
+          <div class="waiting-status" style="margin-top:12px">Get ready to tap as fast as you can!</div>
         </div>
 
-        <!-- Click-to-play overlay (shown until pointer lock) -->
-        <div id="fps-click-overlay">
-          <h2>THE EXECUTION</h2>
-          <p>WASD to move · Mouse to aim · Click or Space to shoot</p>
-          <p style="color:var(--yellow);font-family:var(--font-display);font-size:26px;letter-spacing:0.1em;">
-            CLICK TO PLAY
-          </p>
-          <p>First to 5 kills wins +$25</p>
+        <!-- Active tapping screen -->
+        <div id="tb-p-active" class="hidden"
+             style="display:flex;flex-direction:column;align-items:center;gap:14px;width:100%">
+          <div style="font-family:var(--font-display);font-size:56px;color:var(--yellow)" id="tb-p-timer">10</div>
+          <div style="font-family:var(--font-display);font-size:28px;color:var(--white)">TAPS: <span id="tb-p-count">0</span></div>
+          <div style="font-family:var(--font-body);font-size:12px;color:#555">Them: <span id="tb-p-opp-count">?</span></div>
+          <button id="btn-tb-tap"
+                  style="width:min(220px,70vw);height:min(220px,70vw);border-radius:50%;background:var(--pink);border:none;
+                         font-family:var(--font-display);font-size:52px;color:#fff;cursor:pointer;
+                         box-shadow:0 0 48px rgba(255,105,180,0.5);transition:transform 0.05s;
+                         -webkit-tap-highlight-color:transparent;touch-action:manipulation">🎂</button>
         </div>
 
-        <!-- Paused overlay (shown when pointer lock is lost) -->
-        <div id="fps-paused-overlay" class="hidden"
-             style="position:fixed;inset:0;z-index:921;background:rgba(0,0,0,0.75);
-                    display:flex;align-items:center;justify-content:center;
-                    font-family:var(--font-display);font-size:36px;
-                    color:var(--yellow);letter-spacing:0.1em;">
-          PAUSED — CLICK TO RESUME
+        <!-- Ended -->
+        <div id="tb-p-ended" class="hidden"
+             style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div class="rb-player-result-text neutral" id="tb-p-result-text">—</div>
+          <div class="waiting-status">Waiting for host to apply results…</div>
         </div>
 
-        <!-- Win/Lose overlay (shown at end) -->
-        <div id="fps-end-overlay" class="hidden">
-          <h1 id="fps-end-title">YOU WIN!</h1>
-          <p id="fps-end-sub">Waiting for host to apply results…</p>
-        </div>
-
-        <!-- Three.js render target -->
-        <canvas id="fps-canvas"></canvas>
-
-        <!-- HUD overlay -->
-        <div id="fps-hud">
-          <div id="fps-crosshair">+</div>
-          <div id="fps-reminder">FIRST TO 5 KILLS WINS</div>
-          <div id="fps-score-display">YOU: 0 | THEM: 0</div>
-          <div id="fps-kill-feed"></div>
-          <div id="fps-respawn-msg" class="hidden"></div>
-          <svg id="fps-cooldown-ring" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="20" fill="none" stroke="#333" stroke-width="4"/>
-            <circle id="fps-cooldown-arc" cx="24" cy="24" r="20" fill="none"
-                    stroke="var(--yellow)" stroke-width="4"
-                    stroke-dasharray="125.66" stroke-dashoffset="125.66"
-                    stroke-linecap="round"
-                    transform="rotate(-90 24 24)"/>
-          </svg>
-          <canvas id="fps-minimap" width="100" height="100"></canvas>
-        </div>
-
-        <!-- Mobile virtual controls -->
-        <div id="fps-mobile-controls" class="hidden">
-          <div class="fps-joystick-zone" id="fps-move-zone">
-            <div class="fps-joystick-knob" id="fps-move-knob"></div>
-          </div>
-          <button id="fps-shoot-btn">SHOOT</button>
-          <div class="fps-joystick-zone" id="fps-look-zone">
-            <div class="fps-joystick-knob" id="fps-look-knob"></div>
-          </div>
-        </div>
-
-      </div><!-- /player-execution -->
+      </div><!-- /player-tapbattle -->
       <div id="player-betrayal"  class="hidden">
 
         <!-- ① Waiting for round to start -->
@@ -3436,7 +3350,7 @@
             <button class="btn-vote btn-cooperate" id="btn-cooperate">
               <span class="vote-emoji">🤝</span>
               <span class="vote-label">COOPERATE</span>
-              <span class="vote-sublabel">+$15 if they cooperate too</span>
+              <span class="vote-sublabel">+15 pts if they cooperate too</span>
             </button>
             <button class="btn-vote btn-betray" id="btn-betray">
               <span class="vote-emoji">🔪</span>
@@ -3473,49 +3387,73 @@
       </div>
 
       <!-- ── PLAYER: TYPE TEST ───────────────────────────────── -->
-      <div id="player-typetest" class="hidden">
+      <div id="player-reaction" class="hidden"
+           style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:20px;gap:16px;text-align:center;">
 
-        <!-- ① Waiting -->
-        <div id="tt-p-waiting">
-          <div class="player-trivia-anim">GET READY TO TYPE…</div>
-          <div class="waiting-status" style="margin-top:12px">Waiting for host to start…</div>
+        <!-- Waiting -->
+        <div id="rxn-p-waiting">
+          <div class="player-trivia-anim">🎂 REACTION!</div>
+          <div class="waiting-status" style="margin-top:12px">Tap 🎂 the moment it appears!</div>
         </div>
 
-        <!-- ② Active: typing race -->
-        <div id="tt-p-active" class="hidden"
-             style="display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;padding:16px">
-
-          <!-- Stats row -->
-          <div class="tt-stats">
-            <div class="tt-stat">
-              <div class="tt-stat-value" id="tt-p-timer">60</div>
-              <div class="tt-stat-label">seconds</div>
+        <!-- Armed: wait for signal -->
+        <div id="rxn-p-armed" class="hidden"
+             style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="font-family:var(--font-display);font-size:30px;color:#555;letter-spacing:0.15em">WAIT FOR IT…</div>
+          <div class="trivia-scores">
+            <div class="trivia-score-item">
+              <div class="score-val" id="rxn-p-my-score">0</div>
+              <div class="score-name">YOU</div>
             </div>
-            <div class="tt-stat">
-              <div class="tt-stat-value" id="tt-p-wpm">0</div>
-              <div class="tt-stat-label">WPM</div>
+            <div class="score-divider">VS</div>
+            <div class="trivia-score-item">
+              <div class="score-val" id="rxn-p-opp-score">0</div>
+              <div class="score-name">THEM</div>
             </div>
           </div>
-
-          <!-- Highlighted passage -->
-          <div class="tt-passage" id="tt-p-passage"></div>
-
-          <!-- Input -->
-          <textarea class="tt-input" id="tt-input" rows="3"
-                    placeholder="Start typing here…" autocomplete="off" autocorrect="off"
-                    autocapitalize="off" spellcheck="false"></textarea>
         </div>
 
-        <!-- ③ Done -->
-        <div id="tt-p-done" class="hidden"
-             style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:20px;text-align:center;padding:32px 20px">
-          <div style="font-family:var(--font-display);font-size:22px;color:#888;letter-spacing:0.1em">YOUR RESULT</div>
-          <div class="tt-stat-value" style="font-size:52px" id="tt-p-done-wpm">—</div>
-          <div class="tt-stat-label">words per minute</div>
-          <div class="waiting-status" style="margin-top:8px">Waiting for host to apply results…</div>
+        <!-- GO! tap button -->
+        <div id="rxn-p-go" class="hidden"
+             style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <button id="btn-rxn-tap"
+                  style="width:min(220px,70vw);height:min(220px,70vw);border-radius:50%;background:var(--pink);border:none;
+                         font-family:var(--font-display);font-size:60px;color:#fff;cursor:pointer;
+                         box-shadow:0 0 60px rgba(255,105,180,0.7);
+                         -webkit-tap-highlight-color:transparent;touch-action:manipulation">🎂</button>
+          <div style="font-family:var(--font-display);font-size:22px;color:var(--pink);letter-spacing:0.1em">TAP NOW!</div>
         </div>
 
-      </div>
+        <!-- Tapped this sub-round -->
+        <div id="rxn-p-tapped" class="hidden">
+          <div class="rb-player-result-text neutral">TAPPED!</div>
+          <div class="waiting-status" style="margin-top:12px">Waiting for result…</div>
+        </div>
+
+        <!-- Sub-round result -->
+        <div id="rxn-p-subresult" class="hidden"
+             style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div class="rb-player-result-text neutral" id="rxn-p-subresult-text">—</div>
+          <div class="trivia-scores">
+            <div class="trivia-score-item">
+              <div class="score-val" id="rxn-p-my-score2">0</div>
+              <div class="score-name">YOU</div>
+            </div>
+            <div class="score-divider">VS</div>
+            <div class="trivia-score-item">
+              <div class="score-val" id="rxn-p-opp-score2">0</div>
+              <div class="score-name">THEM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Round ended -->
+        <div id="rxn-p-ended" class="hidden">
+          <div class="rb-player-result-text neutral" id="rxn-p-final-text">—</div>
+          <div class="waiting-status" style="margin-top:12px">Waiting for host to apply results…</div>
+        </div>
+
+      </div><!-- /player-reaction -->
 
       <div id="player-wheel" class="hidden">
         <!-- Waiting for host to enable spin -->
@@ -3567,12 +3505,17 @@
 
   <!-- ── No-Route Fallback ──────────────────────────────────────── -->
   <div id="no-route">
-    <h1>MR KIBO HEAVENLY<br>FRIEND GAME</h1>
-    <p>Choose a view to open:</p>
+    <h1>🎂 Veronica's Birthday Game</h1>
+    <p>Choose your view to open:</p>
     <div class="route-links">
-      <a href="?view=host">Host Panel</a>
-      <a href="?view=player&player=player1">Player 1</a>
+      <a href="?view=host" style="background:var(--pink);color:#fff">Host (Player 1)</a>
       <a href="?view=player&player=player2">Player 2</a>
+      <a href="?view=player&player=player3">Player 3</a>
+      <a href="?view=player&player=player4">Player 4</a>
+      <a href="?view=player&player=player5">Player 5</a>
+      <a href="?view=player&player=player6">Player 6</a>
+      <a href="?view=player&player=player7">Player 7</a>
+      <a href="?view=player&player=player8">Player 8</a>
     </div>
   </div>
 
@@ -3598,8 +3541,11 @@
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
 
-    // ── Money Events ───────────────────────────────────────────
-    const MONEY_EVENTS = {
+    // ── Player Keys (8 players) ────────────────────────────────
+    const PLAYER_KEYS = ['player1','player2','player3','player4','player5','player6','player7','player8'];
+
+    // ── Point Events (replaces money) ─────────────────────────
+    const POINT_EVENTS = {
       TRIVIA_CORRECT:           +5,
       TRIVIA_STEAL:            +20,
       TRIVIA_STOLEN:           -20,
@@ -3611,28 +3557,28 @@
       STACKER_WIN:             +25,
       STACKER_LOSE:            -15,
       STACKER_TIE:              +5,
-      FPS_WIN:                 +25,
-      FPS_LOSE:                -25,
+      TAPBATTLE_WIN:           +25,
+      TAPBATTLE_LOSE:          -15,
       BETRAYAL_BOTH_COOPERATE: +15,
       BETRAYAL_BETRAY_WIN:     +30,
       BETRAYAL_BETRAY_LOSS:    -20,
       BETRAYAL_BOTH_BETRAY:    -10,
-      TYPETEST_WIN:            +25,
-      TYPETEST_LOSE:           -15,
+      REACTION_WIN:            +20,
+      REACTION_LOSE:           -10,
     };
+    const MONEY_EVENTS = POINT_EVENTS; // backwards compat alias
 
     // ── Round metadata ─────────────────────────────────────────
-    // currentRound is 1-indexed: 0 = lobby, 1 = trivia … 8 = wheel
-    const ROUND_ORDER = ['trivia', 'redbutton', 'typewave', 'stacker', 'execution', 'betrayal', 'typetest', 'wheel'];
+    const ROUND_ORDER = ['trivia', 'redbutton', 'typewave', 'stacker', 'tapbattle', 'betrayal', 'reaction', 'wheel'];
     const ROUND_NAMES = {
-      trivia:    'Round 1',
-      redbutton: 'Round 2',
-      typewave:  'Round 3',
-      stacker:   'Round 4',
-      execution: 'Round 5',
-      betrayal:  'Round 6',
-      typetest:  'Round 7',
-      wheel:     'Round 8',
+      trivia:     'Round 1',
+      redbutton:  'Round 2',
+      typewave:   'Round 3',
+      stacker:    'Round 4',
+      tapbattle:  'Round 5',
+      betrayal:   'Round 6',
+      reaction:   'Round 7',
+      wheel:      'Round 8',
     };
 
     // ── Money Counter Animation ────────────────────────────────
@@ -3653,7 +3599,7 @@
       const interval = setInterval(() => {
         step++;
         const current = Math.round(from + (diff * (step / steps)));
-        el.textContent = `$${current}`;
+        el.textContent = `${current} pts`;
         if (step >= steps) {
           clearInterval(interval);
           el.style.color = 'var(--white)';
@@ -3963,12 +3909,17 @@
     // ── URL Routing ───────────────────────────────────────────
     const params    = new URLSearchParams(window.location.search);
     const view      = params.get('view');    // 'host' | 'player'
-    const playerKey = params.get('player'); // 'player1' | 'player2'
+    // Host is always player1; guests are player2–player8
+    const playerKey = view === 'host' ? 'player1' : params.get('player');
 
     const elHostView   = document.getElementById('host-view');
     const elPlayerView = document.getElementById('player-view');
     const elNoRoute    = document.getElementById('no-route');
     const elMoneyBar   = document.getElementById('money-bar');
+
+    // Set share URL hint in host lobby
+    const lobbyShareEl = document.getElementById('lobby-share-url');
+    if (lobbyShareEl) lobbyShareEl.textContent = window.location.origin + window.location.pathname;
 
     function showView(which) {
       elNoRoute.classList.add('hidden');
@@ -3980,30 +3931,33 @@
       }
     }
 
+    const VALID_PLAYER_KEYS = PLAYER_KEYS.slice(1); // player2–player8 are valid guest keys
     if (view === 'host') {
       showView('host');
-    } else if (view === 'player' && (playerKey === 'player1' || playerKey === 'player2')) {
+    } else if (view === 'player' && VALID_PLAYER_KEYS.includes(playerKey)) {
       showView('player');
+      // Show slot label
+      const slotNum = parseInt(playerKey.replace('player', ''), 10);
+      const slotLabel = document.getElementById('player-slot-label');
+      if (slotLabel) slotLabel.textContent = `You are Player ${slotNum}`;
     }
 
     // ── Phase-based panel switching ────────────────────────────
-    // Shows/hides lobby vs round panels based on game.phase + currentRound.
-    // currentRound is 1-indexed (0 = lobby, 1–8 = rounds).
-    const ALL_ROUND_IDS = ['trivia', 'redbutton', 'typewave', 'stacker', 'execution', 'betrayal', 'typetest', 'wheel'];
+    const ALL_ROUND_IDS = ['trivia', 'redbutton', 'typewave', 'stacker', 'tapbattle', 'betrayal', 'reaction', 'wheel'];
 
     function syncPhase(gameData) {
       if (!gameData) return;
       const phase   = gameData.phase        ?? 'lobby';
-      const roundN  = gameData.currentRound ?? 0;  // 1-indexed
-      const roundId = ALL_ROUND_IDS[roundN - 1];   // undefined when lobby
+      const roundN  = gameData.currentRound ?? 0;
+      const roundId = ALL_ROUND_IDS[roundN - 1];
 
       if (view === 'host') {
         const isLobby = phase === 'lobby';
         document.getElementById('host-lobby').classList.toggle('hidden', !isLobby);
 
         ALL_ROUND_IDS.forEach(id => {
-          document.getElementById(`host-${id}`).classList.toggle('hidden',
-            phase !== 'round' || id !== roundId);
+          const el = document.getElementById(`host-${id}`);
+          if (el) el.classList.toggle('hidden', phase !== 'round' || id !== roundId);
         });
 
         document.getElementById('host-results').classList.toggle('hidden', phase !== 'finale');
@@ -4016,13 +3970,12 @@
           phase !== 'round' && phase !== 'result');
 
         ALL_ROUND_IDS.forEach(id => {
-          document.getElementById(`player-${id}`).classList.toggle('hidden',
-            phase !== 'round' || id !== roundId);
+          const el = document.getElementById(`player-${id}`);
+          if (el) el.classList.toggle('hidden', phase !== 'round' || id !== roundId);
         });
 
         document.getElementById('player-results').classList.toggle('hidden', phase !== 'finale');
 
-        // Update waiting status text between rounds
         if (isLobby) {
           const statusEl = document.getElementById('waiting-status');
           if (statusEl) statusEl.textContent = 'WAITING FOR HOST…';
@@ -4045,13 +3998,14 @@
         }
         const playersSnap = await get(ref(db, 'players'));
         if (!playersSnap.exists()) {
-          await set(ref(db, 'players'), {
-            player1: { name: '', balance: 150, startingBalance: 150, alive: true, answer: null, ready: false },
-            player2: { name: '', balance: 130, startingBalance: 130, alive: true, answer: null, ready: false },
+          const playersInit = {};
+          PLAYER_KEYS.forEach(k => {
+            playersInit[k] = { name: '', points: 0, startingPoints: 0, alive: true, answer: null, ready: false };
           });
+          await set(ref(db, 'players'), playersInit);
         }
       } catch (err) {
-        console.error('[Mr Kibo Heavenly Game] initGameState error:', err);
+        console.error('[Birthday Game] initGameState error:', err);
       }
     }
 
@@ -4076,45 +4030,56 @@
             roundActive:  false,
           });
         } catch (err) {
-          console.error('[Mr Kibo Heavenly Game] Start game error:', err);
+          console.error('[Birthday Game] Start game error:', err);
           btnStart.disabled = false;
         }
       });
     }
 
-    // ── Host lobby: live player card updates ───────────────────
+    // ── Host lobby: live player card updates (dynamic for up to 8) ──
     function updateHostCards(playersData) {
       if (!playersData) return;
-
-      ['player1', 'player2'].forEach((key, i) => {
-        const n       = i + 1;
-        const player  = playersData[key];
-        const nameEl  = document.getElementById(`host-p${n}-name`);
-        const balEl   = document.getElementById(`host-p${n}-balance`);
-        const statEl  = document.getElementById(`host-p${n}-status`);
-        const cardEl  = document.getElementById(`host-card-p${n}`);
-        if (!player || !nameEl) return;
-
+      const container = document.getElementById('host-lobby-players');
+      if (!container) return;
+      container.innerHTML = '';
+      let joinedCount = 0;
+      PLAYER_KEYS.forEach((key, i) => {
+        const player  = playersData[key] ?? {};
         const hasName = player.name && player.name.trim().length > 0;
-        nameEl.textContent = hasName ? player.name : '—';
-        balEl.textContent  = `$${player.balance ?? (key === 'player1' ? 150 : 130)}`;
-
-        if (hasName) {
-          statEl.textContent = 'Ready';
-          cardEl.classList.add('ready');
-        } else {
-          statEl.textContent = 'Waiting to join…';
-          cardEl.classList.remove('ready');
-        }
+        if (hasName) joinedCount++;
+        const label   = i === 0 ? 'Player 1 (Host)' : `Player ${i + 1}`;
+        const card    = document.createElement('div');
+        card.className = 'lobby-player-card' + (hasName ? ' ready' : '');
+        card.innerHTML = `
+          <div class="card-eyebrow">${label}</div>
+          <div class="card-name">${hasName ? player.name : '—'}</div>
+          <div class="card-status">${hasName ? '✓ Ready' : 'Waiting to join…'}</div>
+        `;
+        container.appendChild(card);
       });
+      // Enable start once at least 2 players joined (host + 1 guest)
+      if (btnStart) btnStart.disabled = joinedCount < 2;
     }
 
-    // ── Player waiting: set balance, name input, lock-in ──────
-    if (view === 'player' && playerKey) {
-      const startBal = playerKey === 'player1' ? 150 : 130;
-      const balEl    = document.getElementById('player-lobby-amount');
-      if (balEl) balEl.textContent = `$${startBal}`;
+    // ── Host: lock in name (host = player1) ───────────────────
+    if (view === 'host') {
+      const hostNameInput = document.getElementById('host-name-input');
+      const btnHostLock   = document.getElementById('btn-host-lock-name');
+      async function lockHostName() {
+        const name = hostNameInput ? hostNameInput.value.trim() : '';
+        if (!name) return;
+        try {
+          await update(ref(db, 'players/player1'), { name, points: 0, startingPoints: 0, alive: true, ready: true });
+          if (hostNameInput) { hostNameInput.disabled = true; }
+          if (btnHostLock)   { btnHostLock.textContent = '✓ LOCKED'; btnHostLock.disabled = true; }
+        } catch (err) { console.error('[Birthday Game] Host name lock error:', err); }
+      }
+      if (btnHostLock)   btnHostLock.addEventListener('click', lockHostName);
+      if (hostNameInput) hostNameInput.addEventListener('keydown', e => { if (e.key === 'Enter') lockHostName(); });
+    }
 
+    // ── Player waiting: name input, lock-in (player2–player8) ─
+    if (view === 'player' && playerKey && playerKey !== 'player1') {
       const nameInput  = document.getElementById('name-input');
       const btnLock    = document.getElementById('btn-lock-name');
 
@@ -4122,22 +4087,22 @@
         const name = nameInput ? nameInput.value.trim() : '';
         if (!name) return;
         try {
-          await update(ref(db, `players/${playerKey}`), { name });
-          if (nameInput) nameInput.classList.add('locked');
-          if (btnLock)   btnLock.classList.add('hidden');
+          await update(ref(db, `players/${playerKey}`), { name, points: 0, startingPoints: 0, alive: true, ready: true });
+          if (nameInput) nameInput.disabled = true;
+          if (btnLock)   { btnLock.textContent = '✓ LOCKED'; btnLock.disabled = true; }
         } catch (err) {
-          console.error('[Mr Kibo Heavenly Game] Name lock error:', err);
+          console.error('[Birthday Game] Name lock error:', err);
         }
       }
 
       if (btnLock)   btnLock.addEventListener('click', lockName);
       if (nameInput) nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') lockName(); });
 
-      // Pre-fill if name already in Firebase (do NOT lock — player can still edit)
+      // Pre-fill if name already in Firebase
       try {
         const _unsubPlayerName = onValue(ref(db, `players/${playerKey}/name`), snap => {
           const savedName = snap.val();
-          if (savedName && nameInput && !nameInput.classList.contains('locked')) {
+          if (savedName && nameInput && !nameInput.disabled) {
             nameInput.value = savedName;
           }
         });
@@ -4146,46 +4111,56 @@
       }
     }
 
-    // ── Live Money Bar ─────────────────────────────────────────
-    let cachedP1 = 150;
-    let cachedP2 = 130;
+    // ── Live Points Bar (dynamic for all 8 players) ───────────
+    const cachedPts = {}; // playerKey → current pts
+    PLAYER_KEYS.forEach(k => { cachedPts[k] = 0; });
+
+    function buildPtsBar(playersData) {
+      const container = document.getElementById('pts-bar-players');
+      if (!container) return;
+      // Build or update divs
+      PLAYER_KEYS.forEach(k => {
+        const pd = playersData?.[k];
+        if (!pd || !pd.name) return; // skip slots with no name
+        const pts = pd.points ?? 0;
+        let el = document.getElementById(`pbar-${k}`);
+        if (!el) {
+          el = document.createElement('div');
+          el.id = `pbar-${k}`;
+          el.className = 'money-player';
+          el.innerHTML = `<span class="player-label" id="pbar-lbl-${k}"></span><span class="money-amount" id="pbar-amt-${k}">0 pts</span>`;
+          container.appendChild(el);
+        }
+        const lblEl = document.getElementById(`pbar-lbl-${k}`);
+        const amtEl = document.getElementById(`pbar-amt-${k}`);
+        if (lblEl) lblEl.textContent = pd.name;
+        if (amtEl && pts !== cachedPts[k]) {
+          animateMoneyChange(`pbar-amt-${k}`, cachedPts[k], pts);
+          cachedPts[k] = pts;
+        }
+      });
+    }
 
     try {
       const _unsubPlayers = onValue(ref(db, 'players'), (snapshot) => {
         const data = snapshot.val();
         if (!data) return;
 
-        if (data.player1 != null) {
-          const newVal = data.player1.balance ?? 150;
-          if (newVal !== cachedP1) {
-            animateMoneyChange('p1-money', cachedP1, newVal);
-            cachedP1 = newVal;
-          }
-          const lbl = document.getElementById('p1-label');
-          if (lbl && data.player1.name) lbl.textContent = data.player1.name;
-        }
-
-        if (data.player2 != null) {
-          const newVal = data.player2.balance ?? 130;
-          if (newVal !== cachedP2) {
-            animateMoneyChange('p2-money', cachedP2, newVal);
-            cachedP2 = newVal;
-          }
-          const lbl = document.getElementById('p2-label');
-          if (lbl && data.player2.name) lbl.textContent = data.player2.name;
-        }
+        // Update pts bar for all players
+        buildPtsBar(data);
 
         if (view === 'host') {
           updateHostCards(data);
           latestPlayersData = data;
-          if (latestRoundData?.id === 'trivia')    renderHostTrivia(latestRoundData, data);
-          if (latestRoundData?.id === 'redbutton') renderHostRedButton(latestRoundData, data);
-          if (latestRoundData?.id === 'typewave')  renderHostTypewave(latestRoundData, data);
-          if (latestRoundData?.id === 'stacker')   renderHostStacker(latestRoundData, data);
-          if (latestRoundData?.id === 'betrayal')  renderHostBetrayal(latestRoundData, data);
-          if (latestRoundData?.id === 'typetest')  renderHostTypetest(latestRoundData, data);
-          if (latestRoundData?.id === 'wheel')     renderHostWheel(latestRoundData, data);
-          if (latestGamePhase === 'finale')        renderFinale(data, latestRoundData);
+          if (latestRoundData?.id === 'trivia')     renderHostTrivia(latestRoundData, data);
+          if (latestRoundData?.id === 'redbutton')  renderHostRedButton(latestRoundData, data);
+          if (latestRoundData?.id === 'typewave')   renderHostTypewave(latestRoundData, data);
+          if (latestRoundData?.id === 'stacker')    renderHostStacker(latestRoundData, data);
+          if (latestRoundData?.id === 'tapbattle')  renderHostTapBattle(latestRoundData, data);
+          if (latestRoundData?.id === 'betrayal')   renderHostBetrayal(latestRoundData, data);
+          if (latestRoundData?.id === 'reaction')   renderHostReaction(latestRoundData, data);
+          if (latestRoundData?.id === 'wheel')      renderHostWheel(latestRoundData, data);
+          if (latestGamePhase === 'finale')         renderFinale(data, latestRoundData);
         }
       });
 
@@ -4207,7 +4182,7 @@
         syncPhase(data);
       });
     } catch (err) {
-      console.error('[Mr Kibo Heavenly Game] Firebase listener error:', err);
+      console.error('[Birthday Game] Firebase listener error:', err);
     }
 
     // ════════════════════════════════════════════════════════════
@@ -4216,14 +4191,16 @@
 
     // ✏️ EDIT YOUR TRIVIA QUESTIONS HERE
     const TRIVIA_QUESTIONS = [
-      { q: "What is my girlfriends name?",                       a: "Alyssa" },
-      { q: "What is my favorite color?",                         a: "Periwinkle" },
-      { q: "Favorite JoJo character?",                           a: "Bruno Bucciarati" },
-      { q: "What is my birthday?",                               a: "January 10th, 2001" },
-      { q: "What programming language is Antonio fluent in?",    a: "C++" },
-      { q: "What is my mother's maiden name?",                   a: "Hernandez" },
-      { q: "What is my fear?",                                   a: "Trypophobia" },
-      { q: "What will Antonio never do?",                        a: "" },
+      { q: "What is Veronica's favorite color?",                        a: "Ask her!" },
+      { q: "What is Veronica's favorite food?",                         a: "Ask her!" },
+      { q: "What year was Veronica born?",                              a: "Ask her!" },
+      { q: "What is Veronica's favorite movie?",                        a: "Ask her!" },
+      { q: "What is Veronica's favorite holiday?",                      a: "Ask her!" },
+      { q: "What is Veronica's dream vacation destination?",            a: "Ask her!" },
+      { q: "What was Veronica's childhood nickname?",                   a: "Ask her!" },
+      { q: "What is Veronica's go-to karaoke song?",                    a: "Ask her!" },
+      { q: "What sport or hobby does Veronica love most?",              a: "Ask her!" },
+      { q: "What is one thing Veronica always says?",                   a: "Ask her!" },
     ];
 
     // Host-side ephemeral trivia state (not pushed to Firebase)
@@ -4566,8 +4543,8 @@
             btnTriviaApply.classList.add('hidden');
             return;
           }
-          const wBal     = playersData[winner].balance ?? 0;
-          const lBal     = playersData[loser].balance  ?? 0;
+          const wBal     = playersData[winner].points ?? 0;
+          const lBal     = playersData[loser].points  ?? 0;
           const steal    = MONEY_EVENTS.TRIVIA_STEAL;   // +20
           const stolen   = MONEY_EVENTS.TRIVIA_STOLEN;  // -20
 
@@ -4576,8 +4553,8 @@
           const lAlive   = newLBal > 0;
 
           await update(ref(db, 'players'), {
-            [`${winner}/balance`]: newWBal,
-            [`${loser}/balance`]:  newLBal,
+            [`${winner}/points`]: newWBal,
+            [`${loser}/points`]:  newLBal,
             [`${loser}/alive`]:    lAlive,
           });
 
@@ -4651,13 +4628,14 @@
           if ((newRound || wentActive) && data.state === 'active' && !_cdShown) {
             _cdShown = true;
             const names = {
-              trivia:    'WHO KNOWS ME BETTER',
-              redbutton: 'RED BUTTON',
-              typewave:  'TYPEWAVE',
-              stacker:   'STACKER',
-              betrayal:  'THE BETRAYAL VOTE',
-              typetest:  'TYPE TEST',
-              wheel:     'WHEEL OF FATE',
+              trivia:     'WHO KNOWS VERONICA BETTER',
+              redbutton:  'RED BUTTON',
+              typewave:   'TYPEWAVE',
+              stacker:    'STACKER',
+              tapbattle:  'TAP BATTLE',
+              betrayal:   'THE BETRAYAL VOTE',
+              reaction:   'REACTION ROUND',
+              wheel:      'WHEEL OF FATE',
             };
             showCountdown(names[data.id] || 'GET READY');
           }
@@ -4701,8 +4679,9 @@
           }
         }
 
-        if (data.id === 'execution') {
-          if (view === 'player' && !fpsAnimId) fpsSetupFirebase();
+        if (data.id === 'tapbattle') {
+          if (view === 'host')   renderHostTapBattle(data, latestPlayersData);
+          if (view === 'player') renderPlayerTapBattle(data);
         }
 
         if (data.id === 'betrayal') {
@@ -4710,16 +4689,28 @@
           if (view === 'player') renderPlayerBetrayal(data);
         }
 
-        if (data.id === 'typetest') {
-          if (view === 'host')   renderHostTypetest(data, latestPlayersData);
-          if (view === 'player') renderPlayerTypetest(data);
+        if (data.id === 'reaction') {
+          if (view === 'host')   renderHostReaction(data, latestPlayersData);
+          if (view === 'player') renderPlayerReaction(data);
 
-          // Auto-resolve when both scores land (host only)
-          if (view === 'host' && data.state === 'active') {
-            const sc = data.typeScores ?? {};
-            if (sc.player1 != null && sc.player2 != null) {
-              const w = sc.player1 > sc.player2 ? 'player1' : sc.player2 > sc.player1 ? 'player2' : 'tie';
-              update(ref(db, 'round'), { state: 'ended', winner: w }).catch(console.error);
+          // Auto-resolve sub-round clicks (host only)
+          if (view === 'host' && data.state === 'go') {
+            const clicks = data.clicks ?? {};
+            const keys = Object.keys(clicks);
+            if (keys.length >= 2 && !data._subResolving) {
+              // Find fastest
+              const sorted = keys.sort((a, b) => clicks[a] - clicks[b]);
+              const winner = sorted[0];
+              const newScores = { ...(data.scores ?? {}) };
+              newScores[winner] = (newScores[winner] ?? 0) + 1;
+              const subRound = data.subRound ?? 1;
+              const isEnded  = Math.max(...Object.values(newScores)) >= 3;
+              update(ref(db, 'round'), {
+                state: isEnded ? 'ended' : 'subresult',
+                subWinner: winner,
+                scores: newScores,
+                _subResolving: true,
+              }).catch(console.error);
             }
           }
         }
@@ -5048,13 +5039,13 @@
           const d2 = s2 * MONEY_EVENTS.REDBUTTON_WIN + s1 * MONEY_EVENTS.REDBUTTON_LOSE;
 
           if (!pd?.player1 || !pd?.player2) throw new Error('Missing player data');
-          const newB1 = Math.max(0, Math.round((pd.player1.balance ?? 0) + d1));
-          const newB2 = Math.max(0, Math.round((pd.player2.balance ?? 0) + d2));
+          const newB1 = Math.max(0, Math.round((pd.player1.points ?? 0) + d1));
+          const newB2 = Math.max(0, Math.round((pd.player2.points ?? 0) + d2));
 
           flashTransition('var(--green)', 700);
           await update(ref(db, 'players'), {
-            'player1/balance': newB1, 'player1/alive': newB1 > 0,
-            'player2/balance': newB2, 'player2/alive': newB2 > 0,
+            'player1/points': newB1, 'player1/alive': newB1 > 0,
+            'player2/points': newB2, 'player2/alive': newB2 > 0,
           });
           btnRbApply.classList.add('hidden');
         } catch (err) {
@@ -5542,13 +5533,13 @@
           }
 
           if (!pd?.player1 || !pd?.player2) throw new Error('Missing player data');
-          const newB1 = Math.max(0, Math.round((pd.player1.balance ?? 0) + d1));
-          const newB2 = Math.max(0, Math.round((pd.player2.balance ?? 0) + d2));
+          const newB1 = Math.max(0, Math.round((pd.player1.points ?? 0) + d1));
+          const newB2 = Math.max(0, Math.round((pd.player2.points ?? 0) + d2));
 
           flashTransition('var(--green)', 700);
           await update(ref(db, 'players'), {
-            'player1/balance': newB1, 'player1/alive': newB1 > 0,
-            'player2/balance': newB2, 'player2/alive': newB2 > 0,
+            'player1/points': newB1, 'player1/alive': newB1 > 0,
+            'player2/points': newB2, 'player2/alive': newB2 > 0,
           });
 
           btnTwApply.classList.add('hidden');
@@ -6097,13 +6088,13 @@
                    : winner === 'player1' ? MONEY_EVENTS.STACKER_LOSE : MONEY_EVENTS.STACKER_TIE;
 
           if (!pd?.player1 || !pd?.player2) throw new Error('Missing player data');
-          const newB1 = Math.max(0, Math.round((pd.player1.balance ?? 0) + d1));
-          const newB2 = Math.max(0, Math.round((pd.player2.balance ?? 0) + d2));
+          const newB1 = Math.max(0, Math.round((pd.player1.points ?? 0) + d1));
+          const newB2 = Math.max(0, Math.round((pd.player2.points ?? 0) + d2));
 
           flashTransition('var(--green)', 700);
           await update(ref(db, 'players'), {
-            'player1/balance': newB1, 'player1/alive': newB1 > 0,
-            'player2/balance': newB2, 'player2/alive': newB2 > 0,
+            'player1/points': newB1, 'player1/alive': newB1 > 0,
+            'player2/points': newB2, 'player2/alive': newB2 > 0,
           });
           btnStApply.classList.add('hidden');
           document.getElementById('btn-st-next-round')?.classList.remove('hidden');
@@ -6121,7 +6112,7 @@
       btnStNextRound.addEventListener('click', async () => {
         btnStNextRound.disabled = true;
         try {
-          await roundWipeTransition('THE EXECUTION');
+          await roundWipeTransition('TAP BATTLE');
           await update(ref(db, 'game'), { currentRound: 5 });
         } catch (err) {
           console.error('[Stacker] Next round error:', err);
@@ -6135,797 +6126,216 @@
     // ════════════════════════════════════════════════════════════
 
     // ════════════════════════════════════════════════════════════
-    // ROUND 5 — THE EXECUTION (3D FPS)
+    // ROUND 5 — TAP BATTLE
     // ════════════════════════════════════════════════════════════
 
-    // ── Execution: constants ──────────────────────────────────
-    const FPS_KILLS_TO_WIN  = 5;
-    const FPS_SHOOT_COOLDOWN = 800;  // ms
-    const FPS_SYNC_INTERVAL  = 50;   // ms (≈20fps)
-    const FPS_RESPAWN_DELAY  = 2000; // ms
-    const FPS_ARENA_HALF     = 19;   // clamp boundary
+    const TB_DURATION_MS = 10000; // 10 seconds
 
-    const FPS_START_POS = {
-      player1: { x: -15, y: 0.9, z: -15 },
-      player2: { x:  15, y: 0.9, z:  15 },
-    };
+    let tbLocal = { resultApplied: false };
 
-    const FPS_COVER_BOXES = [
-      { x:  0,  z:  0  },
-      { x:  6,  z:  4  },
-      { x: -6,  z: -4  },
-      { x:  8,  z: -8  },
-      { x: -8,  z:  8  },
-      { x:  3,  z: -12 },
-    ];
+    // ── Host: render Tap Battle panel ───────────────────────────
+    function renderHostTapBattle(data, playersData) {
+      if (!data || data.id !== 'tapbattle') return;
+      const preEl  = document.getElementById('tb-h-prestart');
+      const actEl  = document.getElementById('tb-h-active');
+      const endEl  = document.getElementById('tb-h-ended');
+      if (!preEl) return;
 
-    // ── Execution: ephemeral state ────────────────────────────
-    let fpsScene       = null;
-    let fpsCamera      = null;
-    let fpsRenderer    = null;
-    let fpsOpponentMesh = null;
-    let fpsPlayerPos   = null;
-    let fpsYaw         = 0;
-    let fpsPitch        = 0;
-    let fpsKeys         = {};
-    let fpsAnimId       = null;
-    let fpsLastSync     = 0;
-    let fpsLastShot     = 0;
-    let fpsRoundStartTime = 0;
-    let fpsScores       = { player1: 0, player2: 0 };
-    let fpsListeners    = [];  // Firebase unsubscribe functions
-    let fpsResultApplied = false;
-    let fpsRespawning   = false;
-    let fpsMuzzleTimeout = null;
-    let fpsHitTimeout    = null;
-    let fpsLocalWinner   = null;  // set when round ends
+      const state = data.state || 'waiting';
+      preEl.classList.toggle('hidden', state !== 'waiting');
+      actEl.classList.toggle('hidden', state !== 'active');
+      endEl.classList.toggle('hidden', state !== 'ended');
 
-    // Mobile touch state
-    let fpsMoveTouch = null;
-    let fpsLookTouch = null;
-    let fpsMoveJoystick = { dx: 0, dy: 0 };
-    let fpsLookJoystick = { dx: 0, dy: 0 };
-
-    // Host minimap raf
-    let fpsHostMapId = null;
-    let fpsHostP1Pos = { x: -15, z: -15 };
-    let fpsHostP2Pos = { x:  15, z:  15 };
-
-    // ── Execution: helpers ────────────────────────────────────
-    function fpsOpponentId() {
-      return playerKey === 'player1' ? 'player2' : 'player1';
-    }
-
-    function fpsAddKillFeed(msg) {
-      const feed = document.getElementById('fps-kill-feed');
-      if (!feed) return;
-      const el = document.createElement('div');
-      el.className = 'fps-kill-entry';
-      el.textContent = msg;
-      feed.prepend(el);
-      setTimeout(() => el.remove(), 3200);
-      while (feed.children.length > 3) feed.lastChild.remove();
-    }
-
-    function fpsUpdateScoreHUD() {
-      const el = document.getElementById('fps-score-display');
-      if (!el) return;
-      const myScore   = fpsScores[playerKey] ?? 0;
-      const oppScore  = fpsScores[fpsOpponentId()] ?? 0;
-      el.textContent  = `YOU: ${myScore} | THEM: ${oppScore}`;
-    }
-
-    function fpsUpdateCooldown(progress) {
-      // progress 0→1 fills the ring
-      const arc = document.getElementById('fps-cooldown-arc');
-      if (!arc) return;
-      const circumference = 125.66;
-      arc.style.strokeDashoffset = circumference * (1 - progress);
-    }
-
-    function fpsDrawMinimap() {
-      const canvas = document.getElementById('fps-minimap');
-      if (!canvas || !fpsPlayerPos) return;
-      const ctx = canvas.getContext('2d');
-      const W = canvas.width, H = canvas.height;
-      const arenaSize = 40;
-      const toMap = (worldX, worldZ) => ({
-        mx: ((worldX + 20) / arenaSize) * W,
-        my: ((worldZ + 20) / arenaSize) * H,
-      });
-
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(0,0,0,0.4)';
-      ctx.fillRect(0, 0, W, H);
-
-      // Cover boxes
-      ctx.fillStyle = '#444';
-      FPS_COVER_BOXES.forEach(b => {
-        const p = toMap(b.x, b.z);
-        ctx.fillRect(p.mx - 3, p.my - 3, 6, 6);
-      });
-
-      // My position
-      const me = toMap(fpsPlayerPos.x, fpsPlayerPos.z);
-      ctx.beginPath();
-      ctx.arc(me.mx, me.my, 4, 0, Math.PI * 2);
-      ctx.fillStyle = playerKey === 'player1' ? '#FFD700' : '#FF2D2D';
-      ctx.fill();
-
-      // Opponent (from last known position)
-      if (fpsOpponentMesh) {
-        const op = toMap(fpsOpponentMesh.position.x, fpsOpponentMesh.position.z);
-        ctx.beginPath();
-        ctx.arc(op.mx, op.my, 4, 0, Math.PI * 2);
-        ctx.fillStyle = playerKey === 'player1' ? '#FF2D2D' : '#FFD700';
-        ctx.fill();
-      }
-    }
-
-    function fpsResetPositions() {
-      if (!fpsPlayerPos) return;
-      const sp = FPS_START_POS[playerKey];
-      fpsPlayerPos.set(sp.x, sp.y, sp.z);
-      fpsYaw   = playerKey === 'player1' ? Math.PI * 0.25 : Math.PI * 1.25;
-      fpsPitch = 0;
-    }
-
-    // ── Execution: Three.js setup ─────────────────────────────
-    function fpsInitThree() {
-      if (fpsScene) return;  // already initialized
-
-      const canvas = document.getElementById('fps-canvas');
-      if (!canvas) return;
-
-      const W = window.innerWidth;
-      const H = window.innerHeight;
-
-      fpsScene = new THREE.Scene();
-      fpsScene.background = new THREE.Color(0x0a0a0a);
-
-      fpsCamera = new THREE.PerspectiveCamera(75, W / H, 0.1, 100);
-
-      fpsRenderer = new THREE.WebGLRenderer({ canvas, antialias: false });
-      fpsRenderer.setSize(W, H);
-      fpsRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      // ── Lighting ──────────────────────────────────────────
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-      fpsScene.add(ambientLight);
-      const pointLight = new THREE.PointLight(0xffffff, 1.0);
-      pointLight.position.set(0, 4, 0);
-      fpsScene.add(pointLight);
-
-      // ── Arena geometry ────────────────────────────────────
-      const floorGeo  = new THREE.PlaneGeometry(40, 40);
-      const floorMat  = new THREE.MeshLambertMaterial({ color: 0x222222 });
-      const floor = new THREE.Mesh(floorGeo, floorMat);
-      floor.rotation.x = -Math.PI / 2;
-      fpsScene.add(floor);
-
-      const ceilMat  = new THREE.MeshLambertMaterial({ color: 0x222222 });
-      const ceil  = new THREE.Mesh(floorGeo.clone(), ceilMat);
-      ceil.rotation.x = Math.PI / 2;
-      ceil.position.y = 5;
-      fpsScene.add(ceil);
-
-      const wallMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
-      const wallData = [
-        { w: 40, h: 5, d: 1, x:  0, y: 2.5, z: -20 },
-        { w: 40, h: 5, d: 1, x:  0, y: 2.5, z:  20 },
-        { w: 1,  h: 5, d: 40, x: -20, y: 2.5, z: 0 },
-        { w: 1,  h: 5, d: 40, x:  20, y: 2.5, z: 0 },
-      ];
-      wallData.forEach(w => {
-        const geo  = new THREE.BoxGeometry(w.w, w.h, w.d);
-        const mesh = new THREE.Mesh(geo, wallMat);
-        mesh.position.set(w.x, w.y, w.z);
-        fpsScene.add(mesh);
-      });
-
-      const boxMat = new THREE.MeshLambertMaterial({ color: 0x444444 });
-      FPS_COVER_BOXES.forEach(b => {
-        const geo  = new THREE.BoxGeometry(2, 2, 2);
-        const mesh = new THREE.Mesh(geo, boxMat);
-        mesh.position.set(b.x, 1, b.z);
-        fpsScene.add(mesh);
-      });
-
-      // ── Opponent mesh ─────────────────────────────────────
-      const oppColor = playerKey === 'player1' ? 0xFF2D2D : 0xFFD700;
-      const oppGeo   = new THREE.CylinderGeometry(0.3, 0.3, 1.8, 8);
-      const oppMat   = new THREE.MeshLambertMaterial({ color: oppColor });
-      fpsOpponentMesh = new THREE.Mesh(oppGeo, oppMat);
-      fpsOpponentMesh.visible = false;
-      fpsScene.add(fpsOpponentMesh);
-
-      // ── Player starting position ──────────────────────────
-      const sp = FPS_START_POS[playerKey];
-      fpsPlayerPos = new THREE.Vector3(sp.x, sp.y, sp.z);
-      fpsYaw = playerKey === 'player1' ? Math.PI * 0.25 : Math.PI * 1.25;
-
-      // ── Resize handler ────────────────────────────────────
-      const onResize = () => {
-        const nW = window.innerWidth, nH = window.innerHeight;
-        fpsCamera.aspect = nW / nH;
-        fpsCamera.updateProjectionMatrix();
-        fpsRenderer.setSize(nW, nH);
-      };
-      window.addEventListener('resize', onResize);
-      fpsListeners.push(() => window.removeEventListener('resize', onResize));
-    }
-
-    // ── Execution: pointer lock ───────────────────────────────
-    function fpsSetupPointerLock() {
-      const canvas = document.getElementById('fps-canvas');
-      if (!canvas) return;
-
-      const onClick = () => {
-        if (!fpsRenderer) return;
-        canvas.requestPointerLock();
-      };
-      canvas.addEventListener('click', onClick);
-      fpsListeners.push(() => canvas.removeEventListener('click', onClick));
-
-      const onMouseMove = (e) => {
-        if (document.pointerLockElement !== canvas) return;
-        fpsYaw   -= e.movementX * 0.002;
-        fpsPitch -= e.movementY * 0.002;
-        fpsPitch = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, fpsPitch));
-      };
-      document.addEventListener('mousemove', onMouseMove);
-      fpsListeners.push(() => document.removeEventListener('mousemove', onMouseMove));
-
-      const onLockChange = () => {
-        const overlay = document.getElementById('fps-click-overlay');
-        const paused  = document.getElementById('fps-paused-overlay');
-        const locked  = document.pointerLockElement === canvas;
-        if (overlay) overlay.classList.toggle('hidden', locked);
-        if (paused)  paused.classList.toggle('hidden', locked || fpsLocalWinner !== null);
-      };
-      document.addEventListener('pointerlockchange', onLockChange);
-      fpsListeners.push(() => document.removeEventListener('pointerlockchange', onLockChange));
-    }
-
-    // ── Execution: keyboard ───────────────────────────────────
-    function fpsSetupKeyboard() {
-      const onDown = (e) => { fpsKeys[e.code] = true; };
-      const onUp   = (e) => { delete fpsKeys[e.code]; };
-      document.addEventListener('keydown', onDown);
-      document.addEventListener('keyup',   onUp);
-      fpsListeners.push(() => {
-        document.removeEventListener('keydown', onDown);
-        document.removeEventListener('keyup',   onUp);
-      });
-    }
-
-    // ── Execution: shooting ───────────────────────────────────
-    async function fpsFire() {
-      if (!fpsCamera || !fpsOpponentMesh || fpsRespawning) return;
-      const now = Date.now();
-      if (now - fpsLastShot < FPS_SHOOT_COOLDOWN) return;
-      fpsLastShot = now;
-
-      // Start cooldown ring fill animation
-      const start = now;
-      const cooldownTick = () => {
-        const elapsed = Date.now() - start;
-        fpsUpdateCooldown(Math.min(1, elapsed / FPS_SHOOT_COOLDOWN));
-        if (elapsed < FPS_SHOOT_COOLDOWN) requestAnimationFrame(cooldownTick);
-      };
-      requestAnimationFrame(cooldownTick);
-
-      // Muzzle flash
-      const muzzleGeo = new THREE.SphereGeometry(0.06, 6, 6);
-      const muzzleMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      const muzzle    = new THREE.Mesh(muzzleGeo, muzzleMat);
-      const forward   = new THREE.Vector3();
-      fpsCamera.getWorldDirection(forward);
-      muzzle.position.copy(fpsCamera.position).addScaledVector(forward, 0.3);
-      fpsScene.add(muzzle);
-      clearTimeout(fpsMuzzleTimeout);
-      fpsMuzzleTimeout = setTimeout(() => fpsScene?.remove(muzzle), 100);
-
-      // Raycast
-      const raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera({ x: 0, y: 0 }, fpsCamera);
-      const hits = raycaster.intersectObject(fpsOpponentMesh);
-
-      if (hits.length > 0) {
-        // Hit!
-        const crosshair = document.getElementById('fps-crosshair');
-        if (crosshair) {
-          crosshair.classList.add('hit');
-          clearTimeout(fpsHitTimeout);
-          fpsHitTimeout = setTimeout(() => crosshair?.classList.remove('hit'), 200);
+      if (state === 'active') {
+        const taps = data.taps ?? {};
+        const liveEl = document.getElementById('tb-h-live-counts');
+        if (liveEl) {
+          liveEl.innerHTML = PLAYER_KEYS
+            .filter(k => playersData?.[k]?.name)
+            .map(k => `<div style="background:#1a1a1a;border:1px solid var(--pink);border-radius:12px;padding:10px 18px;font-family:var(--font-display);font-size:22px;color:var(--white)">
+              <span style="color:var(--pink)">${playersData[k].name}</span> ${taps[k] ?? 0}
+            </div>`)
+            .join('');
         }
-        try {
-          await update(ref(db, `fps/${playerKey}/shot`), {
-            targetId:  fpsOpponentId(),
-            timestamp: Date.now(),
+        const now = Date.now();
+        const remaining = Math.max(0, Math.ceil(((data.endTime ?? now) - now) / 1000));
+        const timerEl = document.getElementById('tb-h-timer');
+        if (timerEl) timerEl.textContent = `${remaining}s`;
+      }
+
+      if (state === 'ended') {
+        const taps   = data.taps ?? {};
+        const winner = data.winner;
+        const winEl  = document.getElementById('tb-h-winner');
+        const pd     = playersData?.[winner];
+        if (winEl) winEl.textContent = winner ? `${pd?.name || winner} WINS!` : 'TIE!';
+
+        const deltaEl = document.getElementById('tb-h-deltas');
+        if (deltaEl) {
+          let html = '';
+          PLAYER_KEYS.forEach(k => {
+            const p = playersData?.[k];
+            if (!p?.name) return;
+            const isW = k === winner;
+            const d   = isW ? POINT_EVENTS.TAPBATTLE_WIN : POINT_EVENTS.TAPBATTLE_LOSE;
+            html += `<div style="color:${isW ? 'var(--green)' : 'var(--red)'}">${p.name}: ${d > 0 ? '+' : ''}${d} pts (${taps[k] ?? 0} taps)</div>`;
           });
-        } catch (err) {
-          console.error('[FPS] Shot write error:', err);
+          deltaEl.innerHTML = html;
+        }
+
+        const applyBtn = document.getElementById('btn-tb-apply');
+        const nextBtn  = document.getElementById('btn-tb-next-round');
+        if (applyBtn && !tbLocal.resultApplied) applyBtn.classList.remove('hidden');
+        if (nextBtn  && tbLocal.resultApplied)  nextBtn.classList.remove('hidden');
+      }
+    }
+
+    // ── Player: render Tap Battle panel ─────────────────────────
+    function renderPlayerTapBattle(data) {
+      if (!data || data.id !== 'tapbattle') return;
+      const waitEl  = document.getElementById('tb-p-waiting');
+      const actEl   = document.getElementById('tb-p-active');
+      const endEl   = document.getElementById('tb-p-ended');
+      if (!waitEl) return;
+
+      const state = data.state || 'waiting';
+      waitEl.classList.toggle('hidden', state !== 'waiting');
+      actEl.classList.toggle('hidden',  state !== 'active');
+      endEl.classList.toggle('hidden',  state !== 'ended');
+
+      if (state === 'active') {
+        const myTaps  = data.taps?.[playerKey] ?? 0;
+        const now     = Date.now();
+        const remaining = Math.max(0, Math.ceil(((data.endTime ?? now) - now) / 1000));
+        const timerEl = document.getElementById('tb-p-timer');
+        const countEl = document.getElementById('tb-p-count');
+        if (timerEl) timerEl.textContent = `${remaining}s`;
+        if (countEl) countEl.textContent = myTaps;
+      }
+
+      if (state === 'ended') {
+        const winner   = data.winner;
+        const resultEl = document.getElementById('tb-p-result-text');
+        if (resultEl) {
+          resultEl.textContent = !winner ? "TIE!" : winner === playerKey ? "YOU WIN! 🎉" : "YOU LOSE 😢";
+          resultEl.style.color = !winner ? 'var(--yellow)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
         }
       }
     }
 
-    // ── Execution: shooting via click or spacebar ─────────────
-    function fpsSetupShootInput() {
-      const canvas = document.getElementById('fps-canvas');
-      const onCanvasClick = () => {
-        if (document.pointerLockElement === canvas) fpsFire();
-      };
-      canvas?.addEventListener('click', onCanvasClick);
-      fpsListeners.push(() => canvas?.removeEventListener('click', onCanvasClick));
-
-      const onKey = (e) => {
-        if (e.code === 'Space' && document.pointerLockElement === canvas) {
-          e.preventDefault();
-          fpsFire();
-        }
-      };
-      document.addEventListener('keydown', onKey, { capture: true });
-      fpsListeners.push(() => document.removeEventListener('keydown', onKey, { capture: true }));
-
-      // Mobile shoot button
-      document.getElementById('fps-shoot-btn')?.addEventListener('click', fpsFire);
-    }
-
-    // ── Execution: register being shot ───────────────────────
-    async function fpsRegisterHit(shooterKey) {
-      if (fpsRespawning) return;
-      fpsRespawning = true;
-
-      // Increment shooter's score in Firebase
-      const newScore = (fpsScores[shooterKey] ?? 0) + 1;
-      try {
-        await update(ref(db, 'fps/scores'), { [shooterKey]: newScore });
-      } catch (err) {
-        console.error('[FPS] Score update error:', err);
-      }
-
-      // Show respawn countdown
-      const respawnEl = document.getElementById('fps-respawn-msg');
-      if (respawnEl) {
-        respawnEl.classList.remove('hidden');
-        respawnEl.textContent = 'Respawning in 2…';
-        setTimeout(() => { if (respawnEl) respawnEl.textContent = 'Respawning in 1…'; }, 1000);
-        setTimeout(() => {
-          if (respawnEl) respawnEl.classList.add('hidden');
-          fpsResetPositions();
-          fpsRespawning = false;
-        }, FPS_RESPAWN_DELAY);
-      } else {
-        setTimeout(() => {
-          fpsResetPositions();
-          fpsRespawning = false;
-        }, FPS_RESPAWN_DELAY);
-      }
-    }
-
-    // ── Execution: game loop ──────────────────────────────────
-    function fpsGameLoop() {
-      fpsAnimId = requestAnimationFrame(fpsGameLoop);
-      if (!fpsCamera || !fpsPlayerPos || !fpsScene || !fpsRenderer) return;
-
-      // Update camera from position + yaw/pitch
-      fpsCamera.position.set(fpsPlayerPos.x, fpsPlayerPos.y + 0.7, fpsPlayerPos.z);
-      fpsCamera.rotation.set(fpsPitch, fpsYaw, 0, 'YXZ');
-
-      // Movement
-      if (!fpsRespawning) {
-        const speed   = 0.08;
-        const forward = new THREE.Vector3(-Math.sin(fpsYaw), 0, -Math.cos(fpsYaw));
-        const right   = new THREE.Vector3(Math.cos(fpsYaw), 0, -Math.sin(fpsYaw));
-
-        if (fpsKeys['KeyW'])     fpsPlayerPos.addScaledVector(forward, speed);
-        if (fpsKeys['KeyS'])     fpsPlayerPos.addScaledVector(forward, -speed);
-        if (fpsKeys['KeyA'])     fpsPlayerPos.addScaledVector(right, -speed);
-        if (fpsKeys['KeyD'])     fpsPlayerPos.addScaledVector(right, speed);
-
-        // Mobile move joystick
-        if (fpsMoveJoystick.dx || fpsMoveJoystick.dy) {
-          fpsPlayerPos.addScaledVector(right,   fpsMoveJoystick.dx * speed);
-          fpsPlayerPos.addScaledVector(forward, -fpsMoveJoystick.dy * speed);
-        }
-        // Mobile look joystick
-        if (fpsLookJoystick.dx || fpsLookJoystick.dy) {
-          fpsYaw   -= fpsLookJoystick.dx * 0.03;
-          fpsPitch -= fpsLookJoystick.dy * 0.02;
-          fpsPitch = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, fpsPitch));
-        }
-
-        fpsPlayerPos.x = Math.max(-FPS_ARENA_HALF, Math.min(FPS_ARENA_HALF, fpsPlayerPos.x));
-        fpsPlayerPos.z = Math.max(-FPS_ARENA_HALF, Math.min(FPS_ARENA_HALF, fpsPlayerPos.z));
-      }
-
-      // Firebase position sync (throttled to 20fps)
-      const now = Date.now();
-      if (now - fpsLastSync > FPS_SYNC_INTERVAL) {
-        fpsLastSync = now;
+    // ── Host: START TAP BATTLE ──────────────────────────────────
+    const btnTbStart = document.getElementById('btn-tb-start');
+    if (btnTbStart) {
+      btnTbStart.addEventListener('click', async () => {
+        btnTbStart.disabled = true;
         try {
-          update(ref(db, `fps/${playerKey}`), {
-            pos: { x: fpsPlayerPos.x, y: fpsPlayerPos.y, z: fpsPlayerPos.z },
-            yaw: fpsYaw,
+          const endTime = Date.now() + TB_DURATION_MS;
+          const tapsInit = {};
+          PLAYER_KEYS.forEach(k => { tapsInit[k] = 0; });
+          await set(ref(db, 'round'), {
+            id: 'tapbattle', state: 'active',
+            endTime, taps: tapsInit, winner: null,
           });
-        } catch (_) { /* ignore sync errors */ }
-      }
-
-      fpsDrawMinimap();
-      fpsRenderer.render(fpsScene, fpsCamera);
+          // Auto-resolve after time + 500ms buffer
+          setTimeout(async () => {
+            try {
+              const snap = await get(ref(db, 'round'));
+              const rd   = snap.val();
+              if (!rd || rd.state !== 'active') return;
+              const taps = rd.taps ?? {};
+              let topKey = null, topVal = -1;
+              let isTie  = false;
+              PLAYER_KEYS.forEach(k => {
+                const v = taps[k] ?? 0;
+                if (v > topVal) { topVal = v; topKey = k; isTie = false; }
+                else if (v === topVal && topKey !== null) isTie = true;
+              });
+              await update(ref(db, 'round'), { state: 'ended', winner: isTie ? null : topKey });
+            } catch(e) { console.error('[TapBattle] auto-resolve error:', e); }
+          }, TB_DURATION_MS + 500);
+        } catch(e) {
+          console.error('[TapBattle] start error:', e);
+          btnTbStart.disabled = false;
+        }
+      });
     }
 
-    // ── Execution: mobile joystick setup ─────────────────────
-    function fpsSetupMobileControls() {
-      const isMobile = window.innerWidth < 600;
-      const warnEl   = document.getElementById('fps-mobile-warn');
-      const ctrlsEl  = document.getElementById('fps-mobile-controls');
-      if (warnEl)  warnEl.classList.toggle('hidden', !isMobile);
-      if (ctrlsEl) ctrlsEl.classList.toggle('hidden', !isMobile);
-      if (!isMobile) return;
+    // ── Host: APPLY RESULTS ─────────────────────────────────────
+    const btnTbApply = document.getElementById('btn-tb-apply');
+    if (btnTbApply) {
+      btnTbApply.addEventListener('click', async () => {
+        if (tbLocal.resultApplied) return;
+        btnTbApply.disabled = true;
+        tbLocal.resultApplied = true;
+        try {
+          const [roundSnap, playersSnap] = await Promise.all([
+            get(ref(db, 'round')), get(ref(db, 'players')),
+          ]);
+          const rd = roundSnap.val();
+          const pd = playersSnap.val();
+          if (!rd || !pd) throw new Error('Missing data');
+          const winner = rd.winner;
+          const updates = {};
+          PLAYER_KEYS.forEach(k => {
+            const p = pd[k];
+            if (!p?.name) return;
+            const d    = k === winner ? POINT_EVENTS.TAPBATTLE_WIN : POINT_EVENTS.TAPBATTLE_LOSE;
+            const newP = Math.max(0, Math.round((p.points ?? 0) + d));
+            updates[`${k}/points`] = newP;
+            updates[`${k}/alive`]  = newP > 0;
+          });
+          flashTransition('var(--green)', 700);
+          await update(ref(db, 'players'), updates);
+          btnTbApply.classList.add('hidden');
+          document.getElementById('btn-tb-next-round')?.classList.remove('hidden');
+        } catch(e) {
+          console.error('[TapBattle] apply error:', e);
+          tbLocal.resultApplied = false;
+          btnTbApply.disabled = false;
+        }
+      });
+    }
 
-      const setupJoystick = (zoneId, knobId, stateRef) => {
-        const zone = document.getElementById(zoneId);
-        const knob = document.getElementById(knobId);
-        if (!zone || !knob) return;
-        const maxDist = 40;
+    // ── Host: NEXT ROUND (5 → 6) ────────────────────────────────
+    const btnTbNextRound = document.getElementById('btn-tb-next-round');
+    if (btnTbNextRound) {
+      btnTbNextRound.addEventListener('click', async () => {
+        btnTbNextRound.disabled = true;
+        try {
+          await roundWipeTransition('THE BETRAYAL VOTE');
+          await update(ref(db, 'game'), { currentRound: 6 });
+        } catch(e) {
+          console.error('[TapBattle] next round error:', e);
+          btnTbNextRound.disabled = false;
+        }
+      });
+    }
 
-        zone.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          const t = e.changedTouches[0];
-          if (zoneId === 'fps-move-zone') fpsMoveTouch = t.identifier;
-          else fpsLookTouch = t.identifier;
-        }, { passive: false });
-
-        zone.addEventListener('touchmove', (e) => {
-          e.preventDefault();
-          const touchId = zoneId === 'fps-move-zone' ? fpsMoveTouch : fpsLookTouch;
-          const t = Array.from(e.changedTouches).find(x => x.identifier === touchId);
-          if (!t) return;
-          const rect = zone.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top  + rect.height / 2;
-          let dx = t.clientX - cx;
-          let dy = t.clientY - cy;
-          const dist = Math.hypot(dx, dy);
-          if (dist > maxDist) { dx *= maxDist / dist; dy *= maxDist / dist; }
-          knob.style.left = `calc(50% + ${dx}px)`;
-          knob.style.top  = `calc(50% + ${dy}px)`;
-          stateRef.dx = dx / maxDist;
-          stateRef.dy = dy / maxDist;
-        }, { passive: false });
-
-        const end = () => { stateRef.dx = 0; stateRef.dy = 0; knob.style.left = '50%'; knob.style.top = '50%'; };
-        zone.addEventListener('touchend',    end, { passive: false });
-        zone.addEventListener('touchcancel', end, { passive: false });
+    // ── Player: tap button ───────────────────────────────────────
+    let _tbLastTap = 0;
+    const btnTbTap = document.getElementById('btn-tb-tap');
+    if (btnTbTap && view === 'player') {
+      const handleTap = async () => {
+        if (!latestRoundData || latestRoundData.id !== 'tapbattle' || latestRoundData.state !== 'active') return;
+        if (!playerKey) return;
+        const now = Date.now();
+        if (now - _tbLastTap < 80) return; // debounce 80ms
+        _tbLastTap = now;
+        const currentTaps = latestRoundData.taps?.[playerKey] ?? 0;
+        const countEl = document.getElementById('tb-p-count');
+        if (countEl) countEl.textContent = currentTaps + 1; // optimistic UI
+        try {
+          await update(ref(db, `round/taps`), { [playerKey]: currentTaps + 1 });
+        } catch(e) { console.error('[TapBattle] tap error:', e); }
       };
-
-      setupJoystick('fps-move-zone', 'fps-move-knob', fpsMoveJoystick);
-      setupJoystick('fps-look-zone', 'fps-look-knob', fpsLookJoystick);
+      btnTbTap.addEventListener('touchstart', e => { e.preventDefault(); handleTap(); }, { passive: false });
+      btnTbTap.addEventListener('click', handleTap);
     }
-
-    // ── Execution: host minimap loop ──────────────────────────
-    function fpsDrawHostMap() {
-      fpsHostMapId = requestAnimationFrame(fpsDrawHostMap);
-      const canvas = document.getElementById('fps-host-map');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const W = canvas.width, H = canvas.height;
-      const arenaSize = 40;
-      const toMap = (wx, wz) => ({
-        mx: ((wx + 20) / arenaSize) * W,
-        my: ((wz + 20) / arenaSize) * H,
-      });
-
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = '#0e0e0e';
-      ctx.fillRect(0, 0, W, H);
-
-      // Walls
-      ctx.strokeStyle = '#333';
-      ctx.strokeRect(4, 4, W - 8, H - 8);
-
-      // Cover
-      ctx.fillStyle = '#444';
-      FPS_COVER_BOXES.forEach(b => {
-        const p = toMap(b.x, b.z);
-        ctx.fillRect(p.mx - 5, p.my - 5, 10, 10);
-      });
-
-      // Players
-      const p1 = toMap(fpsHostP1Pos.x, fpsHostP1Pos.z);
-      ctx.beginPath();
-      ctx.arc(p1.mx, p1.my, 6, 0, Math.PI * 2);
-      ctx.fillStyle = '#FFD700';
-      ctx.fill();
-
-      const p2 = toMap(fpsHostP2Pos.x, fpsHostP2Pos.z);
-      ctx.beginPath();
-      ctx.arc(p2.mx, p2.my, 6, 0, Math.PI * 2);
-      ctx.fillStyle = '#FF2D2D';
-      ctx.fill();
-    }
-
-    // ── Execution: Firebase listeners ────────────────────────
-    function fpsSetupFirebase() {
-      const oppId = fpsOpponentId();
-
-      // On host: playerKey is '' so oppId resolves to 'player2'.
-      // Listen for both players explicitly on host; on player just the opponent.
-      if (view === 'host') {
-        const h1Unsub = onValue(ref(db, 'fps/player1'), (snap) => {
-          const data = snap.val();
-          if (data?.pos) fpsHostP1Pos = { x: data.pos.x, z: data.pos.z };
-        });
-        const h2Unsub = onValue(ref(db, 'fps/player2'), (snap) => {
-          const data = snap.val();
-          if (data?.pos) fpsHostP2Pos = { x: data.pos.x, z: data.pos.z };
-        });
-        fpsListeners.push(() => h1Unsub(), () => h2Unsub());
-      } else {
-        // Listen for opponent position (player-side only)
-        const oppPosUnsub = onValue(ref(db, `fps/${oppId}`), (snap) => {
-          const data = snap.val();
-          if (!data) return;
-          if (data.pos && fpsOpponentMesh) {
-            fpsOpponentMesh.position.set(data.pos.x, data.pos.y, data.pos.z);
-            fpsOpponentMesh.rotation.y = data.yaw ?? 0;
-            fpsOpponentMesh.visible = true;
-          }
-        });
-        fpsListeners.push(() => oppPosUnsub());
-      }
-
-      // Listen for shots fired at me
-      const shotUnsub = onValue(ref(db, `fps/${oppId}/shot`), (snap) => {
-        const data = snap.val();
-        if (!data) return;
-        const { targetId, timestamp } = data;
-        if (targetId === playerKey && timestamp > fpsRoundStartTime) {
-          fpsRegisterHit(oppId);
-        }
-      });
-      fpsListeners.push(() => shotUnsub());
-
-      // Listen for scores
-      const scoresUnsub = onValue(ref(db, 'fps/scores'), (snap) => {
-        const data = snap.val();
-        if (!data) return;
-        fpsScores = { player1: data.player1 ?? 0, player2: data.player2 ?? 0 };
-        fpsUpdateScoreHUD();
-
-        // Update host score display
-        const s1 = document.getElementById('fps-host-s1');
-        const s2 = document.getElementById('fps-host-s2');
-        if (s1) s1.textContent = fpsScores.player1;
-        if (s2) s2.textContent = fpsScores.player2;
-      });
-      fpsListeners.push(() => scoresUnsub());
-
-      // Listen for player names (host score labels)
-      if (view === 'host') {
-        const namesUnsub = onValue(ref(db, 'players'), (snap) => {
-          const pd = snap.val();
-          if (!pd) return;
-          const sn1 = document.getElementById('fps-host-sn1');
-          const sn2 = document.getElementById('fps-host-sn2');
-          if (sn1) sn1.textContent = pd.player1?.name || 'Player 1';
-          if (sn2) sn2.textContent = pd.player2?.name || 'Player 2';
-        });
-        fpsListeners.push(() => namesUnsub());
-      }
-
-      // Listen for round state
-      const stateUnsub = onValue(ref(db, 'fps/state'), (snap) => {
-        const state = snap.val();
-        if (!state) return;
-
-        if (state === 'active' && view === 'player') {
-          // Start the game loop if not already running
-          if (!fpsAnimId) {
-            fpsInitThree();
-            fpsSetupPointerLock();
-            fpsSetupKeyboard();
-            fpsSetupShootInput();
-            fpsSetupMobileControls();
-            fpsRoundStartTime = Date.now();
-            fpsGameLoop();
-          }
-          document.getElementById('fps-host-prestart')?.classList.add('hidden');
-          document.getElementById('fps-host-active')?.classList.remove('hidden');
-        }
-
-        if (state === 'ended') {
-          fpsHandleEnd();
-        }
-      });
-      fpsListeners.push(() => stateUnsub());
-
-      // Listen for winner
-      const winnerUnsub = onValue(ref(db, 'fps/winner'), (snap) => {
-        const winner = snap.val();
-        if (!winner) return;
-        fpsLocalWinner = winner;
-        if (view === 'player') {
-          const endOverlay = document.getElementById('fps-end-overlay');
-          const endTitle   = document.getElementById('fps-end-title');
-          const endSub     = document.getElementById('fps-end-sub');
-          if (!endOverlay) return;
-          endOverlay.classList.remove('hidden');
-          if (winner === playerKey) {
-            endTitle.textContent  = 'YOU WIN! +$25 💰';
-            endTitle.style.color  = 'var(--green)';
-          } else {
-            endTitle.textContent  = 'YOU LOST. -$25 💀';
-            endTitle.style.color  = 'var(--red)';
-          }
-          if (endSub) endSub.textContent = 'Waiting for host to apply results…';
-          // Release pointer lock
-          if (document.pointerLockElement) document.exitPointerLock();
-        }
-      });
-      fpsListeners.push(() => winnerUnsub());
-    }
-
-    // ── Execution: handle round end ───────────────────────────
-    function fpsHandleEnd() {
-      // Stop game loop
-      if (fpsAnimId) { cancelAnimationFrame(fpsAnimId); fpsAnimId = null; }
-      if (fpsHostMapId) { cancelAnimationFrame(fpsHostMapId); fpsHostMapId = null; }
-
-      if (view === 'host') {
-        document.getElementById('fps-host-active')?.classList.add('hidden');
-        document.getElementById('fps-host-ended')?.classList.remove('hidden');
-      }
-    }
-
-    // ── Execution: cleanup all listeners + Three.js ───────────
-    function fpsCleanup() {
-      if (fpsAnimId)    { cancelAnimationFrame(fpsAnimId);    fpsAnimId    = null; }
-      if (fpsHostMapId) { cancelAnimationFrame(fpsHostMapId); fpsHostMapId = null; }
-      fpsListeners.forEach(fn => fn());
-      fpsListeners = [];
-      if (fpsRenderer) { fpsRenderer.dispose(); fpsRenderer = null; }
-      fpsScene       = null;
-      fpsCamera      = null;
-      fpsOpponentMesh = null;
-      fpsPlayerPos   = null;
-    }
-
-    // ── Execution: host START ROUND ───────────────────────────
-    if (view === 'host') {
-      const btnFpsStart = document.getElementById('btn-fps-start');
-      if (btnFpsStart) {
-        btnFpsStart.addEventListener('click', async () => {
-          btnFpsStart.disabled = true;
-          try {
-            // Reset fps state in Firebase
-            await set(ref(db, 'fps'), {
-              player1: { pos: FPS_START_POS.player1, yaw: 0, shot: null },
-              player2: { pos: FPS_START_POS.player2, yaw: Math.PI, shot: null },
-              scores:  { player1: 0, player2: 0 },
-              state:   'active',
-              winner:  null,
-            });
-            document.getElementById('fps-host-prestart')?.classList.add('hidden');
-            document.getElementById('fps-host-active')?.classList.remove('hidden');
-            fpsSetupFirebase();
-            fpsDrawHostMap();
-          } catch (err) {
-            console.error('[FPS] Start error:', err);
-            btnFpsStart.disabled = false;
-          }
-        });
-      }
-
-      // Force end
-      const btnFpsForceEnd = document.getElementById('btn-fps-force-end');
-      if (btnFpsForceEnd) {
-        btnFpsForceEnd.addEventListener('click', async () => {
-          btnFpsForceEnd.disabled = true;
-          try {
-            // Determine winner from current scores
-            const winner = (fpsScores.player1 ?? 0) >= (fpsScores.player2 ?? 0)
-              ? 'player1' : 'player2';
-            await update(ref(db, 'fps'), { state: 'ended', winner });
-          } catch (err) {
-            console.error('[FPS] Force end error:', err);
-            btnFpsForceEnd.disabled = false;
-          }
-        });
-      }
-
-      // APPLY RESULTS
-      const btnFpsApply = document.getElementById('btn-fps-apply');
-      if (btnFpsApply) {
-        btnFpsApply.addEventListener('click', async () => {
-          if (fpsResultApplied) return;
-          fpsResultApplied = true;
-          btnFpsApply.disabled = true;
-          try {
-            const winnerSnap = await get(ref(db, 'fps/winner'));
-            const winner     = winnerSnap.val();
-            if (!winner) { fpsResultApplied = false; btnFpsApply.disabled = false; return; }
-
-            const loser    = winner === 'player1' ? 'player2' : 'player1';
-            const pdSnap   = await get(ref(db, 'players'));
-            const pd       = pdSnap.val();
-            if (!pd?.[winner] || !pd?.[loser]) throw new Error('Missing player data');
-            const newWBal  = Math.max(0, Math.round((pd[winner].balance ?? 0) + MONEY_EVENTS.FPS_WIN));
-            const newLBal  = Math.max(0, Math.round((pd[loser].balance  ?? 0) + MONEY_EVENTS.FPS_LOSE));
-
-            // Show result UI
-            const w1El = document.getElementById('fps-result-winner');
-            const w2El = document.getElementById('fps-result-sub');
-            const wn   = pd[winner]?.name || (winner === 'player1' ? 'Player 1' : 'Player 2');
-            const ln   = pd[loser]?.name  || (loser  === 'player1' ? 'Player 1' : 'Player 2');
-            if (w1El) { w1El.textContent = `${wn} WINS!`; }
-            if (w2El) { w2El.textContent = `${wn} gets +$${MONEY_EVENTS.FPS_WIN} · ${ln} loses $${Math.abs(MONEY_EVENTS.FPS_LOSE)}`; }
-
-            const d1El = document.getElementById('fps-delta-p1');
-            const d2El = document.getElementById('fps-delta-p2');
-            const nm1  = document.getElementById('fps-rmc-name-p1');
-            const nm2  = document.getElementById('fps-rmc-name-p2');
-            if (nm1) nm1.textContent = pd.player1?.name || 'Player 1';
-            if (nm2) nm2.textContent = pd.player2?.name || 'Player 2';
-            const d1 = winner === 'player1' ? MONEY_EVENTS.FPS_WIN : MONEY_EVENTS.FPS_LOSE;
-            const d2 = winner === 'player2' ? MONEY_EVENTS.FPS_WIN : MONEY_EVENTS.FPS_LOSE;
-            if (d1El) { d1El.textContent = `${d1 > 0 ? '+' : ''}$${d1}`; d1El.className = `rmc-delta ${d1 > 0 ? 'positive' : 'negative'}`; }
-            if (d2El) { d2El.textContent = `${d2 > 0 ? '+' : ''}$${d2}`; d2El.className = `rmc-delta ${d2 > 0 ? 'positive' : 'negative'}`; }
-
-            flashTransition('var(--green)', 700);
-            await update(ref(db, 'players'), {
-              [`${winner}/balance`]: newWBal, [`${winner}/alive`]: newWBal > 0,
-              [`${loser}/balance`]:  newLBal, [`${loser}/alive`]:  newLBal > 0,
-            });
-            btnFpsApply.classList.add('hidden');
-            document.getElementById('btn-fps-next-round')?.classList.remove('hidden');
-          } catch (err) {
-            console.error('[FPS] Apply error:', err);
-            fpsResultApplied = false;
-            btnFpsApply.disabled = false;
-          }
-        });
-      }
-
-      // NEXT ROUND (5 → 6)
-      const btnFpsNextRound = document.getElementById('btn-fps-next-round');
-      if (btnFpsNextRound) {
-        btnFpsNextRound.addEventListener('click', async () => {
-          btnFpsNextRound.disabled = true;
-          try {
-            fpsCleanup();
-            await roundWipeTransition('THE BETRAYAL VOTE');
-            await update(ref(db, 'game'), { currentRound: 6 });
-          } catch (err) {
-            console.error('[FPS] Next round error:', err);
-            btnFpsNextRound.disabled = false;
-          }
-        });
-      }
-    }
-
-    // ── Execution: player-side init ───────────────────────────
-    if (view === 'player') {
-      // fpsSetupFirebase() is called once the round state becomes 'active'
-      // (handled inside the state listener in fpsSetupFirebase itself)
-      // But we need to at least start listening before the host starts:
-      fpsSetupFirebase();
-    }
-
-    // ── Execution: clean up when player leaves this round ─────
-    // Listen for currentRound changes — if it moves away from 5, clean up
-    fpsListeners.push(onValue(ref(db, 'game/currentRound'), (snap) => {
-      const cr = snap.val();
-      if (cr !== 5 && (fpsAnimId || fpsRenderer)) {
-        fpsCleanup();
-      }
-    }));
 
     // ════════════════════════════════════════════════════════════
-    // END ROUND 5 (EXECUTION)
+    // END ROUND 5 (TAP BATTLE)
     // ════════════════════════════════════════════════════════════
+
 
     // ════════════════════════════════════════════════════════════
     // ROUND 6 — THE BETRAYAL VOTE (prisoner's dilemma)
@@ -7216,13 +6626,13 @@
           const outcome    = betrayalOutcomes[outcomeKey] ?? { p1: 0, p2: 0 };
 
           if (!pd?.player1 || !pd?.player2) throw new Error('Missing player data');
-          const newB1 = Math.max(0, Math.round((pd.player1.balance ?? 0) + outcome.p1));
-          const newB2 = Math.max(0, Math.round((pd.player2.balance ?? 0) + outcome.p2));
+          const newB1 = Math.max(0, Math.round((pd.player1.points ?? 0) + outcome.p1));
+          const newB2 = Math.max(0, Math.round((pd.player2.points ?? 0) + outcome.p2));
 
           flashTransition('var(--green)', 700);
           await update(ref(db, 'players'), {
-            'player1/balance': newB1, 'player1/alive': newB1 > 0,
-            'player2/balance': newB2, 'player2/alive': newB2 > 0,
+            'player1/points': newB1, 'player1/alive': newB1 > 0,
+            'player2/points': newB2, 'player2/alive': newB2 > 0,
           });
           // Mark ended and clear votes so they don't leak into next rounds
           await update(ref(db, 'round'), {
@@ -7247,7 +6657,7 @@
       btnBtNextRound.addEventListener('click', async () => {
         btnBtNextRound.disabled = true;
         try {
-          await roundWipeTransition('TYPE TEST');
+          await roundWipeTransition('REACTION ROUND');
           await update(ref(db, 'game'), { currentRound: 7 });
         } catch (err) {
           console.error('[Betrayal] Next round error:', err);
@@ -7298,271 +6708,249 @@
     // ════════════════════════════════════════════════════════════
 
     // ════════════════════════════════════════════════════════════
-    // ROUND 7 — TYPE TEST
+    // ROUND 7 — REACTION ROUND (fastest tap wins, best of 5)
     // ════════════════════════════════════════════════════════════
 
-    const TYPING_PASSAGES = [
-      "The quick brown fox jumps over the lazy dog and then sprints away into the forest.",
-      "Friends who know each other well can finish each other's sentences and share inside jokes.",
-      "Money cannot buy happiness but it can certainly help you avoid a lot of unnecessary stress.",
-    ];
+    const RXN_TOTAL = 5; // first to 5 wins
 
-    let ttLocal = { resultApplied: false, finished: false };
-    let _ttCharSpans = null; // cached passage char spans to avoid querySelectorAll on every keystroke
+    let rxnLocal = { resultApplied: false };
+    let _rxnHostArmed = false;
+    let _rxnPlayerClicked = false;
 
-    function renderHostTypetest(data, playersData) {
-      if (!data || data.id !== 'typetest') return;
+    // ── Host: render Reaction panel ──────────────────────────────
+    function renderHostReaction(data, playersData) {
+      if (!data || data.id !== 'reaction') return;
+      const preEl  = document.getElementById('rxn-h-prestart');
+      const actEl  = document.getElementById('rxn-h-active');
+      const endEl  = document.getElementById('rxn-h-ended');
+      if (!preEl) return;
+
       const state = data.state || 'waiting';
+      preEl.classList.toggle('hidden', state !== 'waiting');
+      actEl.classList.toggle('hidden', state === 'waiting' || state === 'ended');
+      endEl.classList.toggle('hidden', state !== 'ended');
 
-      const prestart = document.getElementById('tt-h-prestart');
-      const active   = document.getElementById('tt-h-active');
-      const ended    = document.getElementById('tt-h-ended');
-      if (!prestart) return;
-
-      prestart.classList.toggle('hidden', state !== 'waiting');
-      active  .classList.toggle('hidden', state !== 'active');
-      ended   .classList.toggle('hidden', state !== 'ended');
-
-      if (state === 'active') {
-        const sc = data.typeScores ?? {};
-        const s1El = document.getElementById('tt-h-wpm-p1');
-        const s2El = document.getElementById('tt-h-wpm-p2');
-        if (s1El) s1El.textContent = sc.player1 != null ? `${sc.player1} WPM` : '—';
-        if (s2El) s2El.textContent = sc.player2 != null ? `${sc.player2} WPM` : '—';
-      }
-
-      if (state === 'ended') {
-        const sc = data.typeScores ?? {};
-        const s1 = sc.player1 ?? 0;
-        const s2 = sc.player2 ?? 0;
-        const winner = data.winner;
-        const p1 = playersData?.player1 ?? {};
-        const p2 = playersData?.player2 ?? {};
-
-        const headEl = document.getElementById('tt-h-headline');
-        if (headEl) {
-          headEl.textContent =
-            winner === 'tie'     ? 'TIE GAME!' :
-            winner === 'player1' ? `${p1.name ?? 'Player 1'} WINS!` :
-                                   `${p2.name ?? 'Player 2'} WINS!`;
+      if (state !== 'waiting' && state !== 'ended') {
+        // Scoreboard
+        const sbEl = document.getElementById('rxn-h-scoreboard');
+        if (sbEl) {
+          const scores = data.scores ?? {};
+          sbEl.innerHTML = PLAYER_KEYS
+            .filter(k => playersData?.[k]?.name)
+            .map(k => `<span>${playersData[k].name}: ${scores[k] ?? 0}</span>`)
+            .join(' &nbsp;|&nbsp; ');
         }
-
-        const r1 = document.getElementById('tt-h-result-p1');
-        const r2 = document.getElementById('tt-h-result-p2');
-        if (r1) {
-          r1.querySelector('.tt-result-name').textContent = p1.name ?? 'Player 1';
-          r1.querySelector('.tt-result-wpm').textContent  = `${s1} WPM`;
-          const delta = winner === 'player1' ? '+$25' : winner === 'player2' ? '-$15' : '$0';
-          const deltaEl = r1.querySelector('.tt-result-delta');
-          deltaEl.textContent = delta;
-          deltaEl.className = 'tt-result-delta ' + (delta.startsWith('+') ? 'pos' : delta.startsWith('-') ? 'neg' : 'neutral');
+        // Status
+        const statEl = document.getElementById('rxn-h-status');
+        if (statEl) {
+          if (state === 'armed') statEl.textContent = 'ARMED — waiting…';
+          else if (state === 'go') statEl.textContent = 'GO! TAP NOW!';
+          else if (state === 'subresult') {
+            const winner = data.subWinner;
+            const pd = playersData?.[winner];
+            statEl.textContent = winner ? `${pd?.name || winner} was faster!` : 'Nobody tapped!';
+          }
         }
-        if (r2) {
-          r2.querySelector('.tt-result-name').textContent = p2.name ?? 'Player 2';
-          r2.querySelector('.tt-result-wpm').textContent  = `${s2} WPM`;
-          const delta = winner === 'player2' ? '+$25' : winner === 'player1' ? '-$15' : '$0';
-          const deltaEl = r2.querySelector('.tt-result-delta');
-          deltaEl.textContent = delta;
-          deltaEl.className = 'tt-result-delta ' + (delta.startsWith('+') ? 'pos' : delta.startsWith('-') ? 'neg' : 'neutral');
-        }
-
-        const applyBtn = document.getElementById('btn-tt-apply');
-        const nextBtn  = document.getElementById('btn-tt-next-round');
-        if (applyBtn) applyBtn.classList.toggle('hidden', ttLocal.resultApplied);
-        if (nextBtn)  nextBtn .classList.toggle('hidden', !ttLocal.resultApplied);
-      }
-    }
-
-    function renderPlayerTypetest(data) {
-      if (!data || data.id !== 'typetest') return;
-      const state = data.state || 'waiting';
-
-      const waiting = document.getElementById('tt-p-waiting');
-      const active  = document.getElementById('tt-p-active');
-      const done    = document.getElementById('tt-p-done');
-      if (!waiting) return;
-
-      waiting.classList.toggle('hidden', state !== 'waiting');
-      active .classList.toggle('hidden', state !== 'active');
-      done   .classList.toggle('hidden', state !== 'ended');
-
-      if (state === 'active') {
-        const passageEl = document.getElementById('tt-p-passage');
-        const inputEl   = document.getElementById('tt-input');
-        const passage   = data.passage ?? '';
-        const startTime = data.ttStartTime ?? Date.now();
-
-        if (passageEl && (passageEl.dataset.passage !== passage || passageEl.dataset.startTime !== String(startTime))) {
-          passageEl.dataset.passage   = passage;
-          passageEl.dataset.startTime = String(startTime);
-          ttLocal.finished = false;
-          _ttCharSpans = null;
-          passageEl.innerHTML = passage.split('').map((ch, i) =>
-            `<span class="tt-char tt-pending" data-i="${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`
-          ).join('');
-          _ttCharSpans = Array.from(passageEl.querySelectorAll('.tt-char'));
-          if (inputEl) { inputEl.value = ''; inputEl.focus(); }
-
-          // Start timer display
-          if (window._ttTimerInterval) clearInterval(window._ttTimerInterval);
-          window._ttTimerInterval = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const left = Math.max(0, 60 - elapsed);
-            const timerEl = document.getElementById('tt-p-timer');
-            if (timerEl) timerEl.textContent = left;
-            if (left <= 0) {
-              clearInterval(window._ttTimerInterval);
-              submitTypetest();
-            }
-          }, 500);
+        // Arm button visible only in subresult or active (not yet armed)
+        const armBtn = document.getElementById('btn-rxn-arm');
+        if (armBtn) {
+          const showArm = (state === 'active' || state === 'subresult') && !_rxnHostArmed;
+          armBtn.classList.toggle('hidden', !showArm);
         }
       }
 
       if (state === 'ended') {
-        if (window._ttTimerInterval) { clearInterval(window._ttTimerInterval); window._ttTimerInterval = null; }
-        const sc = data.typeScores ?? {};
-        const myWpm = sc[playerKey] ?? 0;
-        const doneWpm = document.getElementById('tt-p-done-wpm');
-        if (doneWpm) doneWpm.textContent = `${myWpm} WPM`;
-      }
-    }
+        const winner  = data.winner;
+        const winEl   = document.getElementById('rxn-h-winner');
+        const pd      = playersData?.[winner];
+        if (winEl) winEl.textContent = winner ? `${pd?.name || winner} WINS!` : 'TIE!';
 
-    function _ttCalcWpm(typed, startTime) {
-      const chars = typed.length;
-      const mins  = (Date.now() - startTime) / 60000;
-      return mins > 0 ? Math.round((chars / 5) / mins) : 0;
-    }
-
-    function _ttCalcAccuracy(typed, passage) {
-      if (!passage.length) return 100;
-      let correct = 0;
-      for (let i = 0; i < typed.length && i < passage.length; i++) {
-        if (typed[i] === passage[i]) correct++;
-      }
-      return Math.round((correct / passage.length) * 100);
-    }
-
-    async function submitTypetest() {
-      if (ttLocal.finished || !playerKey) return;
-      ttLocal.finished = true;
-      if (window._ttTimerInterval) { clearInterval(window._ttTimerInterval); window._ttTimerInterval = null; }
-
-      const inputEl = document.getElementById('tt-input');
-      const typed   = inputEl ? inputEl.value : '';
-      const passage = latestRoundData?.passage ?? '';
-      const start   = latestRoundData?.ttStartTime ?? Date.now();
-
-      const wpm = _ttCalcWpm(typed, start);
-      try {
-        await update(ref(db, 'round/typeScores'), { [playerKey]: wpm });
-        // Check if both have submitted
-        const snap = await get(ref(db, 'round/typeScores'));
-        const sc   = snap.val() ?? {};
-        if (sc.player1 != null && sc.player2 != null) {
-          const w = sc.player1 > sc.player2 ? 'player1' : sc.player2 > sc.player1 ? 'player2' : 'tie';
-          await update(ref(db, 'round'), { state: 'ended', winner: w });
+        const deltaEl = document.getElementById('rxn-h-deltas');
+        if (deltaEl) {
+          let html = '';
+          PLAYER_KEYS.forEach(k => {
+            const p = playersData?.[k];
+            if (!p?.name) return;
+            const isW = k === winner;
+            const d   = isW ? POINT_EVENTS.REACTION_WIN : POINT_EVENTS.REACTION_LOSE;
+            html += `<div style="color:${isW ? 'var(--green)' : 'var(--red)'}">${p.name}: ${d > 0 ? '+' : ''}${d} pts</div>`;
+          });
+          deltaEl.innerHTML = html;
         }
-      } catch(e) { console.error('[TypeTest] submit error', e); }
+
+        const applyBtn = document.getElementById('btn-rxn-apply');
+        const nextBtn  = document.getElementById('btn-rxn-next-round');
+        if (applyBtn && !rxnLocal.resultApplied) applyBtn.classList.remove('hidden');
+        if (nextBtn  && rxnLocal.resultApplied)  nextBtn.classList.remove('hidden');
+      }
     }
 
-    // ── Host: Typetest event listeners ──────────────────────────
-    const btnTtStart = document.getElementById('btn-tt-start');
-    if (btnTtStart) {
-      btnTtStart.addEventListener('click', async () => {
-        btnTtStart.disabled = true;
-        ttLocal = { resultApplied: false, finished: false };
-        const sel = document.getElementById('tt-passage-select');
-        const idx = sel ? parseInt(sel.value, 10) : 0;
-        const passage = TYPING_PASSAGES[idx] ?? TYPING_PASSAGES[0];
+    // ── Player: render Reaction panel ────────────────────────────
+    function renderPlayerReaction(data) {
+      if (!data || data.id !== 'reaction') return;
+      const state = data.state || 'waiting';
+
+      const waitEl      = document.getElementById('rxn-p-waiting');
+      const armedEl     = document.getElementById('rxn-p-armed');
+      const goEl        = document.getElementById('rxn-p-go');
+      const tappedEl    = document.getElementById('rxn-p-tapped');
+      const subEl       = document.getElementById('rxn-p-subresult');
+      const endEl       = document.getElementById('rxn-p-ended');
+      if (!waitEl) return;
+
+      waitEl.classList.toggle('hidden',  state !== 'waiting' && state !== 'active');
+      armedEl.classList.toggle('hidden', state !== 'armed');
+      goEl.classList.toggle('hidden',    state !== 'go' || _rxnPlayerClicked);
+      tappedEl.classList.toggle('hidden',state !== 'go' || !_rxnPlayerClicked);
+      subEl.classList.toggle('hidden',   state !== 'subresult');
+      endEl.classList.toggle('hidden',   state !== 'ended');
+
+      if (state === 'armed') _rxnPlayerClicked = false; // reset for new sub-round
+
+      if (state === 'subresult') {
+        const winner  = data.subWinner;
+        const subText = document.getElementById('rxn-p-sub-text');
+        const scores  = data.scores ?? {};
+        if (subText) {
+          subText.textContent = !winner ? 'Nobody tapped in time!' : winner === playerKey ? 'You were faster! ✓' : 'They were faster…';
+          subText.style.color = !winner ? 'var(--yellow)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
+        }
+        const scoreEl = document.getElementById('rxn-p-score');
+        if (scoreEl) scoreEl.textContent = `You: ${scores[playerKey] ?? 0}`;
+      }
+
+      if (state === 'ended') {
+        const winner   = data.winner;
+        const finalEl  = document.getElementById('rxn-p-final-text');
+        if (finalEl) {
+          finalEl.textContent = !winner ? "TIE!" : winner === playerKey ? "YOU WIN! 🎉" : "YOU LOSE 😢";
+          finalEl.style.color = !winner ? 'var(--yellow)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
+        }
+      }
+    }
+
+    // ── Host: START REACTION ROUND ───────────────────────────────
+    const btnRxnStart = document.getElementById('btn-rxn-start');
+    if (btnRxnStart) {
+      btnRxnStart.addEventListener('click', async () => {
+        btnRxnStart.disabled = true;
         try {
-          flashTransition('var(--white)', 280);
+          const scoresInit = {};
+          PLAYER_KEYS.forEach(k => { scoresInit[k] = 0; });
           await set(ref(db, 'round'), {
-            id: 'typetest', state: 'active', passage,
-            ttStartTime: Date.now(),
-            typeScores: { player1: null, player2: null },
-            winner: null,
-            answers: {}, stackerScores: {}, timer: 0, question: '',
+            id: 'reaction', state: 'active',
+            subRound: 0, scores: scoresInit, winner: null, subWinner: null,
           });
         } catch(e) {
-          console.error('[TypeTest] Start error:', e);
-          btnTtStart.disabled = false;
+          console.error('[Reaction] start error:', e);
+          btnRxnStart.disabled = false;
         }
       });
     }
 
-    const btnTtApply = document.getElementById('btn-tt-apply');
-    if (btnTtApply) {
-      btnTtApply.addEventListener('click', async () => {
-        if (ttLocal.resultApplied) return;
-        btnTtApply.disabled = true;
-        ttLocal.resultApplied = true;
-        const data = latestRoundData;
-        const pData = latestPlayersData;
-        if (!data || !pData) { ttLocal.resultApplied = false; btnTtApply.disabled = false; return; }
-        const winner = data.winner;
-        let d1 = 0, d2 = 0;
-        if (winner === 'player1')      { d1 = MONEY_EVENTS.TYPETEST_WIN;  d2 = MONEY_EVENTS.TYPETEST_LOSE; }
-        else if (winner === 'player2') { d1 = MONEY_EVENTS.TYPETEST_LOSE; d2 = MONEY_EVENTS.TYPETEST_WIN;  }
-        const b1 = Math.max(0, Math.round((pData.player1?.balance ?? 0) + d1));
-        const b2 = Math.max(0, Math.round((pData.player2?.balance ?? 0) + d2));
+    // ── Host: ARM sub-round ──────────────────────────────────────
+    const btnRxnArm = document.getElementById('btn-rxn-arm');
+    if (btnRxnArm) {
+      btnRxnArm.addEventListener('click', async () => {
+        if (_rxnHostArmed) return;
+        _rxnHostArmed = true;
+        btnRxnArm.classList.add('hidden');
         try {
-          flashTransition('var(--green)', 700);
-          await update(ref(db, 'players'), {
-            'player1/balance': b1, 'player1/alive': b1 > 0,
-            'player2/balance': b2, 'player2/alive': b2 > 0,
+          const subRound = (latestRoundData?.subRound ?? 0) + 1;
+          await update(ref(db, 'round'), {
+            state: 'armed', subRound, clicks: {}, subWinner: null, _subResolving: false,
           });
-          renderHostTypetest(data, pData);
+          // Random delay 2–8 s then GO
+          const delay = 2000 + Math.random() * 6000;
+          setTimeout(async () => {
+            try {
+              await update(ref(db, 'round'), { state: 'go', goTime: Date.now() });
+            } catch(e) { console.error('[Reaction] go error:', e); }
+            _rxnHostArmed = false;
+          }, delay);
         } catch(e) {
-          console.error('[TypeTest] Apply error:', e);
-          ttLocal.resultApplied = false;
-          btnTtApply.disabled = false;
+          console.error('[Reaction] arm error:', e);
+          _rxnHostArmed = false;
         }
       });
     }
 
-    const btnTtNextRound = document.getElementById('btn-tt-next-round');
-    if (btnTtNextRound) {
-      btnTtNextRound.addEventListener('click', async () => {
-        btnTtNextRound.disabled = true;
+    // ── Host: APPLY RESULTS ──────────────────────────────────────
+    const btnRxnApply = document.getElementById('btn-rxn-apply');
+    if (btnRxnApply) {
+      btnRxnApply.addEventListener('click', async () => {
+        if (rxnLocal.resultApplied) return;
+        btnRxnApply.disabled = true;
+        rxnLocal.resultApplied = true;
+        try {
+          const [roundSnap, playersSnap] = await Promise.all([
+            get(ref(db, 'round')), get(ref(db, 'players')),
+          ]);
+          const rd = roundSnap.val();
+          const pd = playersSnap.val();
+          if (!rd || !pd) throw new Error('Missing data');
+          const winner = rd.winner;
+          const updates = {};
+          PLAYER_KEYS.forEach(k => {
+            const p = pd[k];
+            if (!p?.name) return;
+            const d    = k === winner ? POINT_EVENTS.REACTION_WIN : POINT_EVENTS.REACTION_LOSE;
+            const newP = Math.max(0, Math.round((p.points ?? 0) + d));
+            updates[`${k}/points`] = newP;
+            updates[`${k}/alive`]  = newP > 0;
+          });
+          flashTransition('var(--green)', 700);
+          await update(ref(db, 'players'), updates);
+          btnRxnApply.classList.add('hidden');
+          document.getElementById('btn-rxn-next-round')?.classList.remove('hidden');
+        } catch(e) {
+          console.error('[Reaction] apply error:', e);
+          rxnLocal.resultApplied = false;
+          btnRxnApply.disabled = false;
+        }
+      });
+    }
+
+    // ── Host: NEXT ROUND (7 → 8) ────────────────────────────────
+    const btnRxnNextRound = document.getElementById('btn-rxn-next-round');
+    if (btnRxnNextRound) {
+      btnRxnNextRound.addEventListener('click', async () => {
+        btnRxnNextRound.disabled = true;
         try {
           await roundWipeTransition('WHEEL OF FATE');
           await update(ref(db, 'game'), { currentRound: 8 });
-        } catch(err) {
-          console.error('[TypeTest] Next round error:', err);
-          btnTtNextRound.disabled = false;
+        } catch(e) {
+          console.error('[Reaction] next round error:', e);
+          btnRxnNextRound.disabled = false;
         }
       });
     }
 
-    if (view === 'player') {
-      const ttInputEl = document.getElementById('tt-input');
-      if (ttInputEl) {
-        ttInputEl.addEventListener('input', () => {
-          const passage = latestRoundData?.passage ?? '';
-          const typed   = ttInputEl.value;
-          const chars   = _ttCharSpans || Array.from(document.querySelectorAll('#tt-p-passage .tt-char'));
-          chars.forEach((span, i) => {
-            span.className = 'tt-char ';
-            if (i < typed.length) {
-              span.classList.add(typed[i] === passage[i] ? 'tt-correct' : 'tt-wrong');
-            } else {
-              span.classList.add('tt-pending');
-            }
-          });
-          // Live WPM
-          const start = latestRoundData?.ttStartTime ?? Date.now();
-          const wpm   = _ttCalcWpm(typed, start);
-          const wpmEl = document.getElementById('tt-p-wpm');
-          if (wpmEl) wpmEl.textContent = wpm;
-          // Auto-submit on passage complete
-          if (typed.length >= passage.length) submitTypetest();
-        });
-      }
+    // ── Player: tap button during GO phase ───────────────────────
+    const btnRxnTap = document.getElementById('btn-rxn-tap');
+    if (btnRxnTap && view === 'player') {
+      const handleRxnTap = async () => {
+        if (!latestRoundData || latestRoundData.id !== 'reaction' || latestRoundData.state !== 'go') return;
+        if (_rxnPlayerClicked) return;
+        _rxnPlayerClicked = true;
+        try {
+          await update(ref(db, 'round/clicks'), { [playerKey]: Date.now() });
+        } catch(e) {
+          console.error('[Reaction] tap error:', e);
+          _rxnPlayerClicked = false;
+        }
+      };
+      btnRxnTap.addEventListener('touchstart', e => { e.preventDefault(); handleRxnTap(); }, { passive: false });
+      btnRxnTap.addEventListener('click', handleRxnTap);
     }
 
+    // ── Auto-resolve reaction sub-round when winner found (host) ──
+    // (handled in the round onValue listener above)
+
     // ════════════════════════════════════════════════════════════
-    // END ROUND 7 (TYPE TEST)
+    // END ROUND 7 (REACTION ROUND)
     // ════════════════════════════════════════════════════════════
+
 
     // ════════════════════════════════════════════════════════════
     // ROUND 8 — WHEEL OF FATE
@@ -7754,8 +7142,8 @@
         const b2 = document.getElementById('wl-bal-p2');
         if (n1) n1.textContent = p1.name || 'Player 1';
         if (n2) n2.textContent = p2.name || 'Player 2';
-        if (b1) b1.textContent = `$${p1.balance ?? 150}`;
-        if (b2) b2.textContent = `$${p2.balance ?? 130}`;
+        if (b1) b1.textContent = `${p1.points ?? 0} pts`;
+        if (b2) b2.textContent = `${p2.points ?? 0} pts`;
       }
 
       // Show multiplier results if already spun
@@ -7906,11 +7294,11 @@
               const p2 = pd.player2 || {};
               const m1 = data.p1Multiplier ?? 1;
               const m2 = data.p2Multiplier ?? 1;
-              const newBal1 = Math.max(0, Math.round((p1.balance ?? 0) * m1));
-              const newBal2 = Math.max(0, Math.round((p2.balance ?? 0) * m2));
+              const newBal1 = Math.max(0, Math.round((p1.points ?? 0) * m1));
+              const newBal2 = Math.max(0, Math.round((p2.points ?? 0) * m2));
               try {
-                await update(ref(db, 'players/player1'), { balance: newBal1, alive: newBal1 > 0 });
-                await update(ref(db, 'players/player2'), { balance: newBal2, alive: newBal2 > 0 });
+                await update(ref(db, 'players/player1'), { points: newBal1, alive: newBal1 > 0 });
+                await update(ref(db, 'players/player2'), { points: newBal2, alive: newBal2 > 0 });
                 await update(ref(db, 'game'), { phase: 'finale' });
                 await update(ref(db, 'round'), { state: 'ended' });
                 flashTransition('#FFD700', 600);
@@ -8052,23 +7440,23 @@
         if (!container) return;
         const m1   = roundData?.p1Multiplier ?? 1;
         const m2   = roundData?.p2Multiplier ?? 1;
-        const pMax = (p1.balance ?? 0) >= (p2.balance ?? 0) ? 'player1' : 'player2';
+        const pMax = (p1.points ?? 0) >= (p2.points ?? 0) ? 'player1' : 'player2';
         container.innerHTML = [
           { key: 'player1', p: p1, mult: m1 },
           { key: 'player2', p: p2, mult: m2 },
         ].map(({ key, p, mult }) => {
-          const start  = p.startingBalance ?? (key === 'player1' ? 150 : 130);
-          const final  = p.balance ?? 0;
+          const start  = p.startingPoints ?? 0;
+          const final  = p.points ?? 0;
           const diff   = final - start;
           const diffClass = diff >= 0 ? 'fc-pos' : 'fc-neg';
           const diffSign  = diff >= 0 ? '+' : '';
           return `
             <div class="finale-card${key === pMax ? ' fc-winner' : ''}">
               <div class="fc-name">${p.name || (key === 'player1' ? 'Player 1' : 'Player 2')}</div>
-              <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">$${start}</span></div>
+              <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">${start} pts</span></div>
               <div class="fc-row"><span class="fc-label">Wheel</span><span class="fc-value">${mult}×</span></div>
-              <div class="fc-row"><span class="fc-label">Final</span><span class="fc-value" style="color:var(--yellow)">$${final}</span></div>
-              <div class="fc-row"><span class="fc-label">Change</span><span class="fc-value ${diffClass}">${diffSign}$${Math.abs(diff)}</span></div>
+              <div class="fc-row"><span class="fc-label">Final</span><span class="fc-value" style="color:var(--yellow)">${final} pts</span></div>
+              <div class="fc-row"><span class="fc-label">Change</span><span class="fc-value ${diffClass}">${diffSign}${Math.abs(diff)} pts</span></div>
             </div>`;
         }).join('');
 
@@ -8082,8 +7470,8 @@
 
       if (view === 'player') {
         const p        = playersData[playerKey] || {};
-        const start    = p.startingBalance ?? (playerKey === 'player1' ? 150 : 130);
-        const final    = p.balance ?? 0;
+        const start    = p.startingPoints ?? 0;
+        const final    = p.points ?? 0;
         const diff     = final - start;
         const diffSign = diff >= 0 ? '+' : '';
         const diffCls  = diff >= 0 ? 'fc-pos' : 'fc-neg';
@@ -8094,7 +7482,7 @@
         const oppKey   = playerKey === 'player1' ? 'player2' : 'player1';
         const opp      = playersData[oppKey] || {};
         const oppName  = opp.name || 'Opponent';
-        const oppFinal = opp.balance ?? 0;
+        const oppFinal = opp.points ?? 0;
         const oppMult  = playerKey === 'player1'
           ? (roundData?.p2Multiplier ?? 1)
           : (roundData?.p1Multiplier ?? 1);
@@ -8107,16 +7495,16 @@
         const amtEl    = document.getElementById('player-finale-amount');
         const brkEl    = document.getElementById('player-finale-breakdown');
         if (nameEl)  nameEl.textContent  = p.name || 'You';
-        if (amtEl)   amtEl.textContent   = `$${final}`;
+        if (amtEl)   amtEl.textContent   = `${final} pts`;
         if (brkEl) {
           brkEl.innerHTML = `
-            <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">$${start}</span></div>
+            <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">${start} pts</span></div>
             <div class="fc-row"><span class="fc-label">Wheel</span><span class="fc-value">${mult}×</span></div>
-            <div class="fc-row"><span class="fc-label">Net Change</span><span class="fc-value ${diffCls}">${diffSign}$${Math.abs(diff)}</span></div>
+            <div class="fc-row"><span class="fc-label">Net Change</span><span class="fc-value ${diffCls}">${diffSign}${Math.abs(diff)} pts</span></div>
             <div class="fc-row" style="margin-top:14px;border-top:1px solid #333;padding-top:14px;">
               <span class="fc-label">Opponent</span><span class="fc-label">${oppName}</span>
             </div>
-            <div class="fc-row"><span class="fc-label">Their Total</span><span class="fc-value">$${oppFinal}</span></div>
+            <div class="fc-row"><span class="fc-label">Their Total</span><span class="fc-value">${oppFinal} pts</span></div>
             <div class="fc-row"><span class="fc-label">Their Wheel</span><span class="fc-value">${oppMult}×</span></div>
             <div style="margin-top:16px;padding:14px 20px;border-radius:12px;background:${winnerBg};text-align:center;font-family:var(--font-display);font-size:clamp(22px,7vw,34px);color:${winnerColor};letter-spacing:0.06em;">${winnerText}</div>`;
         }
@@ -8341,8 +7729,8 @@
         const b2El = document.getElementById('me-p2-bal');
         if (n1El) n1El.textContent = p1.name || 'Player 1';
         if (n2El) n2El.textContent = p2.name || 'Player 2';
-        if (b1El) b1El.textContent = `$${p1.balance ?? 150}`;
-        if (b2El) b2El.textContent = `$${p2.balance ?? 130}`;
+        if (b1El) b1El.textContent = `${p1.points ?? 0} pts`;
+        if (b2El) b2El.textContent = `${p2.points ?? 0} pts`;
       }
 
       onValue(ref(db, 'players'), (snap) => {
@@ -8354,12 +7742,12 @@
         try {
           const snap   = await get(ref(db, `players/${pk}`));
           const pData  = snap.val() || {};
-          const oldBal = pData.balance ?? (pk === 'player1' ? 150 : 130);
+          const oldBal = pData.points ?? 0;
           const newBal = Math.max(0, Math.round(oldBal + delta));
-          await update(ref(db, `players/${pk}`), { balance: newBal });
-          const name = pData.name || (pk === 'player1' ? 'Player 1' : 'Player 2');
-          const sign = delta >= 0 ? `+$${delta}` : `-$${Math.abs(delta)}`;
-          logMoneyAction(`Host adjusted ${name} ${sign} → $${newBal}`);
+          await update(ref(db, `players/${pk}`), { points: newBal });
+          const name = pData.name || pk;
+          const sign = delta >= 0 ? `+${delta} pts` : `${delta} pts`;
+          logMoneyAction(`Host adjusted ${name} ${sign} → ${newBal} pts`);
         } catch (e) { console.error('[MC] adjustMoney:', e); }
       }
 
@@ -8369,9 +7757,9 @@
           if (isNaN(newBal)) return;
           const snap  = await get(ref(db, `players/${pk}`));
           const pData = snap.val() || {};
-          const name  = pData.name || (pk === 'player1' ? 'Player 1' : 'Player 2');
-          await update(ref(db, `players/${pk}`), { balance: newBal });
-          logMoneyAction(`Host set ${name} balance to $${newBal}`);
+          const name  = pData.name || pk;
+          await update(ref(db, `players/${pk}`), { points: newBal });
+          logMoneyAction(`Host set ${name} to ${newBal} pts`);
         } catch (e) { console.error('[MC] setMoney:', e); }
       }
 
@@ -8397,18 +7785,18 @@
             _nuclearBtn.classList.remove('armed');
             confirmAction(
               `RESET ENTIRE GAME?<br>
-               <small style="color:var(--red)">Wipes ALL Firebase data and returns to lobby<br>with original balances ($150 / $130).</small>`,
+               <small style="color:var(--red)">Wipes ALL Firebase data and returns to lobby with 0 points.</small>`,
               async () => {
                 try {
+                  const playersInit = {};
+                  PLAYER_KEYS.forEach(k => {
+                    playersInit[k] = { name: '', points: 0, startingPoints: 0, alive: true, answer: null, ready: false };
+                  });
                   await set(ref(db, '/'), {
                     game: { phase: 'lobby', currentRound: 0, roundActive: false },
-                    players: {
-                      player1: { name: '', balance: 150, startingBalance: 150, alive: true, answer: null, ready: false },
-                      player2: { name: '', balance: 130, startingBalance: 130, alive: true, answer: null, ready: false },
-                    },
+                    players: playersInit,
                     round: null,
                     wheel: null,
-                    fps: null,
                   });
                 } catch (e) { console.error('[MC] nuclearReset:', e); }
               }
