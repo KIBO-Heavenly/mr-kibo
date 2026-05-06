@@ -192,16 +192,16 @@
       justify-content: center;
       padding: 40px 24px;
       gap: 52px;
-      background: radial-gradient(ellipse at 50% 40%, #1c1600 0%, var(--bg) 70%);
+      background: radial-gradient(ellipse at 50% 40%, #1c0014 0%, var(--bg) 70%);
     }
 
     .lobby-title {
       font-family: var(--font-display);
       font-size: clamp(52px, 9vw, 100px);
-      color: var(--yellow);
+      color: var(--pink);
       text-align: center;
       line-height: 0.88;
-      text-shadow: 0 0 80px rgba(255,215,0,0.35);
+      text-shadow: 0 0 80px rgba(255,105,180,0.35);
     }
 
     .lobby-title .lobby-eyebrow {
@@ -365,7 +365,7 @@
       transition: border-color 0.2s;
     }
 
-    .player-name-row input:focus   { border-color: var(--yellow); }
+    .player-name-row input:focus   { border-color: var(--pink); }
     .player-name-row input.locked  { border-color: var(--green); color: var(--green); pointer-events: none; }
 
     .btn-lock-name {
@@ -421,7 +421,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.24em;
-      color: var(--yellow);
+      color: var(--pink);
       margin-bottom: 6px;
     }
 
@@ -455,7 +455,7 @@
     .score-val {
       font-family: var(--font-display);
       font-size: 54px;
-      color: var(--yellow);
+      color: var(--pink);
       line-height: 1;
     }
 
@@ -594,7 +594,7 @@
     .btn-trivia-action:active:not(:disabled) { transform: scale(0.97); }
     .btn-trivia-action:disabled { opacity: 0.28; cursor: not-allowed; }
 
-    .btn-start-round   { background: var(--yellow); color: #000; box-shadow: 0 0 36px rgba(255,215,0,0.22); }
+    .btn-start-round   { background: var(--pink); color: #fff; box-shadow: 0 0 36px rgba(255,105,180,0.35); }
     .btn-next-q        { background: var(--white);  color: #000; }
     .btn-finish-round  { background: var(--red);    color: var(--white); box-shadow: 0 0 36px rgba(255,45,45,0.18); }
     .btn-apply-results { background: var(--green);  color: #000; box-shadow: 0 0 36px rgba(0,255,135,0.22); }
@@ -632,8 +632,8 @@
     .result-winner-text {
       font-family: var(--font-display);
       font-size: clamp(48px, 9vw, 92px);
-      color: var(--yellow);
-      text-shadow: 0 0 70px rgba(255,215,0,0.4);
+      color: var(--pink);
+      text-shadow: 0 0 70px rgba(255,105,180,0.4);
       line-height: 0.93;
     }
 
@@ -727,15 +727,15 @@
       transition: border-color 0.2s;
     }
 
-    .player-answer-area input:focus     { border-color: var(--yellow); }
+    .player-answer-area input:focus     { border-color: var(--pink); }
     .player-answer-area input.submitted { border-color: var(--green); color: var(--green); }
 
     .btn-submit-answer {
       font-family: var(--font-display);
       font-size: 24px;
       letter-spacing: 0.1em;
-      background: var(--yellow);
-      color: #000;
+      background: var(--pink);
+      color: #fff;
       border: none;
       padding: 15px 0;
       border-radius: 6px;
@@ -743,10 +743,10 @@
       min-height: 58px;
       width: 100%;
       transition: transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 0 28px rgba(255,215,0,0.18);
+      box-shadow: 0 0 28px rgba(255,105,180,0.18);
     }
 
-    .btn-submit-answer:hover:not(:disabled)  { transform: scale(1.02); box-shadow: 0 0 44px rgba(255,215,0,0.38); }
+    .btn-submit-answer:hover:not(:disabled)  { transform: scale(1.02); box-shadow: 0 0 44px rgba(255,105,180,0.38); }
     .btn-submit-answer:active:not(:disabled) { transform: scale(0.97); }
     .btn-submit-answer:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
 
@@ -767,7 +767,7 @@
       color: #444;
     }
 
-    .player-trivia-score span { color: var(--yellow); }
+    .player-trivia-score span { color: var(--pink); }
 
     .player-trivia-anim {
       font-family: var(--font-display);
@@ -792,7 +792,7 @@
     .player-trivia-end-score span {
       font-family: var(--font-display);
       font-size: 24px;
-      color: var(--yellow);
+      color: var(--pink);
     }
 
     /* ── Red Button Round ───────────────────────────────────────── */
@@ -824,7 +824,7 @@
       letter-spacing: 0.22em;
       color: #555;
     }
-    .rb-sub-tracker span { color: var(--yellow); font-size: 15px; }
+    .rb-sub-tracker span { color: var(--pink); font-size: 15px; }
 
     /* Host status labels */
     .rb-host-status {
@@ -896,6 +896,13 @@
       0%,100% { box-shadow: 0 0 20px rgba(255,45,45,0.8), 0 0 50px rgba(255,45,45,0.4); }
       50%      { box-shadow: 0 0 40px rgba(255,45,45,1),   0 0 90px rgba(255,45,45,0.75); }
     }
+    @keyframes rb-pop-in {
+      0%   { transform: translate(-50%, -50%) scale(0);    opacity: 0; }
+      55%  { transform: translate(-50%, -50%) scale(1.3);  opacity: 1; }
+      75%  { transform: translate(-50%, -50%) scale(0.88); }
+      90%  { transform: translate(-50%, -50%) scale(1.07); }
+      100% { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
+    }
     #rb-small-btn:active { transform: translate(-50%,-50%) scale(0.88); animation: none; }
 
     /* MISSED overlay */
@@ -963,7 +970,7 @@
     .rb-p-score-num {
       font-family: var(--font-display);
       font-size: 80px;
-      color: var(--yellow);
+      color: var(--pink);
       line-height: 1;
     }
     .rb-p-score-label {
@@ -986,7 +993,7 @@
     .rb-p-status-big {
       font-family: var(--font-display);
       font-size: clamp(28px, 6vw, 52px);
-      color: var(--yellow);
+      color: var(--pink);
       letter-spacing: 0.1em;
       text-align: center;
     }
@@ -1013,9 +1020,9 @@
     .tw-scrambled-word {
       font-family: var(--font-display);
       font-size: clamp(56px, 13vw, 108px);
-      color: var(--yellow);
+      color: var(--pink);
       letter-spacing: 0.12em;
-      text-shadow: 0 0 60px rgba(255,215,0,0.35);
+      text-shadow: 0 0 60px rgba(255,105,180,0.35);
       text-align: center;
       line-height: 1;
     }
@@ -1119,7 +1126,7 @@
       color: #444;
     }
 
-    .tw-p-scores span { color: var(--yellow); }
+    .tw-p-scores span { color: var(--pink); }
 
     .tw-p-scrambled { margin: 8px 0; position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 4px 0 8px; }
 
@@ -1147,7 +1154,7 @@
       transition: border-color 0.2s;
     }
 
-    .tw-p-answer-area input:focus         { border-color: var(--yellow); }
+    .tw-p-answer-area input:focus         { border-color: var(--pink); }
     .tw-p-answer-area input.tw-inp-correct { border-color: var(--green); }
     .tw-p-answer-area input.tw-inp-wrong  {
       border-color: var(--red);
@@ -1251,7 +1258,7 @@
     .st-host-level {
       font-family: var(--font-display);
       font-size: 58px;
-      color: var(--yellow);
+      color: var(--pink);
       line-height: 1;
       margin: 8px 0 4px;
     }
@@ -1298,7 +1305,7 @@
       font-family: var(--font-display);
       font-size: 24px;
       letter-spacing: 0.1em;
-      color: var(--yellow);
+      color: var(--pink);
     }
 
     .st-p-opponent {
@@ -1450,7 +1457,7 @@
       font-family: var(--font-display);
       font-size: 36px;
       letter-spacing: 0.12em;
-      color: var(--yellow);
+      color: var(--pink);
       text-shadow: 0 2px 12px rgba(0,0,0,1);
       text-align: center;
     }
@@ -1482,7 +1489,7 @@
     #fps-click-overlay h2 {
       font-family: var(--font-display);
       font-size: clamp(42px, 8vw, 80px);
-      color: var(--yellow);
+      color: var(--pink);
     }
 
     #fps-click-overlay p {
@@ -1517,13 +1524,13 @@
     }
 
     #fps-mobile-warn {
-      background: #1a1200;
-      border: 2px solid var(--yellow);
+      background: #1a0010;
+      border: 2px solid var(--pink);
       border-radius: 8px;
       padding: 12px 20px;
       font-family: var(--font-body);
       font-size: 13px;
-      color: var(--yellow);
+      color: var(--pink);
       text-align: center;
       margin-bottom: 8px;
     }
@@ -1722,9 +1729,9 @@
     .bt-countdown {
       font-family: var(--font-display);
       font-size: clamp(120px, 28vw, 220px);
-      color: var(--yellow);
+      color: var(--pink);
       line-height: 1;
-      text-shadow: 0 0 80px rgba(255,215,0,0.5);
+      text-shadow: 0 0 80px rgba(255,105,180,0.5);
       animation: bt-count-pulse 0.9s ease-in-out infinite;
     }
 
@@ -1819,7 +1826,7 @@
       outline: none;
       resize: none;
     }
-    .tt-input:focus { border-color: var(--yellow); }
+    .tt-input:focus { border-color: var(--pink); }
     .tt-stats {
       display: flex;
       gap: 32px;
@@ -1834,7 +1841,7 @@
     .tt-stat-value {
       font-family: var(--font-display);
       font-size: 36px;
-      color: var(--yellow);
+      color: var(--pink);
     }
     .tt-stat-label {
       font-family: var(--font-body);
@@ -1883,7 +1890,7 @@
       min-width: 160px;
     }
     .tt-h-live-name  { font-family:var(--font-body); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#666; margin-bottom:6px; }
-    .tt-h-live-wpm   { font-family:var(--font-display); font-size:40px; color:var(--yellow); }
+    .tt-h-live-wpm   { font-family:var(--font-display); font-size:40px; color:var(--pink); }
 
     /* ── Wheel of Fate ──────────────────────────────────────────── */
     #host-wheel, #player-wheel {
@@ -1910,8 +1917,8 @@
       transition: border-color 0.3s, box-shadow 0.3s;
     }
     .wl-player-card.wl-active-player {
-      border-color: var(--yellow);
-      box-shadow: 0 0 40px rgba(255,215,0,0.25);
+      border-color: var(--pink);
+      box-shadow: 0 0 40px rgba(255,105,180,0.25);
     }
     .wl-player-card.wl-done-player {
       border-color: var(--green);
@@ -1926,7 +1933,7 @@
     .wl-card-balance {
       font-family: var(--font-display);
       font-size: 36px;
-      color: var(--yellow);
+      color: var(--pink);
       margin-bottom: 12px;
     }
     .wl-card-multiplier {
@@ -1936,8 +1943,8 @@
       margin-bottom: 8px;
     }
     .btn-spin {
-      background: linear-gradient(145deg, #c8a200, var(--yellow));
-      color: #000;
+      background: linear-gradient(145deg, #cc0070, var(--hot-pink));
+      color: #fff;
       font-family: var(--font-display);
       font-size: 22px;
       letter-spacing: 0.08em;
@@ -1973,7 +1980,7 @@
     .wl-spinning-label {
       font-family: var(--font-display);
       font-size: 22px;
-      color: var(--yellow);
+      color: var(--pink);
       letter-spacing: 0.1em;
       animation: wl-spin-pulse 0.6s ease-in-out infinite alternate;
       min-height: 32px;
@@ -1985,7 +1992,7 @@
     .wl-result-banner {
       font-family: var(--font-display);
       font-size: clamp(48px, 14vw, 90px);
-      color: var(--yellow);
+      color: var(--pink);
       letter-spacing: 0.06em;
       animation: wl-result-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
     }
@@ -2023,7 +2030,7 @@
     .wl-p-multiplier-value {
       font-family: var(--font-display);
       font-size: clamp(80px, 22vw, 140px);
-      color: var(--yellow);
+      color: var(--pink);
       line-height: 1;
       animation: wl-result-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
     }
@@ -2038,19 +2045,22 @@
       text-align: center;
     }
     .finale-eyebrow {
-      font-family: var(--font-body);
-      font-size: 12px;
+      font-family: var(--font-birthday);
+      font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #555;
+      letter-spacing: 0.15em;
+      text-transform: none;
+      color: var(--pink);
+      text-shadow: 0 0 20px rgba(255,105,180,0.5);
     }
     .finale-title {
-      font-family: var(--font-display);
+      font-family: var(--font-birthday);
       font-size: clamp(36px, 10vw, 72px);
-      color: var(--yellow);
-      letter-spacing: 0.06em;
+      color: var(--pink);
+      letter-spacing: 0.04em;
       line-height: 1.1;
+      text-shadow: 0 0 40px rgba(255,105,180,0.4);
+      animation: finale-title-in 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
     }
     .finale-owes-text {
       font-family: var(--font-display);
@@ -2115,13 +2125,48 @@
       flex-direction: column;
       gap: 8px;
     }
-    .finale-card.fc-winner { border-color: var(--yellow); box-shadow: 0 0 50px rgba(255,215,0,0.2); }
+    .finale-card.fc-winner { border-color: var(--pink); box-shadow: 0 0 50px rgba(255,105,180,0.35); }
     .fc-name {
       font-family: var(--font-display);
       font-size: 28px;
       color: var(--white);
       margin-bottom: 4px;
     }
+
+    /* play-again links on finale screen */
+    .play-again-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 32px;
+    }
+    .play-again-label {
+      width: 100%;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 4px;
+    }
+    .play-again-btn {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .play-again-btn:hover { transform: scale(1.06); box-shadow: 0 0 24px rgba(255,105,180,0.4); }
+    .play-again-host { background: var(--pink); color: #fff; }
+    .play-again-p1   { background: transparent; border-color: var(--pink); color: var(--pink); }
+    .play-again-p2   { background: transparent; border-color: var(--pink); color: var(--pink); }
 
     /* ── Full-screen flash transition ───────────────────────────── */
     #flash-overlay {
@@ -2148,7 +2193,7 @@
     #round-wipe .wipe-panel {
       position: absolute;
       inset: 0;
-      background: var(--yellow);
+      background: var(--pink);
       transform: translateX(-100%);
       will-change: transform;
     }
@@ -2157,7 +2202,7 @@
       z-index: 1;
       font-family: var(--font-display);
       font-size: clamp(48px, 14vw, 120px);
-      color: #000;
+      color: #fff;
       letter-spacing: 0.06em;
       opacity: 0;
       transform: scale(0.7);
@@ -2186,10 +2231,10 @@
     #countdown-number {
       font-family: var(--font-display);
       font-size: clamp(180px, 40vw, 320px);
-      color: var(--yellow);
+      color: var(--pink);
       line-height: 0.9;
       animation: none;
-      text-shadow: 0 0 120px rgba(255,215,0,0.6);
+      text-shadow: 0 0 120px rgba(255,105,180,0.6);
     }
     #countdown-number.pop {
       animation: cd-pop 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
@@ -2198,6 +2243,12 @@
       0%   { transform: scale(0.4); opacity: 0; }
       60%  { transform: scale(1.1); opacity: 1; }
       100% { transform: scale(1);   opacity: 1; }
+    }
+    @keyframes finale-title-in {
+      0%   { transform: scale(0.6) rotate(-4deg); opacity: 0; }
+      60%  { transform: scale(1.08) rotate(2deg); opacity: 1; }
+      80%  { transform: scale(0.97) rotate(-1deg); }
+      100% { transform: scale(1) rotate(0deg);    opacity: 1; }
     }
     #countdown-label {
       font-family: var(--font-body);
@@ -2226,7 +2277,7 @@
       left: 0;
       right: 0;
       background: #111111;
-      border-top: 3px solid var(--yellow);
+      border-top: 3px solid var(--pink);
       padding: 12px 20px;
       display: flex;
       align-items: center;
@@ -2239,7 +2290,7 @@
       font-family: var(--font-display);
       font-size: 15px;
       letter-spacing: 0.1em;
-      color: var(--yellow);
+      color: var(--pink);
       min-width: 200px;
       flex: 1;
     }
@@ -2271,7 +2322,7 @@
     .mc-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
     .mc-btn-prev    { background: var(--white);  color: #000; }
-    .mc-btn-skip    { background: var(--yellow); color: #000; }
+    .mc-btn-skip    { background: var(--pink); color: #fff; }
     .mc-btn-restart { background: #FF8C00;       color: var(--white); }
     .mc-btn-finale  { background: var(--red);    color: var(--white); }
     .mc-btn-money   { background: var(--green);  color: #000; }
@@ -2303,7 +2354,7 @@
       font-family: var(--font-display);
       font-size: 16px;
       letter-spacing: 0.08em;
-      color: var(--yellow);
+      color: var(--pink);
       min-width: 90px;
     }
 
@@ -2343,13 +2394,13 @@
       text-align: center;
     }
 
-    .me-set-input:focus { border-color: var(--yellow); }
+    .me-set-input:focus { border-color: var(--pink); }
 
     .me-apply-btn {
       font-family: var(--font-display);
       font-size: 14px;
-      background: var(--yellow);
-      color: #000;
+      background: var(--pink);
+      color: #fff;
       border: none;
       border-radius: 4px;
       padding: 6px 14px;
@@ -2417,7 +2468,7 @@
       border-radius: 3px;
       padding: 1px 5px;
       font-size: 11px;
-      color: var(--yellow);
+      color: var(--pink);
     }
 
   </style>
@@ -2505,7 +2556,7 @@
         <div id="host-trivia-prestart" class="trivia-prestart">
           <p>Players will answer 10 questions about you.<br>
              Judge each answer ✓ or ✗ — most correct wins<br>
-             and <strong style="color:var(--white)">steals $20</strong> from the other player.</p>
+             and <strong style="color:var(--white)">gets +20 pts</strong> from the other player.</p>
           <button id="btn-start-trivia" class="btn-trivia-action btn-start-round">
             START ROUND
           </button>
@@ -2533,7 +2584,7 @@
               Question <span id="host-trivia-q-num">1</span> of 8
             </div>
             <div class="trivia-q-text" id="host-trivia-q-text">…</div>
-            <div id="host-trivia-q-answer" style="margin-top:10px;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.12em;color:var(--yellow);text-transform:uppercase;display:none;"></div>
+            <div id="host-trivia-q-answer" style="margin-top:10px;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.12em;color:var(--pink);text-transform:uppercase;display:none;"></div>
           </div>
 
           <!-- Answer cards -->
@@ -2587,11 +2638,11 @@
           <div class="result-money-row">
             <div class="result-money-card">
               <div class="rmc-name"  id="trivia-rmc-name-p1">Player 1</div>
-              <div class="rmc-delta neutral" id="trivia-delta-p1">$0</div>
+              <div class="rmc-delta neutral" id="trivia-delta-p1">0 pts</div>
             </div>
             <div class="result-money-card">
               <div class="rmc-name"  id="trivia-rmc-name-p2">Player 2</div>
-              <div class="rmc-delta neutral" id="trivia-delta-p2">$0</div>
+              <div class="rmc-delta neutral" id="trivia-delta-p2">0 pts</div>
             </div>
           </div>
 
@@ -2636,8 +2687,8 @@
         <div id="rb-prestart" class="trivia-prestart">
           <p>A small red button flashes at random positions on both screens.<br>
              First to tap it scores a point. <strong style="color:var(--white)">Best of 7.</strong><br>
-             <strong style="color:var(--green)">+$20 winner</strong> /
-             <strong style="color:var(--red)">-$10 loser</strong> net at end.</p>
+             <strong style="color:var(--green)">+20 pts winner</strong> /
+             <strong style="color:var(--red)">-10 pts loser</strong> net at end.</p>
           <button id="btn-rb-start" class="btn-trivia-action btn-start-round">
             START ROUND
           </button>
@@ -2662,11 +2713,11 @@
           <div class="result-money-row">
             <div class="result-money-card">
               <div class="rmc-name"  id="rb-rmc-name-p1">Player 1</div>
-              <div class="rmc-delta neutral" id="rb-delta-p1">$0</div>
+              <div class="rmc-delta neutral" id="rb-delta-p1">0 pts</div>
             </div>
             <div class="result-money-card">
               <div class="rmc-name"  id="rb-rmc-name-p2">Player 2</div>
-              <div class="rmc-delta neutral" id="rb-delta-p2">$0</div>
+              <div class="rmc-delta neutral" id="rb-delta-p2">0 pts</div>
             </div>
           </div>
           <button id="btn-rb-apply"
@@ -2707,10 +2758,10 @@
         <div id="tw-prestart" class="trivia-prestart">
           <p>A scrambled word appears on both screens.<br>
              First to type the correct word wins it.<br>
-             Wrong answers cost <strong style="color:var(--red)">$5 each</strong>.<br>
+             Wrong answers cost <strong style="color:var(--red)">5 pts each</strong>.<br>
              First to <strong style="color:var(--white)">5 words</strong> wins:
-             <strong style="color:var(--green)">+$25</strong> /
-             <strong style="color:var(--red)">-$15</strong>.</p>
+             <strong style="color:var(--green)">+25 pts</strong> /
+             <strong style="color:var(--red)">-15 pts</strong>.</p>
           <button id="btn-tw-start" class="btn-trivia-action btn-start-round">
             START ROUND
           </button>
@@ -2769,11 +2820,11 @@
           <div class="result-money-row">
             <div class="result-money-card">
               <div class="rmc-name"  id="tw-rmc-name-p1">Player 1</div>
-              <div class="rmc-delta neutral" id="tw-delta-p1">$0</div>
+              <div class="rmc-delta neutral" id="tw-delta-p1">0 pts</div>
             </div>
             <div class="result-money-card">
               <div class="rmc-name"  id="tw-rmc-name-p2">Player 2</div>
-              <div class="rmc-delta neutral" id="tw-delta-p2">$0</div>
+              <div class="rmc-delta neutral" id="tw-delta-p2">0 pts</div>
             </div>
           </div>
 
@@ -2804,9 +2855,9 @@
         <div id="st-prestart" class="trivia-prestart">
           <p>Both players play the arcade stacker game simultaneously.<br>
              Click or tap to drop each block — 12 levels, speed increases each level.<br>
-             Higher stack wins <strong style="color:var(--green)">+$25</strong> /
-             lower gets <strong style="color:var(--red)">-$15</strong>.
-             Tie: both get <strong style="color:var(--green)">+$5</strong>.</p>
+             Higher stack wins <strong style="color:var(--green)">+25 pts</strong> /
+             lower gets <strong style="color:var(--red)">-15 pts</strong>.
+             Tie: both get <strong style="color:var(--green)">+5 pts</strong>.</p>
           <button id="btn-st-start" class="btn-trivia-action btn-start-round">
             START ROUND
           </button>
@@ -2841,11 +2892,11 @@
           <div class="result-money-row">
             <div class="result-money-card">
               <div class="rmc-name"  id="st-rmc-name-p1">Player 1</div>
-              <div class="rmc-delta neutral" id="st-delta-p1">$0</div>
+              <div class="rmc-delta neutral" id="st-delta-p1">0 pts</div>
             </div>
             <div class="result-money-card">
               <div class="rmc-name"  id="st-rmc-name-p2">Player 2</div>
-              <div class="rmc-delta neutral" id="st-delta-p2">$0</div>
+              <div class="rmc-delta neutral" id="st-delta-p2">0 pts</div>
             </div>
           </div>
 
@@ -2909,9 +2960,9 @@
         <!-- ① Pre-start -->
         <div id="bt-prestart" class="trivia-prestart">
           <p>Each player secretly votes COOPERATE or BETRAY.<br>
-             Both cooperate: both <strong style="color:var(--green)">+$15</strong>.<br>
-             One betrays, one cooperates: betrayer <strong style="color:var(--green)">+$30</strong> / other <strong style="color:var(--red)">-$20</strong>.<br>
-             Both betray: both <strong style="color:var(--red)">-$10</strong>.</p>
+             Both cooperate: both <strong style="color:var(--green)">+15 pts</strong>.<br>
+             One betrays, one cooperates: betrayer <strong style="color:var(--green)">+30 pts</strong> / other <strong style="color:var(--red)">-20 pts</strong>.<br>
+             Both betray: both <strong style="color:var(--red)">-10 pts</strong>.</p>
           <button id="btn-bt-start" class="btn-trivia-action btn-start-round">
             START ROUND
           </button>
@@ -2950,11 +3001,11 @@
           <div class="result-money-row">
             <div class="result-money-card">
               <div class="rmc-name"  id="bt-rmc-name-p1">Player 1</div>
-              <div class="rmc-delta neutral" id="bt-delta-p1">$0</div>
+              <div class="rmc-delta neutral" id="bt-delta-p1">0 pts</div>
             </div>
             <div class="result-money-card">
               <div class="rmc-name"  id="bt-rmc-name-p2">Player 2</div>
-              <div class="rmc-delta neutral" id="bt-delta-p2">$0</div>
+              <div class="rmc-delta neutral" id="bt-delta-p2">0 pts</div>
             </div>
           </div>
           <div class="trivia-host-controls">
@@ -3025,13 +3076,13 @@
         <div class="wl-player-cards" id="wl-host-cards">
           <div class="wl-player-card" id="wl-card-p1">
             <div class="wl-card-name" id="wl-name-p1">Player 1</div>
-            <div class="wl-card-balance" id="wl-bal-p1">$150</div>
+            <div class="wl-card-balance" id="wl-bal-p1">0 pts</div>
             <div class="wl-card-multiplier hidden" id="wl-mult-p1"></div>
             <button class="btn-spin" id="btn-wl-spin-p1" disabled>SPIN FOR P1</button>
           </div>
           <div class="wl-player-card" id="wl-card-p2">
             <div class="wl-card-name" id="wl-name-p2">Player 2</div>
-            <div class="wl-card-balance" id="wl-bal-p2">$130</div>
+            <div class="wl-card-balance" id="wl-bal-p2">0 pts</div>
             <div class="wl-card-multiplier hidden" id="wl-mult-p2"></div>
             <button class="btn-spin" id="btn-wl-spin-p2" disabled>SPIN FOR P2</button>
           </div>
@@ -3056,9 +3107,15 @@
 
     <!-- Results / Finale -->
     <div id="host-results" class="hidden">
-      <div class="finale-eyebrow">THE FINAL VERDICT</div>
-      <div class="finale-title">WHAT THE HOST OWES</div>
+      <div class="finale-eyebrow">🎂 Happy Birthday Veronica! 🎂</div>
+      <div class="finale-title">Final Scores</div>
       <div class="finale-cards" id="host-finale-cards"></div>
+      <div class="play-again-links">
+        <div class="play-again-label">Share these links to play again:</div>
+        <a class="play-again-btn play-again-host" href="?view=host">🎮 Host View</a>
+        <a class="play-again-btn play-again-p1" href="?view=player&amp;player=player1">Player 1</a>
+        <a class="play-again-btn play-again-p2" href="?view=player&amp;player=player2">Player 2</a>
+      </div>
     </div>
 
     <!-- ── Master Host Control Panel (always visible on host) ─── -->
@@ -3076,7 +3133,7 @@
       </div>
 
       <!-- Money editor toggle -->
-      <button class="mc-btn mc-btn-money" id="mc-btn-toggle-money">💰 MONEY EDITOR</button>
+      <button class="mc-btn mc-btn-money" id="mc-btn-toggle-money">🎁 POINTS EDITOR</button>
 
       <!-- Nuclear reset — double-confirm -->
       <button class="mc-btn mc-btn-nuclear" id="mc-btn-nuclear">💣 RESET GAME</button>
@@ -3088,7 +3145,7 @@
           <div><kbd>Ctrl</kbd> + <kbd>→</kbd> &nbsp;Skip round</div>
           <div><kbd>Ctrl</kbd> + <kbd>←</kbd> &nbsp;Prev round</div>
           <div><kbd>Ctrl</kbd> + <kbd>R</kbd> &nbsp;&nbsp;Restart round</div>
-          <div><kbd>Ctrl</kbd> + <kbd>M</kbd> &nbsp;Toggle money panel</div>
+          <div><kbd>Ctrl</kbd> + <kbd>M</kbd> &nbsp;Toggle points panel</div>
         </div>
       </div>
 
@@ -3096,17 +3153,17 @@
       <div id="money-editor" class="hidden">
         <div class="me-player-row">
           <div class="me-player-label" id="me-p1-name">Player 1</div>
-          <div class="me-balance"      id="me-p1-bal">$150</div>
-          <button class="me-adj-btn me-minus" data-player="player1" data-adj="-10">− $10</button>
-          <button class="me-adj-btn me-plus"  data-player="player1" data-adj="10">+ $10</button>
+          <div class="me-balance"      id="me-p1-bal">0 pts</div>
+          <button class="me-adj-btn me-minus" data-player="player1" data-adj="-10">− 10</button>
+          <button class="me-adj-btn me-plus"  data-player="player1" data-adj="10">+ 10</button>
           <input  class="me-set-input" id="me-p1-input" type="number" placeholder="amt" min="0" />
           <button class="me-apply-btn" data-player="player1">APPLY</button>
         </div>
         <div class="me-player-row">
           <div class="me-player-label" id="me-p2-name">Player 2</div>
-          <div class="me-balance"      id="me-p2-bal">$130</div>
-          <button class="me-adj-btn me-minus" data-player="player2" data-adj="-10">− $10</button>
-          <button class="me-adj-btn me-plus"  data-player="player2" data-adj="10">+ $10</button>
+          <div class="me-balance"      id="me-p2-bal">0 pts</div>
+          <button class="me-adj-btn me-minus" data-player="player2" data-adj="-10">− 10</button>
+          <button class="me-adj-btn me-plus"  data-player="player2" data-adj="10">+ 10</button>
           <input  class="me-set-input" id="me-p2-input" type="number" placeholder="amt" min="0" />
           <button class="me-apply-btn" data-player="player2">APPLY</button>
         </div>
@@ -3317,7 +3374,7 @@
         <!-- Active tapping screen -->
         <div id="tb-p-active" class="hidden"
              style="display:flex;flex-direction:column;align-items:center;gap:14px;width:100%">
-          <div style="font-family:var(--font-display);font-size:56px;color:var(--yellow)" id="tb-p-timer">10</div>
+          <div style="font-family:var(--font-display);font-size:56px;color:var(--pink)" id="tb-p-timer">10</div>
           <div style="font-family:var(--font-display);font-size:28px;color:var(--white)">TAPS: <span id="tb-p-count">0</span></div>
           <div style="font-family:var(--font-body);font-size:12px;color:#555">Them: <span id="tb-p-opp-count">?</span></div>
           <button id="btn-tb-tap"
@@ -3355,7 +3412,7 @@
             <button class="btn-vote btn-betray" id="btn-betray">
               <span class="vote-emoji">🔪</span>
               <span class="vote-label">BETRAY</span>
-              <span class="vote-sublabel">+$30 if they cooperate</span>
+              <span class="vote-sublabel">+30 pts if they cooperate</span>
             </button>
           </div>
         </div>
@@ -3464,7 +3521,7 @@
 
         <!-- Spin ready (this player's turn) -->
         <div id="wl-p-ready" class="hidden">
-          <div class="wl-p-status" style="color:var(--yellow);margin-bottom:12px">YOUR TURN!</div>
+          <div class="wl-p-status" style="color:var(--pink);margin-bottom:12px">YOUR TURN!</div>
           <div class="wl-wheel-area">
             <div class="wl-pointer">▼</div>
             <canvas id="wl-p-canvas" width="340" height="340"></canvas>
@@ -3495,10 +3552,15 @@
 
     <!-- Results / Finale -->
     <div id="player-results" class="hidden">
-      <div class="finale-eyebrow">THE HOST OWES YOU</div>
+      <div class="finale-eyebrow">🎂 Your Birthday Score 🎂</div>
       <div class="finale-title" id="player-finale-name"></div>
       <div class="finale-amount" id="player-finale-amount"></div>
       <div class="finale-breakdown" id="player-finale-breakdown"></div>
+      <div class="play-again-links">
+        <a class="play-again-btn play-again-host" href="?view=host">🎮 Play Again (Host)</a>
+        <a class="play-again-btn play-again-p1" href="?view=player&amp;player=player1">Play Again (P1)</a>
+        <a class="play-again-btn play-again-p2" href="?view=player&amp;player=player2">Play Again (P2)</a>
+      </div>
     </div>
 
   </div>
@@ -4306,19 +4368,19 @@
 
       if (winner === 'tie') {
         winnerEl.textContent = "IT'S A TIE!";
-        subEl.textContent    = `Both scored ${s1} — no money changes`;
-        d1El.textContent = '+$0'; d1El.className = 'rmc-delta neutral';
-        d2El.textContent = '+$0'; d2El.className = 'rmc-delta neutral';
+        subEl.textContent    = `Both scored ${s1} — no points change`;
+        d1El.textContent = '+0 pts'; d1El.className = 'rmc-delta neutral';
+        d2El.textContent = '+0 pts'; d2El.className = 'rmc-delta neutral';
       } else if (winner === 'player1') {
         winnerEl.textContent = `${p1name} WINS!`;
-        subEl.textContent    = `${s1} vs ${s2} correct — ${p1name} steals $20 from ${p2name}`;
-        d1El.textContent = '+$20'; d1El.className = 'rmc-delta positive';
-        d2El.textContent = '-$20'; d2El.className = 'rmc-delta negative';
+        subEl.textContent    = `${s1} vs ${s2} correct — ${p1name} gets +20 pts from ${p2name}`;
+        d1El.textContent = '+20 pts'; d1El.className = 'rmc-delta positive';
+        d2El.textContent = '-20 pts'; d2El.className = 'rmc-delta negative';
       } else {
         winnerEl.textContent = `${p2name} WINS!`;
-        subEl.textContent    = `${s2} vs ${s1} correct — ${p2name} steals $20 from ${p1name}`;
-        d1El.textContent = '-$20'; d1El.className = 'rmc-delta negative';
-        d2El.textContent = '+$20'; d2El.className = 'rmc-delta positive';
+        subEl.textContent    = `${s2} vs ${s1} correct — ${p2name} gets +20 pts from ${p1name}`;
+        d1El.textContent = '-20 pts'; d1El.className = 'rmc-delta negative';
+        d2El.textContent = '+20 pts'; d2El.className = 'rmc-delta positive';
       }
 
       const applyBtn = document.getElementById('btn-trivia-apply');
@@ -4377,13 +4439,13 @@
         if (endMsgEl) {
           const winner = roundData.winner;
           if (winner === playerKey) {
-            endMsgEl.textContent  = 'YOU WIN! +$20 steal incoming…';
+            endMsgEl.textContent  = 'YOU WIN! +20 pts stealing…';
             endMsgEl.style.color  = 'var(--green)';
           } else if (winner === 'tie') {
-            endMsgEl.textContent  = "It's a tie — no money changes.";
+            endMsgEl.textContent  = "It's a tie — no points change.";
             endMsgEl.style.color  = '#888';
           } else {
-            endMsgEl.textContent  = 'You lose. -$20 will be deducted…';
+            endMsgEl.textContent  = 'You lose. -20 pts will be deducted…';
             endMsgEl.style.color  = 'var(--red)';
           }
         }
@@ -4397,7 +4459,7 @@
         btnStartTrivia.disabled = true;
         triviaLocal = { judgedP1: false, judgedP2: false, resultApplied: false };
         try {
-          flashTransition('#FFD700', 400);
+          flashTransition('#FF69B4', 400);
           await set(ref(db, 'round'), {
             id:            'trivia',
             state:         'active',
@@ -4778,7 +4840,6 @@
       if (rbLocal.waitingForClick) return;
       const left = (10 + Math.random() * 78).toFixed(1); // 10–88%
       const top  = (18 + Math.random() * 62).toFixed(1); // 18–80%
-      rbLocal.waitingForClick = true;
       rbPlayerClickedThisShow = false;
 
       try {
@@ -4790,7 +4851,8 @@
           'clicks/player1': null,
           'clicks/player2': null,
         });
-      } catch (err) { console.error('[RB] show error', err); rbLocal.waitingForClick = false; return; }
+        rbLocal.waitingForClick = true; // Set AFTER write so stale listeners can't trigger false win
+      } catch (err) { console.error('[RB] show error', err); return; }
 
       // Auto-hide after 3 s if no one clicks
       rbLocal.loop = setTimeout(() => rbResolvePoint(null), 3000);
@@ -4876,9 +4938,15 @@
         }
 
         // If host's listener sees a click come in while waitingForClick → resolve immediately
+        // Guard: only accept clicks that happened AFTER btnShowTime to prevent stale-click false wins
         if (rbLocal.waitingForClick) {
-          const clicks = data.clicks ?? {};
-          const t1 = clicks.player1, t2 = clicks.player2;
+          const clicks      = data.clicks ?? {};
+          const btnShowTime = data.btnShowTime ?? 0;
+          let t1 = clicks.player1 ?? null;
+          let t2 = clicks.player2 ?? null;
+          // Discard any click that predates this button show (leftover from previous sub-round)
+          if (t1 !== null && t1 < btnShowTime) t1 = null;
+          if (t2 !== null && t2 < btnShowTime) t2 = null;
           if (t1 !== null || t2 !== null) {
             let winner;
             if (t1 !== null && t2 !== null) winner = t1 <= t2 ? 'player1' : 'player2';
@@ -4903,7 +4971,7 @@
         const d2 = s2 * MONEY_EVENTS.REDBUTTON_WIN + s1 * MONEY_EVENTS.REDBUTTON_LOSE;
         function setDelta(id, val) {
           const el = document.getElementById(id); if (!el) return;
-          el.textContent = `${val >= 0 ? '+' : ''}$${val}`;
+          el.textContent = `${val >= 0 ? '+' : ''}${Math.abs(val)} pts`;
           el.className   = `rmc-delta ${val > 0 ? 'positive' : val < 0 ? 'negative' : 'neutral'}`;
         }
         setDelta('rb-delta-p1', d1);
@@ -4937,7 +5005,17 @@
         if (data.btnVisible && state === 'active') {
           smallBtn.style.left    = data.btnLeft + '%';
           smallBtn.style.top     = data.btnTop  + '%';
-          smallBtn.style.display = 'block';
+          if (smallBtn.style.display === 'none' || !smallBtn.style.display) {
+            smallBtn.style.display = 'block';
+            smallBtn.style.animation = 'none';
+            void smallBtn.offsetWidth; // force reflow to restart animation
+            smallBtn.style.animation = 'rb-pop-in 1.1s cubic-bezier(0.34,1.56,0.64,1) both';
+            setTimeout(() => {
+              if (smallBtn.style.display !== 'none') {
+                smallBtn.style.animation = 'rb-small-pulse 0.45s ease-in-out infinite';
+              }
+            }, 1100);
+          }
         } else {
           if (smallBtn.style.display !== 'none') {
             // Button just disappeared — show MISSED if player didn't click
@@ -4957,7 +5035,7 @@
         const statusEl = document.getElementById('rb-p-status-text');
         if (statusEl) {
           statusEl.textContent = data.btnVisible ? 'CLICK IT!' : 'WATCH CAREFULLY…';
-          statusEl.style.color = data.btnVisible ? 'var(--red)' : 'var(--yellow)';
+          statusEl.style.color = data.btnVisible ? 'var(--red)' : 'var(--pink)';
         }
       } else if (state === 'ended') {
         // Hide button
@@ -5284,7 +5362,7 @@
           const won  = wordWinner === pKey;
 
           if (textEl)  textEl.textContent = ans ?? '—';
-          if (wrongEl) wrongEl.textContent = wc > 0 ? `${wc} wrong (-$${wc * 5})` : '';
+          if (wrongEl) wrongEl.textContent = wc > 0 ? `${wc} wrong (-${wc * 5} pts)` : '';
 
           if (won) {
             cardEl?.classList.add('tw-correct'); cardEl?.classList.remove('tw-wrong');
@@ -5345,7 +5423,7 @@
 
         function twSetDelta(id, val) {
           const el = document.getElementById(id); if (!el) return;
-          el.textContent = `${val >= 0 ? '+' : ''}$${val}`;
+          el.textContent = `${val >= 0 ? '+' : ''}${Math.abs(val)} pts`;
           el.className   = `rmc-delta ${val > 0 ? 'positive' : val < 0 ? 'negative' : 'neutral'}`;
         }
         twSetDelta('tw-delta-p1', d1);
@@ -5428,11 +5506,11 @@
         const ftEl   = document.getElementById('tw-p-final-text');
         if (ftEl) {
           if (winner === playerKey) {
-            ftEl.textContent = 'YOU WIN THE ROUND! +$25'; ftEl.className = 'rb-player-result-text won';
+            ftEl.textContent = 'YOU WIN THE ROUND! +25 pts'; ftEl.className = 'rb-player-result-text won';
           } else if (winner === 'tie') {
             ftEl.textContent = "IT'S A TIE!"; ftEl.className = 'rb-player-result-text neutral';
           } else {
-            ftEl.textContent = 'YOU LOSE THE ROUND. -$15'; ftEl.className = 'rb-player-result-text lost';
+            ftEl.textContent = 'YOU LOSE THE ROUND. -15 pts'; ftEl.className = 'rb-player-result-text lost';
           }
         }
       }
@@ -5449,7 +5527,7 @@
         const scrambled = _scrambleWord(word.answer);
         const now       = Date.now();
         try {
-          flashTransition('var(--yellow)', 500);
+          flashTransition('var(--pink)', 500);
           await set(ref(db, 'round'), {
             id:            'typewave',
             state:         'active',
@@ -5611,7 +5689,7 @@
           setTimeout(() => input.classList.remove('tw-inp-wrong'), 400);
         }
         const wc = (latestRoundData.wrongCounts?.[playerKey] ?? 0) + 1;
-        if (statusEl) { statusEl.textContent = `WRONG! -$5 (×${wc})`; statusEl.className = 'tw-p-status tw-wrong'; }
+        if (statusEl) { statusEl.textContent = `WRONG! -5 pts (×${wc})`; statusEl.className = 'tw-p-status tw-wrong'; }
 
         try {
           await update(ref(db, 'round'), {
@@ -5945,7 +6023,7 @@
 
         function stSetDelta(id, val) {
           const el = document.getElementById(id); if (!el) return;
-          el.textContent = `${val >= 0 ? '+' : ''}$${val}`;
+          el.textContent = `${val >= 0 ? '+' : ''}${Math.abs(val)} pts`;
           el.className   = `rmc-delta ${val > 0 ? 'positive' : val < 0 ? 'negative' : 'neutral'}`;
         }
         stSetDelta('st-delta-p1', d1);
@@ -6021,11 +6099,11 @@
         const fsEl    = document.getElementById('st-p-final-score');
         if (ftEl) {
           if (winner === playerKey) {
-            ftEl.textContent = 'YOU WIN! +$25'; ftEl.className = 'rb-player-result-text won';
+            ftEl.textContent = 'YOU WIN! +25 pts'; ftEl.className = 'rb-player-result-text won';
           } else if (winner === 'tie') {
-            ftEl.textContent = "IT'S A TIE! +$5"; ftEl.className = 'rb-player-result-text neutral';
+            ftEl.textContent = "IT'S A TIE! +5 pts"; ftEl.className = 'rb-player-result-text neutral';
           } else {
-            ftEl.textContent = 'YOU LOSE. -$15'; ftEl.className = 'rb-player-result-text lost';
+            ftEl.textContent = 'YOU LOSE. -15 pts'; ftEl.className = 'rb-player-result-text lost';
           }
         }
         if (fsEl) fsEl.textContent = `Your score: ${myScore} / 12`;
@@ -6039,7 +6117,7 @@
         btnStStart.disabled = true;
         stLocal = { resolved: false, resultApplied: false };
         try {
-          flashTransition('var(--yellow)', 500);
+          flashTransition('var(--pink)', 500);
           await set(ref(db, 'round'), {
             id:            'stacker',
             state:         'active',
@@ -6061,7 +6139,7 @@
       const s2     = data.stackerScores?.player2 ?? 0;
       const winner = s1 > s2 ? 'player1' : s2 > s1 ? 'player2' : 'tie';
       try {
-        flashTransition('var(--yellow)', 500);
+        flashTransition('var(--pink)', 500);
         await update(ref(db, 'round'), { state: 'ended', winner });
       } catch (err) { console.error('[Stacker] Resolve error:', err); }
     }
@@ -6132,6 +6210,22 @@
     const TB_DURATION_MS = 10000; // 10 seconds
 
     let tbLocal = { resultApplied: false };
+    let _tbTimerInterval = null;
+
+    function tbStartClientTimer(endTime) {
+      if (_tbTimerInterval) clearInterval(_tbTimerInterval);
+      _tbTimerInterval = setInterval(() => {
+        const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+        const timerEl = document.getElementById('tb-p-timer');
+        if (timerEl) timerEl.textContent = `${remaining}s`;
+        if (remaining <= 0) { clearInterval(_tbTimerInterval); _tbTimerInterval = null; }
+      }, 250);
+    }
+    function tbStopClientTimer() {
+      if (_tbTimerInterval) { clearInterval(_tbTimerInterval); _tbTimerInterval = null; }
+    }
+
+    let _tbLocalCount = 0;   // local tap counter — avoids stale Firebase reads
 
     // ── Host: render Tap Battle panel ───────────────────────────
     function renderHostTapBattle(data, playersData) {
@@ -6204,13 +6298,27 @@
       endEl.classList.toggle('hidden',  state !== 'ended');
 
       if (state === 'active') {
-        const myTaps  = data.taps?.[playerKey] ?? 0;
+        const oppKey  = playerKey === 'player1' ? 'player2' : 'player1';
+        const serverTaps = data.taps?.[playerKey] ?? 0;
+        // Sync local counter if server has higher value (e.g. after reconnect)
+        if (serverTaps > _tbLocalCount) _tbLocalCount = serverTaps;
+        const oppTaps = data.taps?.[oppKey]    ?? 0;
+        const endTime = data.endTime ?? (Date.now() + TB_DURATION_MS);
         const now     = Date.now();
-        const remaining = Math.max(0, Math.ceil(((data.endTime ?? now) - now) / 1000));
-        const timerEl = document.getElementById('tb-p-timer');
-        const countEl = document.getElementById('tb-p-count');
+        const remaining = Math.max(0, Math.ceil((endTime - now) / 1000));
+        const timerEl  = document.getElementById('tb-p-timer');
+        const countEl  = document.getElementById('tb-p-count');
+        const oppEl    = document.getElementById('tb-p-opp-count');
         if (timerEl) timerEl.textContent = `${remaining}s`;
-        if (countEl) countEl.textContent = myTaps;
+        if (countEl) countEl.textContent = _tbLocalCount;
+        if (oppEl)   oppEl.textContent   = oppTaps;
+        // Start smooth client-side countdown
+        if (!_tbTimerInterval && endTime) tbStartClientTimer(endTime);
+      }
+
+      if (state !== 'active') {
+        tbStopClientTimer();
+        _tbLocalCount = 0; // reset for next round
       }
 
       if (state === 'ended') {
@@ -6218,7 +6326,7 @@
         const resultEl = document.getElementById('tb-p-result-text');
         if (resultEl) {
           resultEl.textContent = !winner ? "TIE!" : winner === playerKey ? "YOU WIN! 🎉" : "YOU LOSE 😢";
-          resultEl.style.color = !winner ? 'var(--yellow)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
+          resultEl.style.color = !winner ? 'var(--pink)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
         }
       }
     }
@@ -6321,11 +6429,12 @@
         const now = Date.now();
         if (now - _tbLastTap < 80) return; // debounce 80ms
         _tbLastTap = now;
-        const currentTaps = latestRoundData.taps?.[playerKey] ?? 0;
+        _tbLocalCount++;
         const countEl = document.getElementById('tb-p-count');
-        if (countEl) countEl.textContent = currentTaps + 1; // optimistic UI
+        if (countEl) countEl.textContent = _tbLocalCount; // optimistic UI
+        const tapCount = _tbLocalCount;
         try {
-          await update(ref(db, `round/taps`), { [playerKey]: currentTaps + 1 });
+          await update(ref(db, `round/taps`), { [playerKey]: tapCount });
         } catch(e) { console.error('[TapBattle] tap error:', e); }
       };
       btnTbTap.addEventListener('touchstart', e => { e.preventDefault(); handleTap(); }, { passive: false });
@@ -6473,7 +6582,7 @@
 
         function btSetDelta(id, val) {
           const el = document.getElementById(id); if (!el) return;
-          el.textContent = `${val >= 0 ? '+' : ''}$${val}`;
+          el.textContent = `${val >= 0 ? '+' : ''}${Math.abs(val)} pts`;
           el.className   = `rmc-delta ${val > 0 ? 'positive' : val < 0 ? 'negative' : 'neutral'}`;
         }
         btSetDelta('bt-delta-p1', outcome.p1);
@@ -6537,11 +6646,11 @@
         const outEl = document.getElementById('bt-p-outcome-text');
         if (outEl) {
           if (myDelta > 0) {
-            outEl.textContent = `+$${myDelta}`;             outEl.className = 'rb-player-result-text won';
+            outEl.textContent = `+${myDelta} pts`;             outEl.className = 'rb-player-result-text won';
           } else if (myDelta < 0) {
-            outEl.textContent = `-$${Math.abs(myDelta)}`;   outEl.className = 'rb-player-result-text lost';
+            outEl.textContent = `-${Math.abs(myDelta)} pts`;   outEl.className = 'rb-player-result-text lost';
           } else {
-            outEl.textContent = '$0 change';                 outEl.className = 'rb-player-result-text neutral';
+            outEl.textContent = '0 pts change';                 outEl.className = 'rb-player-result-text neutral';
           }
         }
 
@@ -6805,18 +6914,34 @@
       subEl.classList.toggle('hidden',   state !== 'subresult');
       endEl.classList.toggle('hidden',   state !== 'ended');
 
-      if (state === 'armed') _rxnPlayerClicked = false; // reset for new sub-round
+      if (state === 'armed') {
+        _rxnPlayerClicked = false; // reset for new sub-round
+        const scores = data.scores ?? {};
+        const oppKey = playerKey === 'player1' ? 'player2' : 'player1';
+        const myEl  = document.getElementById('rxn-p-my-score');
+        const oppEl = document.getElementById('rxn-p-opp-score');
+        if (myEl)  myEl.textContent  = scores[playerKey] ?? 0;
+        if (oppEl) oppEl.textContent = scores[oppKey]    ?? 0;
+      }
 
       if (state === 'subresult') {
         const winner  = data.subWinner;
-        const subText = document.getElementById('rxn-p-sub-text');
+        const subText = document.getElementById('rxn-p-subresult-text');
         const scores  = data.scores ?? {};
+        const oppKey  = playerKey === 'player1' ? 'player2' : 'player1';
         if (subText) {
           subText.textContent = !winner ? 'Nobody tapped in time!' : winner === playerKey ? 'You were faster! ✓' : 'They were faster…';
-          subText.style.color = !winner ? 'var(--yellow)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
+          subText.style.color = !winner ? 'var(--pink)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
         }
-        const scoreEl = document.getElementById('rxn-p-score');
-        if (scoreEl) scoreEl.textContent = `You: ${scores[playerKey] ?? 0}`;
+        const myEl2  = document.getElementById('rxn-p-my-score2');
+        const oppEl2 = document.getElementById('rxn-p-opp-score2');
+        if (myEl2)  myEl2.textContent  = scores[playerKey] ?? 0;
+        if (oppEl2) oppEl2.textContent = scores[oppKey]    ?? 0;
+        // also update armed-state score display
+        const myEl  = document.getElementById('rxn-p-my-score');
+        const oppEl = document.getElementById('rxn-p-opp-score');
+        if (myEl)  myEl.textContent  = scores[playerKey] ?? 0;
+        if (oppEl) oppEl.textContent = scores[oppKey]    ?? 0;
       }
 
       if (state === 'ended') {
@@ -6824,7 +6949,7 @@
         const finalEl  = document.getElementById('rxn-p-final-text');
         if (finalEl) {
           finalEl.textContent = !winner ? "TIE!" : winner === playerKey ? "YOU WIN! 🎉" : "YOU LOSE 😢";
-          finalEl.style.color = !winner ? 'var(--yellow)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
+          finalEl.style.color = !winner ? 'var(--pink)' : winner === playerKey ? 'var(--green)' : 'var(--red)';
         }
       }
     }
@@ -6962,7 +7087,7 @@
       btnWlStartStandalone.addEventListener('click', async () => {
         btnWlStartStandalone.disabled = true;
         try {
-          flashTransition('var(--yellow)', 500);
+          flashTransition('var(--pink)', 500);
           await set(ref(db, 'round'), {
             id: 'wheel', state: 'p1_ready',
             p1Multiplier: null, p2Multiplier: null,
@@ -7091,7 +7216,7 @@
         ctx.arc(cx, cy, W * 0.1, 0, Math.PI * 2);
         ctx.fillStyle   = '#111';
         ctx.fill();
-        ctx.strokeStyle = '#FFD700';
+        ctx.strokeStyle = '#FF69B4';
         ctx.lineWidth   = 3;
         ctx.stroke();
       }
@@ -7301,7 +7426,7 @@
                 await update(ref(db, 'players/player2'), { points: newBal2, alive: newBal2 > 0 });
                 await update(ref(db, 'game'), { phase: 'finale' });
                 await update(ref(db, 'round'), { state: 'ended' });
-                flashTransition('#FFD700', 600);
+                flashTransition('#FF69B4', 600);
               } catch(e) { console.error(e); applyBtn.disabled = false; }
             });
           }
@@ -7455,7 +7580,7 @@
               <div class="fc-name">${p.name || (key === 'player1' ? 'Player 1' : 'Player 2')}</div>
               <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">${start} pts</span></div>
               <div class="fc-row"><span class="fc-label">Wheel</span><span class="fc-value">${mult}×</span></div>
-              <div class="fc-row"><span class="fc-label">Final</span><span class="fc-value" style="color:var(--yellow)">${final} pts</span></div>
+              <div class="fc-row"><span class="fc-label">Final</span><span class="fc-value" style="color:var(--pink)">${final} pts</span></div>
               <div class="fc-row"><span class="fc-label">Change</span><span class="fc-value ${diffClass}">${diffSign}${Math.abs(diff)} pts</span></div>
             </div>`;
         }).join('');
@@ -7463,7 +7588,7 @@
         // Fire fanfare + confetti once
         if (!_finaleFired) {
           _finaleFired = true;
-          flashTransition('#FFD700', 800);
+          flashTransition('#FF69B4', 800);
           setTimeout(() => window.launchConfetti?.(), 400);
         }
       }
@@ -7488,8 +7613,8 @@
           : (roundData?.p1Multiplier ?? 1);
 
         const winnerText  = final > oppFinal ? 'YOU WIN!' : final < oppFinal ? 'YOU LOSE' : "IT'S A TIE!";
-        const winnerBg    = final > oppFinal ? 'rgba(0,255,135,0.18)' : final < oppFinal ? 'rgba(255,45,45,0.18)' : 'rgba(255,215,0,0.18)';
-        const winnerColor = final > oppFinal ? 'var(--green)' : final < oppFinal ? '#FF2D2D' : 'var(--yellow)';
+        const winnerBg    = final > oppFinal ? 'rgba(0,255,135,0.18)' : final < oppFinal ? 'rgba(255,45,45,0.18)' : 'rgba(255,105,180,0.18)';
+        const winnerColor = final > oppFinal ? 'var(--green)' : final < oppFinal ? '#FF2D2D' : 'var(--pink)';
 
         const nameEl   = document.getElementById('player-finale-name');
         const amtEl    = document.getElementById('player-finale-amount');
@@ -7519,7 +7644,7 @@
             flashTransition('#FF2D2D', 700);
             setTimeout(() => soundElimination(), 200);
           } else {
-            flashTransition('#FFD700', 500);
+            flashTransition('#FF69B4', 500);
             setTimeout(() => soundFanfare(), 300);
           }
         }
@@ -7541,8 +7666,9 @@
         redbutton: 'Red Button',
         typewave:  'Typewave',
         stacker:   'Stacker',
-        execution: 'The Execution',
+        tapbattle: 'Tap Battle',
         betrayal:  'The Betrayal Vote',
+        reaction:  'Reaction Round',
         typetest:  'Type Test',
         wheel:     'Wheel of Fate',
       };
@@ -7593,7 +7719,7 @@
           'display:flex;align-items:center;justify-content:center;' +
           'z-index:99999;font-family:var(--font-body);';
         modal.innerHTML = `
-          <div style="background:#1a1a1a;border:2px solid var(--yellow);
+          <div style="background:#1a1a1a;border:2px solid var(--pink);
                       padding:32px;border-radius:12px;text-align:center;
                       max-width:400px;margin:16px;">
             <p style="color:white;font-size:18px;margin-bottom:24px;
