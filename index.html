@@ -2271,6 +2271,7 @@
     #confetti-canvas.visible { opacity: 1; }
 
     /* ── Master Host Control Panel ─────────────────────────── */
+    /* ── Master Controls — slide-up drawer ───────────────────── */
     #master-controls {
       position: fixed;
       bottom: 0;
@@ -2278,60 +2279,108 @@
       right: 0;
       background: #111111;
       border-top: 3px solid var(--pink);
-      padding: 12px 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(calc(100% - 52px));
+      transition: transform 0.3s cubic-bezier(0.34,1.28,0.64,1);
+    }
+    #master-controls.mc-open { transform: translateY(0); }
+
+    /* Tab handle — always visible */
+    .mc-tab {
       display: flex;
       align-items: center;
-      gap: 12px;
-      z-index: 9999;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 52px;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .mc-tab:active { background: rgba(255,105,180,0.08); }
+
+    .mc-tab-status {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: var(--pink);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .mc-tab-status span { color: var(--white); }
+
+    .mc-tab-arrow {
+      font-size: 18px;
+      color: var(--pink);
+      transition: transform 0.3s;
+      margin-left: 12px;
+      flex-shrink: 0;
+    }
+    #master-controls.mc-open .mc-tab-arrow { transform: rotate(180deg); }
+
+    /* Drawer body */
+    .mc-body {
+      padding: 12px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      max-height: 70vh;
     }
 
+    /* Status line inside drawer (desktop) */
     .mc-status {
       font-family: var(--font-display);
       font-size: 15px;
       letter-spacing: 0.1em;
       color: var(--pink);
-      min-width: 200px;
-      flex: 1;
+      display: none; /* shown via tab handle instead */
     }
-
     .mc-status span { color: var(--white); }
 
-    .mc-nav-group {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
+    /* 2-column button grid */
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .mc-grid-full {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
 
     .mc-btn {
       font-family: var(--font-display);
-      font-size: 14px;
+      font-size: 15px;
       letter-spacing: 0.06em;
       border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
+      padding: 0 16px;
+      border-radius: 10px;
       cursor: pointer;
-      min-height: 40px;
+      height: 56px;
       transition: transform 0.1s, box-shadow 0.15s;
       white-space: nowrap;
+      width: 100%;
     }
-
-    .mc-btn:hover:not(:disabled)  { transform: scale(1.04); }
-    .mc-btn:active:not(:disabled) { transform: scale(0.96); }
+    .mc-btn:active:not(:disabled) { transform: scale(0.95); }
     .mc-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    .mc-btn-prev    { background: var(--white);  color: #000; }
+    .mc-btn-prev    { background: #2a2a2a; color: var(--white); }
     .mc-btn-skip    { background: var(--pink); color: #fff; }
-    .mc-btn-restart { background: #FF8C00;       color: var(--white); }
-    .mc-btn-finale  { background: var(--red);    color: var(--white); }
-    .mc-btn-money   { background: var(--green);  color: #000; }
-    .mc-btn-nuclear { background: rgba(255,45,45,0.18); color: var(--red); border: 2px solid var(--red); font-size: 13px; font-weight: 700; }
-    .mc-btn-nuclear:hover { background: rgba(255,45,45,0.32); }
-    .mc-btn-nuclear.armed {
-      background: var(--red);
-      color: var(--white);
+    .mc-btn-restart { background: #FF8C00; color: var(--white); }
+    .mc-btn-finale  { background: var(--red); color: var(--white); }
+    .mc-btn-money   { background: rgba(0,255,135,0.12); color: var(--green); border: 2px solid var(--green); }
+    .mc-btn-nuclear { background: rgba(255,45,45,0.12); color: var(--red); border: 2px solid var(--red); }
+    .mc-btn-nuclear.armed, .mc-btn-nuclear.armed:active {
+      background: var(--red); color: var(--white);
       animation: breathe 0.6s ease-in-out infinite;
+    }
+    .mc-divider {
+      height: 1px; background: #222; margin: 2px 0;
     }
     /* big standalone restart button on finale */
     .btn-restart-game {
@@ -2444,52 +2493,7 @@
     .me-log-entry { padding: 1px 0; }
     .me-log-entry span { color: #888; }
 
-    .mc-shortcuts-wrap { position: relative; }
-
-    .mc-shortcuts-label {
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: #444;
-      cursor: default;
-      padding: 6px 10px;
-      border: 1px solid #222;
-      border-radius: 4px;
-      white-space: nowrap;
-      user-select: none;
-    }
-
-    .mc-shortcuts-label:hover { color: #888; border-color: #333; }
-
-    .mc-shortcuts-tooltip {
-      display: none;
-      position: absolute;
-      bottom: calc(100% + 8px);
-      right: 0;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 14px 18px;
-      width: 250px;
-      font-family: var(--font-body);
-      font-size: 12px;
-      color: #888;
-      line-height: 2;
-      z-index: 10000;
-      white-space: nowrap;
-    }
-
-    .mc-shortcuts-wrap:hover .mc-shortcuts-tooltip { display: block; }
-
-    .mc-shortcuts-tooltip kbd {
-      background: #222;
-      border: 1px solid #444;
-      border-radius: 3px;
-      padding: 1px 5px;
-      font-size: 11px;
-      color: var(--pink);
-    }
+    /* keyboard shortcut hint removed — useless on mobile */
 
   </style>
 
@@ -3191,6 +3195,7 @@
         <div id="me-log"></div>
       </div>
 
+      </div><!-- /mc-body -->
     </div><!-- /master-controls -->
 
   </div>
@@ -7696,13 +7701,27 @@
 
       let _mcGameData = null; // tracks /game snapshot for master panel
 
-      // Reveal the panel
+      // Reveal the panel + wire tab toggle
       const _mcPanel = document.getElementById('master-controls');
       if (_mcPanel) _mcPanel.classList.remove('hidden');
 
-      // Push content down so panel doesn't obscure host UI
+      // Tab handle opens/closes the drawer
+      const _mcTab = document.getElementById('mc-tab');
+      if (_mcTab) {
+        _mcTab.addEventListener('click', () => {
+          _mcPanel.classList.toggle('mc-open');
+        });
+      }
+      // Close drawer when user taps outside it
+      document.addEventListener('pointerdown', (e) => {
+        if (_mcPanel && _mcPanel.classList.contains('mc-open') && !_mcPanel.contains(e.target)) {
+          _mcPanel.classList.remove('mc-open');
+        }
+      }, { passive: true });
+
+      // Push content down so panel doesn't obscure host UI (tab height = 52px)
       const _hv = document.getElementById('host-view');
-      if (_hv) _hv.style.paddingBottom = '80px';
+      if (_hv) _hv.style.paddingBottom = '60px';
 
       // ── Status display ─────────────────────────────────────────
       function updateMasterStatus() {
@@ -7852,6 +7871,8 @@
       // ── Money editor toggle ────────────────────────────────────
       function toggleMoneyEditor() {
         document.getElementById('money-editor')?.classList.toggle('hidden');
+        // Make sure drawer stays open
+        _mcPanel?.classList.add('mc-open');
       }
 
       // ── Money log ─────────────────────────────────────────────
