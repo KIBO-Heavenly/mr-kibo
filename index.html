@@ -2287,6 +2287,13 @@
     }
     #master-controls.mc-open { transform: translateY(0); }
 
+    @media (max-width: 560px) {
+      .mc-tab { height: 56px; }
+      .mc-btn  { height: 52px; font-size: 13px; }
+      .mc-body { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+      .me-player-row { flex-wrap: wrap; gap: 8px; }
+    }
+
     /* Tab handle — always visible */
     .mc-tab {
       display: flex;
@@ -3146,54 +3153,62 @@
     <!-- ── Master Host Control Panel (always visible on host) ─── -->
     <div id="master-controls" class="hidden">
 
-      <!-- Round status — left side -->
-      <div class="mc-status" id="mc-status-text">LOBBY — WAITING FOR PLAYERS</div>
-
-      <!-- Round navigation buttons -->
-      <div class="mc-nav-group">
-        <button class="mc-btn mc-btn-prev"    id="mc-btn-prev">⏮ PREV ROUND</button>
-        <button class="mc-btn mc-btn-skip"    id="mc-btn-skip">⏭ SKIP ROUND</button>
-        <button class="mc-btn mc-btn-restart" id="mc-btn-restart">🔄 RESTART ROUND</button>
-        <button class="mc-btn mc-btn-finale"  id="mc-btn-finale">🏁 GO TO FINALE</button>
+      <!-- Tab handle — always peeking 52px above bottom, click to open/close -->
+      <div class="mc-tab" id="mc-tab">
+        <div class="mc-tab-status" id="mc-status-text">⚙️ HOST CONTROLS — TAP TO OPEN</div>
+        <div class="mc-tab-arrow">▲</div>
       </div>
 
-      <!-- Money editor toggle -->
-      <button class="mc-btn mc-btn-money" id="mc-btn-toggle-money">🎁 POINTS EDITOR</button>
+      <!-- Drawer body — slides up on open -->
+      <div class="mc-body">
 
-      <!-- Nuclear reset — double-confirm -->
-      <button class="mc-btn mc-btn-nuclear" id="mc-btn-nuclear">� RESET GAME</button>
+        <!-- Round navigation buttons (2-column grid) -->
+        <div class="mc-grid">
+          <button class="mc-btn mc-btn-prev"    id="mc-btn-prev">⏮ PREV ROUND</button>
+          <button class="mc-btn mc-btn-skip"    id="mc-btn-skip">⏭ SKIP ROUND</button>
+          <button class="mc-btn mc-btn-restart" id="mc-btn-restart">🔄 RESTART ROUND</button>
+          <button class="mc-btn mc-btn-finale"  id="mc-btn-finale">🏁 GO TO FINALE</button>
+        </div>
 
-      <!-- Keyboard shortcut hint -->
-      <div class="mc-shortcuts-wrap">
-        <div class="mc-shortcuts-label">⌨️ Shortcuts</div>
-        <div class="mc-shortcuts-tooltip">
-          <div><kbd>Ctrl</kbd> + <kbd>→</kbd> &nbsp;Skip round</div>
-          <div><kbd>Ctrl</kbd> + <kbd>←</kbd> &nbsp;Prev round</div>
-          <div><kbd>Ctrl</kbd> + <kbd>R</kbd> &nbsp;&nbsp;Restart round</div>
-          <div><kbd>Ctrl</kbd> + <kbd>M</kbd> &nbsp;Toggle points panel</div>
-        </div>
-      </div>
+        <div class="mc-divider"></div>
 
-      <!-- Money editor — collapsed by default -->
-      <div id="money-editor" class="hidden">
-        <div class="me-player-row">
-          <div class="me-player-label" id="me-p1-name">Player 1</div>
-          <div class="me-balance"      id="me-p1-bal">0 pts</div>
-          <button class="me-adj-btn me-minus" data-player="player1" data-adj="-10">− 10</button>
-          <button class="me-adj-btn me-plus"  data-player="player1" data-adj="10">+ 10</button>
-          <input  class="me-set-input" id="me-p1-input" type="number" placeholder="amt" min="0" />
-          <button class="me-apply-btn" data-player="player1">APPLY</button>
+        <!-- Money editor toggle -->
+        <button class="mc-btn mc-btn-money" id="mc-btn-toggle-money">🎁 POINTS EDITOR</button>
+
+      <!-- Nuclear reset -- double-confirm -->
+        <button class="mc-btn mc-btn-nuclear" id="mc-btn-nuclear">&#x1F534; RESET GAME</button>
+
+        <!-- Keyboard shortcut hint -->
+        <div class="mc-shortcuts-wrap">
+          <div class="mc-shortcuts-label">&#x2328;&#xFE0F; Shortcuts</div>
+          <div class="mc-shortcuts-tooltip">
+            <div><kbd>Ctrl</kbd> + <kbd>&#x2192;</kbd> &nbsp;Skip round</div>
+            <div><kbd>Ctrl</kbd> + <kbd>&#x2190;</kbd> &nbsp;Prev round</div>
+            <div><kbd>Ctrl</kbd> + <kbd>R</kbd> &nbsp;&nbsp;Restart round</div>
+            <div><kbd>Ctrl</kbd> + <kbd>M</kbd> &nbsp;Toggle points panel</div>
+          </div>
         </div>
-        <div class="me-player-row">
-          <div class="me-player-label" id="me-p2-name">Player 2</div>
-          <div class="me-balance"      id="me-p2-bal">0 pts</div>
-          <button class="me-adj-btn me-minus" data-player="player2" data-adj="-10">− 10</button>
-          <button class="me-adj-btn me-plus"  data-player="player2" data-adj="10">+ 10</button>
-          <input  class="me-set-input" id="me-p2-input" type="number" placeholder="amt" min="0" />
-          <button class="me-apply-btn" data-player="player2">APPLY</button>
+
+        <!-- Money editor -- collapsed by default -->
+        <div id="money-editor" class="hidden">
+          <div class="me-player-row">
+            <div class="me-player-label" id="me-p1-name">Player 1</div>
+            <div class="me-balance"      id="me-p1-bal">0 pts</div>
+            <button class="me-adj-btn me-minus" data-player="player1" data-adj="-10">&#x2212; 10</button>
+            <button class="me-adj-btn me-plus"  data-player="player1" data-adj="10">+ 10</button>
+            <input  class="me-set-input" id="me-p1-input" type="number" placeholder="amt" min="0" />
+            <button class="me-apply-btn" data-player="player1">APPLY</button>
+          </div>
+          <div class="me-player-row">
+            <div class="me-player-label" id="me-p2-name">Player 2</div>
+            <div class="me-balance"      id="me-p2-bal">0 pts</div>
+            <button class="me-adj-btn me-minus" data-player="player2" data-adj="-10">&#x2212; 10</button>
+            <button class="me-adj-btn me-plus"  data-player="player2" data-adj="10">+ 10</button>
+            <input  class="me-set-input" id="me-p2-input" type="number" placeholder="amt" min="0" />
+            <button class="me-apply-btn" data-player="player2">APPLY</button>
+          </div>
+          <div id="me-log"></div>
         </div>
-        <div id="me-log"></div>
-      </div>
 
       </div><!-- /mc-body -->
     </div><!-- /master-controls -->
