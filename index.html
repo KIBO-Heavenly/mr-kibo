@@ -2326,12 +2326,32 @@
     .mc-btn-restart { background: #FF8C00;       color: var(--white); }
     .mc-btn-finale  { background: var(--red);    color: var(--white); }
     .mc-btn-money   { background: var(--green);  color: #000; }
-    .mc-btn-nuclear { background: #2a2a2a; color: #666; font-size: 12px; }
+    .mc-btn-nuclear { background: rgba(255,45,45,0.18); color: var(--red); border: 2px solid var(--red); font-size: 13px; font-weight: 700; }
+    .mc-btn-nuclear:hover { background: rgba(255,45,45,0.32); }
     .mc-btn-nuclear.armed {
       background: var(--red);
       color: var(--white);
       animation: breathe 0.6s ease-in-out infinite;
     }
+    /* big standalone restart button on finale */
+    .btn-restart-game {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+      padding: 18px 48px;
+      background: rgba(255,45,45,0.15);
+      border: 2px solid var(--red);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-restart-game:hover { background: var(--red); color: #fff; transform: scale(1.06); box-shadow: 0 0 32px rgba(255,45,45,0.5); }
+    .btn-restart-game.armed { background: var(--red); color: #fff; animation: breathe 0.6s ease-in-out infinite; }
 
     #money-editor {
       width: 100%;
@@ -3110,6 +3130,7 @@
       <div class="finale-eyebrow">🎂 Happy Birthday Veronica! 🎂</div>
       <div class="finale-title">Final Scores</div>
       <div class="finale-cards" id="host-finale-cards"></div>
+      <button class="btn-restart-game" id="btn-finale-restart">🔄 RESTART ENTIRE GAME</button>
       <div class="play-again-links">
         <div class="play-again-label">Share these links to play again:</div>
         <a class="play-again-btn play-again-host" href="?view=host">🎮 Host View</a>
@@ -3136,7 +3157,7 @@
       <button class="mc-btn mc-btn-money" id="mc-btn-toggle-money">🎁 POINTS EDITOR</button>
 
       <!-- Nuclear reset — double-confirm -->
-      <button class="mc-btn mc-btn-nuclear" id="mc-btn-nuclear">💣 RESET GAME</button>
+      <button class="mc-btn mc-btn-nuclear" id="mc-btn-nuclear">� RESET GAME</button>
 
       <!-- Keyboard shortcut hint -->
       <div class="mc-shortcuts-wrap">
@@ -7889,47 +7910,51 @@
         } catch (e) { console.error('[MC] setMoney:', e); }
       }
 
-      // ── Nuclear reset (double-confirm within 3 s) ──────────────
-      let _nuclearArmed   = false;
-      let _nuclearTimer   = null;
-      const _nuclearBtn   = document.getElementById('mc-btn-nuclear');
-      if (_nuclearBtn) {
-        _nuclearBtn.addEventListener('click', () => {
-          if (!_nuclearArmed) {
-            _nuclearArmed = true;
-            _nuclearBtn.textContent = '⚠️ ARE YOU SURE? CLICK AGAIN';
-            _nuclearBtn.classList.add('armed');
-            _nuclearTimer = setTimeout(() => {
-              _nuclearArmed = false;
-              _nuclearBtn.textContent = '💣 RESET GAME';
-              _nuclearBtn.classList.remove('armed');
+      // ── Nuclear reset (shared logic + double-confirm) ───────────
+      async function doNuclearReset() {
+        try {
+          const playersInit = {};
+          PLAYER_KEYS.forEach(k => {
+            playersInit[k] = { name: '', points: 0, startingPoints: 0, alive: true, answer: null, ready: false };
+          });
+          await set(ref(db, '/'), {
+            game: { phase: 'lobby', currentRound: 0, roundActive: false },
+            players: playersInit,
+            round: null,
+            wheel: null,
+            fps: null,
+          });
+          _finaleFired = false;
+        } catch (e) { console.error('[MC] nuclearReset:', e); }
+      }
+
+      function armResetBtn(btn, defaultLabel) {
+        let armed = false, timer = null;
+        btn.addEventListener('click', () => {
+          if (!armed) {
+            armed = true;
+            btn.textContent = '⚠️ CLICK AGAIN TO CONFIRM';
+            btn.classList.add('armed');
+            timer = setTimeout(() => {
+              armed = false;
+              btn.textContent = defaultLabel;
+              btn.classList.remove('armed');
             }, 3000);
           } else {
-            clearTimeout(_nuclearTimer);
-            _nuclearArmed = false;
-            _nuclearBtn.textContent = '💣 RESET GAME';
-            _nuclearBtn.classList.remove('armed');
-            confirmAction(
-              `RESET ENTIRE GAME?<br>
-               <small style="color:var(--red)">Wipes ALL Firebase data and returns to lobby with 0 points.</small>`,
-              async () => {
-                try {
-                  const playersInit = {};
-                  PLAYER_KEYS.forEach(k => {
-                    playersInit[k] = { name: '', points: 0, startingPoints: 0, alive: true, answer: null, ready: false };
-                  });
-                  await set(ref(db, '/'), {
-                    game: { phase: 'lobby', currentRound: 0, roundActive: false },
-                    players: playersInit,
-                    round: null,
-                    wheel: null,
-                  });
-                } catch (e) { console.error('[MC] nuclearReset:', e); }
-              }
-            );
+            clearTimeout(timer);
+            armed = false;
+            btn.textContent = defaultLabel;
+            btn.classList.remove('armed');
+            doNuclearReset();
           }
         });
       }
+
+      const _nuclearBtn = document.getElementById('mc-btn-nuclear');
+      if (_nuclearBtn) armResetBtn(_nuclearBtn, '🔴 RESET GAME');
+
+      const _finaleRestartBtn = document.getElementById('btn-finale-restart');
+      if (_finaleRestartBtn) armResetBtn(_finaleRestartBtn, '🔄 RESTART ENTIRE GAME');
 
       // ── Wire up nav buttons ────────────────────────────────────
       document.getElementById('mc-btn-prev')   ?.addEventListener('click', prevRound);
