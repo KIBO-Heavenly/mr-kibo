@@ -599,6 +599,43 @@
     .btn-finish-round  { background: var(--red);    color: var(--white); box-shadow: 0 0 36px rgba(255,45,45,0.18); }
     .btn-apply-results { background: var(--green);  color: #000; box-shadow: 0 0 36px rgba(0,255,135,0.22); }
 
+    /* ── Shared generic action buttons (used in wheel + future rounds) */
+    .btn-primary {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: 0.1em;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      padding: 16px 44px;
+      border-radius: 6px;
+      cursor: pointer;
+      min-height: 58px;
+      box-shadow: 0 0 36px rgba(255,105,180,0.35);
+      transition: transform 0.12s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .btn-primary:hover:not(:disabled)  { transform: scale(1.04); box-shadow: 0 0 56px rgba(255,105,180,0.55); }
+    .btn-primary:active:not(:disabled) { transform: scale(0.97); }
+    .btn-primary:disabled { opacity: 0.28; cursor: not-allowed; }
+
+    .btn-secondary {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: 0.1em;
+      background: var(--green);
+      color: #000;
+      border: none;
+      padding: 16px 44px;
+      border-radius: 6px;
+      cursor: pointer;
+      min-height: 58px;
+      box-shadow: 0 0 36px rgba(0,255,135,0.25);
+      transition: transform 0.12s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .btn-secondary:hover:not(:disabled)  { transform: scale(1.04); box-shadow: 0 0 56px rgba(0,255,135,0.45); }
+    .btn-secondary:active:not(:disabled) { transform: scale(0.97); }
+    .btn-secondary:disabled { opacity: 0.28; cursor: not-allowed; }
+
     /* ── Trivia: pre-start section ───────────────────────────────── */
     .trivia-prestart {
       flex: 1;
@@ -1943,20 +1980,21 @@
       margin-bottom: 8px;
     }
     .btn-spin {
-      background: linear-gradient(145deg, #cc0070, var(--hot-pink));
+      background: var(--pink);
       color: #fff;
       font-family: var(--font-display);
       font-size: 22px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       border: none;
-      border-radius: 10px;
+      border-radius: 6px;
       padding: 14px 28px;
       cursor: pointer;
       min-width: 160px;
-      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: 0 0 30px rgba(255,105,180,0.3);
+      transition: transform 0.12s, box-shadow 0.2s, opacity 0.2s;
     }
-    .btn-spin:disabled { opacity: 0.35; cursor: not-allowed; transform: none; background: #555; color: #999; }
-    .btn-spin:not(:disabled):hover { transform: scale(1.04); }
+    .btn-spin:disabled { opacity: 0.28; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-spin:not(:disabled):hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(255,105,180,0.55); }
 
     .wl-wheel-area {
       display: flex;
@@ -2502,6 +2540,86 @@
 
     /* keyboard shortcut hint removed — useless on mobile */
 
+    /* ── Player Instruction Cards ─────────────────────────────── */
+    .p-inst-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding: 36px 24px 28px;
+      text-align: center;
+      max-width: 440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .p-inst-eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--pink);
+    }
+    .p-inst-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 10vw, 68px);
+      color: var(--white);
+      line-height: 0.92;
+    }
+    .p-inst-rules {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: #888;
+      line-height: 1.75;
+      max-width: 340px;
+    }
+    .p-inst-rules strong { color: var(--white); }
+    .p-inst-stakes {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .p-inst-pill {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.06em;
+      padding: 8px 22px;
+      border-radius: 999px;
+      line-height: 1;
+    }
+    .p-inst-pill.win  { background: rgba(0,255,135,0.12); color: var(--green); border: 2px solid rgba(0,255,135,0.3); }
+    .p-inst-pill.lose { background: rgba(255,45,45,0.10); color: var(--red);   border: 2px solid rgba(255,45,45,0.25); }
+    .p-inst-pill.tie  { background: rgba(255,255,255,0.06); color: #888;       border: 2px solid #2a2a2a; }
+    .p-inst-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .p-inst-matrix-cell {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 10px 8px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .p-inst-matrix-cell strong { display: block; font-family: var(--font-display); font-size: 16px; margin-bottom: 2px; }
+    .p-inst-matrix-cell.g strong { color: var(--green); }
+    .p-inst-matrix-cell.r strong { color: var(--red); }
+    .p-inst-footer {
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.24em;
+      color: #2a2a2a;
+      animation: breathe 2.4s ease-in-out infinite;
+      margin-top: 4px;
+    }
+
   </style>
 
   <!-- Three.js r128 — used by The Execution (Round 5 FPS) -->
@@ -2547,15 +2665,6 @@
       <div class="lobby-title">
         <span class="lobby-eyebrow" style="font-family:var(--font-birthday);font-size:24px;color:var(--pink)">Happy Birthday Veronica! 🎂</span>
         BIRTHDAY<br>GAME
-      </div>
-
-      <!-- Host name entry -->
-      <div style="display:flex;gap:12px;align-items:center;margin:12px 0;flex-wrap:wrap;justify-content:center">
-        <input id="host-name-input" type="text" maxlength="20"
-               placeholder="Your name (you are Player 1)"
-               style="padding:12px 16px;background:#111;border:2px solid var(--pink);border-radius:6px;
-                      color:var(--white);font-family:var(--font-body);font-size:16px;flex:1;min-width:200px;max-width:340px" />
-        <button id="btn-host-lock-name" class="btn-primary" style="padding:12px 24px;font-size:18px">LOCK IN</button>
       </div>
 
       <!-- Share link -->
@@ -3244,7 +3353,21 @@
 
         <!-- ① Waiting for host to start -->
         <div id="player-trivia-waiting">
-          <div class="player-trivia-anim">ROUND STARTING SOON…</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 1 of 8</div>
+            <div class="p-inst-title">Who Knows Me Better?</div>
+            <div class="p-inst-rules">
+              Answer <strong>10 questions</strong> about Veronica.<br>
+              Type your answer and hit <strong>SUBMIT</strong>.<br>
+              The host judges each answer right or wrong.<br>
+              Most correct answers wins the round.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill win">WIN +20 pts</div>
+              <div class="p-inst-pill lose">LOSE −20 pts</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- ② Active question -->
@@ -3286,7 +3409,20 @@
 
         <!-- ① Waiting for round to start -->
         <div id="rb-p-waiting">
-          <div class="player-trivia-anim">ROUND STARTING SOON…</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 2 of 8</div>
+            <div class="p-inst-title">Red Button</div>
+            <div class="p-inst-rules">
+              A <strong>red button</strong> flashes at a random spot on your screen.<br>
+              <strong>TAP IT FIRST</strong> to score the point.<br>
+              Best of <strong>7 points</strong> wins.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill win">+20 pts per win</div>
+              <div class="p-inst-pill lose">−10 pts per loss</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- ② Active: live scores + status -->
@@ -3323,7 +3459,21 @@
 
         <!-- ① Waiting for round to start -->
         <div id="tw-p-waiting">
-          <div class="player-trivia-anim">ROUND STARTING SOON…</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 3 of 8</div>
+            <div class="p-inst-title">Typewave</div>
+            <div class="p-inst-rules">
+              A <strong>scrambled word</strong> appears on both screens.<br>
+              Unscramble it and type the correct word <strong>first</strong>.<br>
+              Wrong answers cost <strong style="color:var(--red)">−5 pts</strong> each.<br>
+              First to <strong>5 words</strong> wins.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill win">WIN +25 pts</div>
+              <div class="p-inst-pill lose">LOSE −15 pts</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- ② Active: scrambled word + input -->
@@ -3373,8 +3523,22 @@
 
         <!-- ① Waiting -->
         <div id="st-p-waiting"
-             style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:20px;text-align:center;">
-          <div class="player-trivia-anim">ROUND STARTING SOON…</div>
+             style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;">
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 4 of 8</div>
+            <div class="p-inst-title">Stacker</div>
+            <div class="p-inst-rules">
+              <strong>Tap</strong> to drop the moving block onto the stack.<br>
+              Stack as high as you can — <strong>12 levels</strong>, speed increases each level.<br>
+              Higher stack wins. Tie = both get points.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill win">WIN +25 pts</div>
+              <div class="p-inst-pill lose">LOSE −15 pts</div>
+              <div class="p-inst-pill tie">TIE +5 pts</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- ② Active: the canvas game -->
@@ -3408,8 +3572,19 @@
 
         <!-- Waiting -->
         <div id="tb-p-waiting">
-          <div class="player-trivia-anim">🎂 TAP BATTLE</div>
-          <div class="waiting-status" style="margin-top:12px">Get ready to tap as fast as you can!</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 5 of 8</div>
+            <div class="p-inst-title">🎂 Tap Battle</div>
+            <div class="p-inst-rules">
+              Tap the button as <strong>fast as you can</strong> for <strong>10 seconds</strong>.<br>
+              Most taps when time runs out wins.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill win">WIN +25 pts</div>
+              <div class="p-inst-pill lose">LOSE −15 pts</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- Active tapping screen -->
@@ -3437,7 +3612,18 @@
 
         <!-- ① Waiting for round to start -->
         <div id="bt-p-waiting">
-          <div class="player-trivia-anim">ROUND STARTING SOON…</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 6 of 8</div>
+            <div class="p-inst-title">The Betrayal Vote</div>
+            <div class="p-inst-rules">Secretly choose <strong>Cooperate</strong> or <strong>Betray</strong>.</div>
+            <div class="p-inst-matrix">
+              <div class="p-inst-matrix-cell g"><strong>+15 / +15</strong>Both cooperate</div>
+              <div class="p-inst-matrix-cell r"><strong>+30 / −20</strong>You betray, they cooperate</div>
+              <div class="p-inst-matrix-cell r"><strong>−20 / +30</strong>You cooperate, they betray</div>
+              <div class="p-inst-matrix-cell r"><strong>−10 / −10</strong>Both betray</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- ② Voting: two giant buttons -->
@@ -3490,8 +3676,20 @@
 
         <!-- Waiting -->
         <div id="rxn-p-waiting">
-          <div class="player-trivia-anim">🎂 REACTION!</div>
-          <div class="waiting-status" style="margin-top:12px">Tap 🎂 the moment it appears!</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 7 of 8</div>
+            <div class="p-inst-title">Reaction Round</div>
+            <div class="p-inst-rules">
+              Wait for the 🎂 to appear, then <strong>tap it as fast as possible</strong>.<br>
+              Fastest reaction wins each sub-round.<br>
+              Best of <strong>3 sub-rounds</strong> wins.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill win">WIN +20 pts</div>
+              <div class="p-inst-pill lose">LOSE −10 pts</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST TO START…</div>
+          </div>
         </div>
 
         <!-- Armed: wait for signal -->
@@ -3556,8 +3754,22 @@
       <div id="player-wheel" class="hidden">
         <!-- Waiting for host to enable spin -->
         <div id="wl-p-waiting">
-          <div class="wl-p-status">WHEEL OF FATE</div>
-          <div class="waiting-status" style="margin-top:20px">Waiting for host…</div>
+          <div class="p-inst-card">
+            <div class="p-inst-eyebrow">Round 8 of 8 — The Finale</div>
+            <div class="p-inst-title">Wheel of Fate</div>
+            <div class="p-inst-rules">
+              Spin the wheel to get a <strong>multiplier</strong> applied to your final score.<br>
+              You could double your points — or cut them in half.
+            </div>
+            <div class="p-inst-stakes">
+              <div class="p-inst-pill lose">0.5× 💀</div>
+              <div class="p-inst-pill tie">0.75× 😬</div>
+              <div class="p-inst-pill tie">1× 😐</div>
+              <div class="p-inst-pill tie">1.25× 😏</div>
+              <div class="p-inst-pill win">2× 🎉</div>
+            </div>
+            <div class="p-inst-footer">WAITING FOR HOST…</div>
+          </div>
         </div>
 
         <!-- Spin ready (this player's turn) -->
@@ -3593,10 +3805,9 @@
 
     <!-- Results / Finale -->
     <div id="player-results" class="hidden">
-      <div class="finale-eyebrow">🎂 Your Birthday Score 🎂</div>
-      <div class="finale-title" id="player-finale-name"></div>
-      <div class="finale-amount" id="player-finale-amount"></div>
-      <div class="finale-breakdown" id="player-finale-breakdown"></div>
+      <div class="finale-eyebrow">🎂 Happy Birthday Veronica! 🎂</div>
+      <div class="finale-title" id="player-finale-outcome"></div>
+      <div class="finale-cards" id="player-finale-cards"></div>
       <div class="play-again-links">
         <a class="play-again-btn play-again-host" href="?view=host">🎮 Play Again (Host)</a>
         <a class="play-again-btn play-again-p1" href="?view=player&amp;player=player1">Play Again (P1)</a>
@@ -3611,7 +3822,8 @@
     <h1>🎂 Veronica's Birthday Game</h1>
     <p>Choose your view to open:</p>
     <div class="route-links">
-      <a href="?view=host" style="background:var(--pink);color:#fff">Host (Player 1)</a>
+      <a href="?view=host" style="background:var(--pink);color:#fff">Host (Judge)</a>
+      <a href="?view=player&player=player1">Player 1</a>
       <a href="?view=player&player=player2">Player 2</a>
       <a href="?view=player&player=player3">Player 3</a>
       <a href="?view=player&player=player4">Player 4</a>
@@ -4012,8 +4224,8 @@
     // ── URL Routing ───────────────────────────────────────────
     const params    = new URLSearchParams(window.location.search);
     const view      = params.get('view');    // 'host' | 'player'
-    // Host is always player1; guests are player2–player8
-    const playerKey = view === 'host' ? 'player1' : params.get('player');
+    // Host is a pure judge/spectator with no player slot
+    const playerKey = view === 'host' ? null : params.get('player');
 
     const elHostView   = document.getElementById('host-view');
     const elPlayerView = document.getElementById('player-view');
@@ -4034,7 +4246,7 @@
       }
     }
 
-    const VALID_PLAYER_KEYS = PLAYER_KEYS.slice(1); // player2–player8 are valid guest keys
+    const VALID_PLAYER_KEYS = PLAYER_KEYS; // player1–player8 are all valid player slots
     if (view === 'host') {
       showView('host');
     } else if (view === 'player' && VALID_PLAYER_KEYS.includes(playerKey)) {
@@ -4150,7 +4362,7 @@
         const player  = playersData[key] ?? {};
         const hasName = player.name && player.name.trim().length > 0;
         if (hasName) joinedCount++;
-        const label   = i === 0 ? 'Player 1 (Host)' : `Player ${i + 1}`;
+        const label   = `Player ${i + 1}`;
         const card    = document.createElement('div');
         card.className = 'lobby-player-card' + (hasName ? ' ready' : '');
         card.innerHTML = `
@@ -4160,29 +4372,12 @@
         `;
         container.appendChild(card);
       });
-      // Enable start once at least 2 players joined (host + 1 guest)
+      // Enable start once at least 2 real players have joined
       if (btnStart) btnStart.disabled = joinedCount < 2;
     }
 
-    // ── Host: lock in name (host = player1) ───────────────────
-    if (view === 'host') {
-      const hostNameInput = document.getElementById('host-name-input');
-      const btnHostLock   = document.getElementById('btn-host-lock-name');
-      async function lockHostName() {
-        const name = hostNameInput ? hostNameInput.value.trim() : '';
-        if (!name) return;
-        try {
-          await update(ref(db, 'players/player1'), { name, points: 0, startingPoints: 0, alive: true, ready: true });
-          if (hostNameInput) { hostNameInput.disabled = true; }
-          if (btnHostLock)   { btnHostLock.textContent = '✓ LOCKED'; btnHostLock.disabled = true; }
-        } catch (err) { console.error('[Birthday Game] Host name lock error:', err); }
-      }
-      if (btnHostLock)   btnHostLock.addEventListener('click', lockHostName);
-      if (hostNameInput) hostNameInput.addEventListener('keydown', e => { if (e.key === 'Enter') lockHostName(); });
-    }
-
-    // ── Player waiting: name input, lock-in (player2–player8) ─
-    if (view === 'player' && playerKey && playerKey !== 'player1') {
+    // ── Player waiting: name input, lock-in (player1–player8) ─
+    if (view === 'player' && playerKey) {
       const nameInput  = document.getElementById('name-input');
       const btnLock    = document.getElementById('btn-lock-name');
 
@@ -4265,6 +4460,11 @@
           if (latestRoundData?.id === 'wheel')      renderHostWheel(latestRoundData, data);
           if (latestGamePhase === 'finale')         renderFinale(data, latestRoundData);
         }
+
+        if (view === 'player') {
+          latestPlayersData = data;
+          if (latestGamePhase === 'finale')         renderFinale(data, latestRoundData);
+        }
       });
 
       const _unsubGame = onValue(ref(db, 'game'), (snapshot) => {
@@ -4326,6 +4526,7 @@
       prestart.classList.toggle('hidden', state !== 'waiting');
       active  .classList.toggle('hidden', state !== 'active');
       result  .classList.toggle('hidden', state !== 'ended');
+      if (state === 'waiting') btnStartTrivia.disabled = false;
 
       // --- Player names in score + answer headers ---
       const p1name = playersData?.player1?.name || 'Player 1';
@@ -4594,6 +4795,7 @@
             'player1/answer': null,
             'player2/answer': null,
           });
+          btnTriviaNext.disabled = false;
         } catch (err) {
           console.error('[Trivia] Next question error:', err);
           btnTriviaNext.disabled = false;
@@ -4962,6 +5164,7 @@
       document.getElementById('rb-prestart')    ?.classList.toggle('hidden', state !== 'waiting');
       document.getElementById('rb-active-view') ?.classList.toggle('hidden', state !== 'active');
       document.getElementById('rb-ended-view')  ?.classList.toggle('hidden', state !== 'ended');
+      if (state === 'waiting' && btnRbStart) btnRbStart.disabled = false;
 
       if (state === 'active') {
         const lpw = data.lastPointWinner;
@@ -5382,6 +5585,7 @@
       document.getElementById('tw-prestart')?.classList.toggle('hidden', state !== 'waiting');
       document.getElementById('tw-active')  ?.classList.toggle('hidden', state === 'waiting' || state === 'ended');
       document.getElementById('tw-ended')   ?.classList.toggle('hidden', state !== 'ended');
+      if (state === 'waiting') btnTwStart.disabled = false;
 
       if (state === 'active') {
         const scrambled = data.scrambled ?? TYPEWAVE_WORDS[wordIndex]?._localScramble ?? '——';
@@ -6019,6 +6223,7 @@
       document.getElementById('st-prestart')?.classList.toggle('hidden', state !== 'waiting');
       document.getElementById('st-active')  ?.classList.toggle('hidden', state !== 'active');
       document.getElementById('st-ended')   ?.classList.toggle('hidden', state !== 'ended');
+      if (state === 'waiting') btnStStart.disabled = false;
 
       if (state === 'active') {
         [['p1','player1'],['p2','player2']].forEach(([p, pKey]) => {
@@ -6280,6 +6485,7 @@
       preEl.classList.toggle('hidden', state !== 'waiting');
       actEl.classList.toggle('hidden', state !== 'active');
       endEl.classList.toggle('hidden', state !== 'ended');
+      if (state === 'waiting' && btnTbStart) btnTbStart.disabled = false;
 
       if (state === 'active') {
         const taps = data.taps ?? {};
@@ -6551,6 +6757,7 @@
       document.getElementById('bt-active')   ?.classList.toggle('hidden', state !== 'active');
       document.getElementById('bt-revealing')?.classList.toggle('hidden', state !== 'revealing');
       document.getElementById('bt-revealed') ?.classList.toggle('hidden', state !== 'revealed' && state !== 'ended');
+      if (state === 'waiting' && btnBtStart) btnBtStart.disabled = false;
 
       if (state === 'active') {
         btHostRevealScheduled = false;
@@ -6879,6 +7086,7 @@
       preEl.classList.toggle('hidden', state !== 'waiting');
       actEl.classList.toggle('hidden', state === 'waiting' || state === 'ended');
       endEl.classList.toggle('hidden', state !== 'ended');
+      if (state === 'waiting' && btnRxnStart) btnRxnStart.disabled = false;
 
       if (state !== 'waiting' && state !== 'ended') {
         // Scoreboard
@@ -7143,12 +7351,12 @@
     }
 
     const WHEEL_SEGMENTS = [
-      { label: '0.5×  💀',  multiplier: 0.5,  color: '#FF2D2D' },
-      { label: '0.75× 😬',  multiplier: 0.75, color: '#FF8C00' },
-      { label: '1×    😐',  multiplier: 1.0,  color: '#555555' },
-      { label: '1×    😐',  multiplier: 1.0,  color: '#444444' },
-      { label: '1.25× 😏',  multiplier: 1.25, color: '#00AA55' },
-      { label: '2×    🎉',  multiplier: 2.0,  color: '#FFD700' },
+      { label: '0.5×  💀',  multiplier: 0.5,  color: '#FF2D2D' },   // red  — game's --red
+      { label: '0.75× 😬',  multiplier: 0.75, color: '#CC5500' },   // burnt orange
+      { label: '1×    😐',  multiplier: 1.0,  color: '#2a2a2a' },   // dark neutral
+      { label: '1×    😐',  multiplier: 1.0,  color: '#3d3d3d' },   // dark neutral alt
+      { label: '1.25× 😏',  multiplier: 1.25, color: '#00AA55' },   // green
+      { label: '2×    🎉',  multiplier: 2.0,  color: '#FFD700' },   // gold — game's --yellow
     ];
 
     class SpinWheel {
@@ -7255,10 +7463,17 @@
         // center cap
         ctx.beginPath();
         ctx.arc(cx, cy, W * 0.1, 0, Math.PI * 2);
-        ctx.fillStyle   = '#111';
+        ctx.fillStyle   = '#0a0a0a';
         ctx.fill();
         ctx.strokeStyle = '#FF69B4';
-        ctx.lineWidth   = 3;
+        ctx.lineWidth   = 4;
+        ctx.stroke();
+
+        // outer rim
+        ctx.beginPath();
+        ctx.arc(cx, cy, r + 2, 0, Math.PI * 2);
+        ctx.strokeStyle = '#FF69B4';
+        ctx.lineWidth   = 4;
         ctx.stroke();
       }
 
@@ -7635,53 +7850,54 @@
       }
 
       if (view === 'player') {
-        const p        = playersData[playerKey] || {};
-        const start    = p.startingPoints ?? 0;
-        const final    = p.points ?? 0;
-        const diff     = final - start;
-        const diffSign = diff >= 0 ? '+' : '';
-        const diffCls  = diff >= 0 ? 'fc-pos' : 'fc-neg';
-        const mult     = playerKey === 'player1'
-          ? (roundData?.p1Multiplier ?? 1)
-          : (roundData?.p2Multiplier ?? 1);
+        const container = document.getElementById('player-finale-cards');
+        const outcomeEl = document.getElementById('player-finale-outcome');
+        if (!container) return;
 
+        const m1   = roundData?.p1Multiplier ?? 1;
+        const m2   = roundData?.p2Multiplier ?? 1;
+        const pMax = (p1.points ?? 0) >= (p2.points ?? 0) ? 'player1' : 'player2';
+
+        // Ranked leaderboard cards — identical template to host
+        container.innerHTML = [
+          { key: 'player1', p: p1, mult: m1 },
+          { key: 'player2', p: p2, mult: m2 },
+        ].map(({ key, p, mult }) => {
+          const start     = p.startingPoints ?? 0;
+          const final     = p.points ?? 0;
+          const diff      = final - start;
+          const diffClass = diff >= 0 ? 'fc-pos' : 'fc-neg';
+          const diffSign  = diff >= 0 ? '+' : '';
+          const isMe      = key === playerKey;
+          return `
+            <div class="finale-card${key === pMax ? ' fc-winner' : ''}">
+              <div class="fc-name">${p.name || (key === 'player1' ? 'Player 1' : 'Player 2')}${isMe ? ' <span style="font-size:0.55em;color:var(--pink);letter-spacing:0.12em">(YOU)</span>' : ''}</div>
+              <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">${start} pts</span></div>
+              <div class="fc-row"><span class="fc-label">Wheel</span><span class="fc-value">${mult}×</span></div>
+              <div class="fc-row"><span class="fc-label">Final</span><span class="fc-value" style="color:var(--pink)">${final} pts</span></div>
+              <div class="fc-row"><span class="fc-label">Change</span><span class="fc-value ${diffClass}">${diffSign}${Math.abs(diff)} pts</span></div>
+            </div>`;
+        }).join('');
+
+        // Outcome headline
+        const myFinal  = (playersData[playerKey] || {}).points ?? 0;
         const oppKey   = playerKey === 'player1' ? 'player2' : 'player1';
-        const opp      = playersData[oppKey] || {};
-        const oppName  = opp.name || 'Opponent';
-        const oppFinal = opp.points ?? 0;
-        const oppMult  = playerKey === 'player1'
-          ? (roundData?.p2Multiplier ?? 1)
-          : (roundData?.p1Multiplier ?? 1);
-
-        const winnerText  = final > oppFinal ? 'YOU WIN!' : final < oppFinal ? 'YOU LOSE' : "IT'S A TIE!";
-        const winnerBg    = final > oppFinal ? 'rgba(0,255,135,0.18)' : final < oppFinal ? 'rgba(255,45,45,0.18)' : 'rgba(255,105,180,0.18)';
-        const winnerColor = final > oppFinal ? 'var(--green)' : final < oppFinal ? '#FF2D2D' : 'var(--pink)';
-
-        const nameEl   = document.getElementById('player-finale-name');
-        const amtEl    = document.getElementById('player-finale-amount');
-        const brkEl    = document.getElementById('player-finale-breakdown');
-        if (nameEl)  nameEl.textContent  = p.name || 'You';
-        if (amtEl)   amtEl.textContent   = `${final} pts`;
-        if (brkEl) {
-          brkEl.innerHTML = `
-            <div class="fc-row"><span class="fc-label">Starting</span><span class="fc-value">${start} pts</span></div>
-            <div class="fc-row"><span class="fc-label">Wheel</span><span class="fc-value">${mult}×</span></div>
-            <div class="fc-row"><span class="fc-label">Net Change</span><span class="fc-value ${diffCls}">${diffSign}${Math.abs(diff)} pts</span></div>
-            <div class="fc-row" style="margin-top:14px;border-top:1px solid #333;padding-top:14px;">
-              <span class="fc-label">Opponent</span><span class="fc-label">${oppName}</span>
-            </div>
-            <div class="fc-row"><span class="fc-label">Their Total</span><span class="fc-value">${oppFinal} pts</span></div>
-            <div class="fc-row"><span class="fc-label">Their Wheel</span><span class="fc-value">${oppMult}×</span></div>
-            <div style="margin-top:16px;padding:14px 20px;border-radius:12px;background:${winnerBg};text-align:center;font-family:var(--font-display);font-size:clamp(22px,7vw,34px);color:${winnerColor};letter-spacing:0.06em;">${winnerText}</div>`;
+        const oppFinal = (playersData[oppKey] || {}).points ?? 0;
+        if (outcomeEl) {
+          const winnerText  = myFinal > oppFinal ? 'YOU WIN!' : myFinal < oppFinal ? 'YOU LOSE' : "IT'S A TIE!";
+          const winnerColor = myFinal > oppFinal ? 'var(--green)' : myFinal < oppFinal ? '#FF2D2D' : 'var(--pink)';
+          outcomeEl.textContent = winnerText;
+          outcomeEl.style.color = winnerColor;
         }
 
-        // Trigger confetti if player made money, elimination sting if they lost
+        // Effects — fire once
+        const myStart = (playersData[playerKey] || {}).startingPoints ?? 0;
         if (!_finaleFired) {
           _finaleFired = true;
-          if (final > start) {
+          if (myFinal > myStart) {
             flashTransition('#00FF87', 700);
             setTimeout(() => window.launchConfetti?.(), 300);
-          } else if (final === 0) {
+          } else if (myFinal === 0) {
             flashTransition('#FF2D2D', 700);
             setTimeout(() => soundElimination(), 200);
           } else {
